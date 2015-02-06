@@ -30,4 +30,3 @@ module Robots
     attr_reader :board
   end
 end
-

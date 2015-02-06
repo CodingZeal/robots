@@ -13,4 +13,3 @@ module Robots
     private_constant :BOARD_SIZE
   end
 end
-
