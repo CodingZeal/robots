@@ -1,0 +1,1 @@
+require "robots/version"
