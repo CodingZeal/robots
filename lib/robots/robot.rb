@@ -10,19 +10,19 @@ module Robots
     end
 
     def north
-      @position = position.with_row(board.top)
+      @position = board.position_above(position)
     end
 
     def south
-      @position = position.with_row(board.bottom)
+      @position = board.position_below(position)
     end
 
     def west
-      @position = position.with_column(board.left)
+      @position = board.position_left_of(position)
     end
 
     def east
-      @position = position.with_column(board.right)
+      @position = board.position_right_of(position)
     end
 
     private

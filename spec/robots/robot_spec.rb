@@ -4,28 +4,33 @@ module Robots
   describe Robot do
     subject(:robot) { described_class.new(at: start, on: board) }
 
-    let(:board) { Board.new }
+    let(:board) { instance_double(Board) }
     let(:start) { Position.new(row: 11, column: 6) }
+    let(:dest) { Position.new(row: 5, column: 8) }
 
     describe "movement" do
       it "moves north" do
+        allow(board).to receive(:position_above) { dest }
         robot.north
-        expect(robot.position).to eq Position.new(row: board.top, column: start.column)
+        expect(robot.position).to eq dest
       end
 
       it "moves west" do
+        allow(board).to receive(:position_left_of) { dest }
         robot.west
-        expect(robot.position).to eq Position.new(row: start.row, column: board.left)
+        expect(robot.position).to eq dest
       end
 
       it "moves south" do
+        allow(board).to receive(:position_below) { dest }
         robot.south
-        expect(robot.position).to eq Position.new(row: board.bottom, column: start.column)
+        expect(robot.position).to eq dest
       end
 
       it "moves east" do
+        allow(board).to receive(:position_right_of) { dest }
         robot.east
-        expect(robot.position).to eq Position.new(row: start.row, column: board.right)
+        expect(robot.position).to eq dest
       end
     end
   end
