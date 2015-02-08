@@ -41,6 +41,10 @@ module Robots
       end
     end
 
+    def inspect
+      "#<#{self.class.name}:#{object_id} row=#{row} column=#{column}"
+    end
+
     # Should be private, but can't be because of enumerator above
     def neighbor(direction)
       send(direction)

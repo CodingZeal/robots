@@ -45,7 +45,7 @@ module Robots
 
     def add_special_cells
       add_center_island
-      add_edge_walls
+      add_interior_walls
     end
 
     def add_center_island
@@ -55,12 +55,18 @@ module Robots
       add_cell(Cell.closed(self, 8, 8))
     end
 
-    def add_edge_walls
-      [1, 10].each { |column| add_wall_after_column(top, column) }
-      [5, 11].each { |column| add_wall_after_column(bottom, column) }
+    def add_interior_walls
+      VERTICAL_WALLS.each_with_index do |walls, row|
+        walls.each do |column|
+          add_wall_after_column(row, column)
+        end
+      end
 
-      [5, 11].each { |row| add_wall_after_row(row, left) }
-      [4, 8].each { |row| add_wall_after_row(row, right) }
+      HORIZONTAL_WALLS.each_with_index do |walls, column|
+        walls.each do |row|
+          add_wall_after_row(row, column)
+        end
+      end
     end
 
     def add_wall_after_column(row, column)
@@ -89,7 +95,45 @@ module Robots
       row.between?(top, bottom) && column.between?(left, right)
     end
 
+    VERTICAL_WALLS = [
+      [1, 10],
+      [3, 8],
+      [1, 14],
+      [6],
+      [10],
+      [],
+      [2, 11],
+      [],
+      [4],
+      [1],
+      [7, 12],
+      [10],
+      [13],
+      [4],
+      [1, 9],
+      [5, 11]
+    ]
+
+    HORIZONTAL_WALLS = [
+      [5, 11],
+      [1, 14],
+      [8],
+      [6],
+      [0, 12],
+      [8],
+      [3],
+      [],
+      [9],
+      [1, 13],
+      [4, 11],
+      [],
+      [5],
+      [9],
+      [1, 12],
+      [4, 8]
+    ]
+
     BOARD_SIZE = 16
-    private_constant :BOARD_SIZE
+    private_constant :BOARD_SIZE, :VERTICAL_WALLS, :HORIZONTAL_WALLS
   end
 end
