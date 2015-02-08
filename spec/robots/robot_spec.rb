@@ -9,27 +9,9 @@ module Robots
     let(:dest) { Position[5, 8] }
 
     describe "movement" do
-      it "moves north" do
-        allow(board).to receive(:position_above) { dest }
-        robot.north
-        expect(robot.position).to eq dest
-      end
-
-      it "moves west" do
-        allow(board).to receive(:position_left_of) { dest }
-        robot.west
-        expect(robot.position).to eq dest
-      end
-
-      it "moves south" do
-        allow(board).to receive(:position_below) { dest }
-        robot.south
-        expect(robot.position).to eq dest
-      end
-
-      it "moves east" do
-        allow(board).to receive(:position_right_of) { dest }
-        robot.east
+      it "moves as far as the board will let it" do
+        allow(board).to receive(:next_position).with(start, :any_direction) { dest }
+        robot.move(:any_direction)
         expect(robot.position).to eq dest
       end
     end

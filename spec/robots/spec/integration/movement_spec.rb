@@ -8,32 +8,32 @@ module Robots
     context "with no obstacles" do
       let(:start) { Position[5, 11] }
 
-      it "moves north" do
-        robot.north
+      it "moves up" do
+        robot.move(:up)
         expect(robot.position).to eq Position[board.top, start.column]
       end
 
-      it "moves east" do
-        robot.east
+      it "moves right" do
+        robot.move(:right)
         expect(robot.position).to eq Position[start.row, board.right]
       end
     end
 
     context "with center obstacle" do
-      context "while moving south" do
+      context "while moving down" do
         let(:start) { Position[board.top, 7] }
 
         it "stops at the obstacle" do
-          robot.south
+          robot.move(:down)
           expect(robot.position).to eq Position[6, start.column]
         end
       end
 
-      context "while moving west" do
+      context "while moving left" do
         let(:start) { Position[8, board.right] }
 
-        pending "stops at the obstacle" do
-          robot.west
+        it "stops at the obstacle" do
+          robot.move(:left)
           expect(robot.position).to eq Position[start.row, 9]
         end
       end

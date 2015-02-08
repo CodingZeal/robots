@@ -9,24 +9,10 @@ module Robots
       @bottom = @right = BOARD_SIZE - 1
     end
 
-    def position_above(position)
-      position.each_above.each_cons(2) do |below, above|
-        return below if blocked?(above)
+    def next_position(position, direction)
+      position.each_moving(direction).each_cons(2) do |from, to|
+        return from if blocked?(to)
       end
-    end
-
-    def position_below(position)
-      position.each_below.each_cons(2) do |above, below|
-        return above if blocked?(below)
-      end
-    end
-
-    def position_left_of(position)
-      position.with_column(left)
-    end
-
-    def position_right_of(position)
-      position.with_column(right)
     end
 
     private
@@ -51,6 +37,7 @@ module Robots
       Position[8, 7],
       Position[8, 8]
     ]
+
     private_constant :BOARD_SIZE, :ISLAND
   end
 end

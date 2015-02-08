@@ -26,16 +26,30 @@ module Robots
 
     describe "enumeration" do
       it "yields each position above itself" do
-        enum = position.each_above
+        enum = position.each_moving(:up)
         (1..3).each do |delta|
           expect(enum.next).to eq position.with_row(position.row - delta)
         end
       end
 
       it "yields each position below itself" do
-        enum = position.each_below
+        enum = position.each_moving(:down)
         (1..3).each do |delta|
           expect(enum.next).to eq position.with_row(position.row + delta)
+        end
+      end
+
+      it "yields each position left of itself" do
+        enum = position.each_moving(:left)
+        (1..3).each do |delta|
+          expect(enum.next).to eq position.with_column(position.column - delta)
+        end
+      end
+
+      it "yields each position right of itself" do
+        enum = position.each_moving(:right)
+        (1..3).each do |delta|
+          expect(enum.next).to eq position.with_column(position.column + delta)
         end
       end
     end

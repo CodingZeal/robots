@@ -15,21 +15,11 @@ module Robots
       @column = column
     end
 
-    def each_above
+    def each_moving(direction)
       Enumerator.new do |yielder|
         position = self
         loop do
-          position = position.up
-          yielder << position
-        end
-      end
-    end
-
-    def each_below
-      Enumerator.new do |yielder|
-        position = self
-        loop do
-          position = position.down
+          position = position.neighbor(direction)
           yielder << position
         end
       end
@@ -43,12 +33,27 @@ module Robots
       self.class[row, new_column]
     end
 
+    # Should be private, but can't be because of enumerator above
+    def neighbor(direction)
+      send(direction)
+    end
+
+    private
+
     def up
       with_row(row - 1)
     end
 
     def down
       with_row(row + 1)
+    end
+
+    def left
+      with_column(column - 1)
+    end
+
+    def right
+      with_column(column + 1)
     end
   end
 end

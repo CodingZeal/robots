@@ -9,20 +9,8 @@ module Robots
       @board = on
     end
 
-    def north
-      @position = board.position_above(position)
-    end
-
-    def south
-      @position = board.position_below(position)
-    end
-
-    def west
-      @position = board.position_left_of(position)
-    end
-
-    def east
-      @position = board.position_right_of(position)
+    def move(direction)
+      @position = board.next_position(position, direction)
     end
 
     private

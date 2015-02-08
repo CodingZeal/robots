@@ -20,45 +20,21 @@ module Robots
       context "with no obstacles" do
         let(:start) { Position[5, 11] }
 
-        it "stops at top edge" do
-          expect(board.position_above(start)).to eq Position[board.top, start.column]
-        end
-
-        it "stops at bottom edge" do
-          expect(board.position_below(start)).to eq Position[board.bottom, start.column]
-        end
-
-        it "stops at left edge" do
-          expect(board.position_left_of(start)).to eq Position[start.row, board.left]
-        end
-
-        it "stops at right edge" do
-          expect(board.position_right_of(start)).to eq Position[start.row, board.right]
+        it "stops at the board's edge" do
+          expect(board.next_position(start, :up)).to eq Position[board.top, start.column]
         end
       end
 
       context "with center obstacle" do
-        context "when below the obstacle" do
-          let(:start) { Position[board.bottom - 3, 7] }
+        context "when left of the obstacle" do
+          let(:start) { Position[7, board.left + 3] }
 
-          it "stops at the obstacle when moving north" do
-            expect(board.position_above(start)).to eq Position[9, start.column]
+          it "stops at the obstacle when moving right" do
+            expect(board.next_position(start, :right)).to eq Position[start.row, 6]
           end
 
-          it "stops at the bottom when moving south" do
-            expect(board.position_below(start)).to eq Position[board.bottom, start.column]
-          end
-        end
-
-        context "when above the obstacle" do
-          let(:start) { Position[board.top + 2, 8] }
-
-          it "stops at the top when moving north" do
-            expect(board.position_above(start)).to eq Position[board.top, start.column]
-          end
-
-          it "stops at the obstacle when moving south" do
-            expect(board.position_below(start)).to eq Position[6, start.column]
+          it "stops at the board's edge when moving left" do
+            expect(board.next_position(start, :left)).to eq Position[start.row, board.left]
           end
         end
       end
