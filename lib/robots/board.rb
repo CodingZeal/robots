@@ -1,3 +1,5 @@
+require_relative "position"
+
 module Robots
   class Board
     attr_reader :top, :bottom, :left, :right
@@ -8,18 +10,14 @@ module Robots
     end
 
     def position_above(position)
-      if [7, 8].include?(position.column) && position.row > 8
-        position.with_row(9)
-      else
-        position.with_row(top)
+      position.each_above.each_cons(2) do |below, above|
+        return below if blocked?(above)
       end
     end
 
     def position_below(position)
-      if [7, 8].include?(position.column) && position.row < 7
-        position.with_row(6)
-      else
-        position.with_row(bottom)
+      position.each_below.each_cons(2) do |above, below|
+        return above if blocked?(below)
       end
     end
 
@@ -33,7 +31,26 @@ module Robots
 
     private
 
+    def blocked?(position)
+      ISLAND.include?(position) || off_board?(position)
+    end
+
+    def off_board?(position)
+      !on_board?(position)
+    end
+
+    def on_board?(position)
+      position.row.between?(top, bottom) && position.column.between?(left, right)
+    end
+
     BOARD_SIZE = 16
-    private_constant :BOARD_SIZE
+
+    ISLAND = [
+      Position.new(row: 7, column: 7),
+      Position.new(row: 7, column: 8),
+      Position.new(row: 8, column: 7),
+      Position.new(row: 8, column: 8)
+    ]
+    private_constant :BOARD_SIZE, :ISLAND
   end
 end

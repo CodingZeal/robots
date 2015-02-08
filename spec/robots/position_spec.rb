@@ -23,5 +23,21 @@ module Robots
         expect(position.with_column(42)).to eq described_class.new(row: 3, column: 42)
       end
     end
+
+    describe "enumeration" do
+      it "yields each position above itself" do
+        enum = position.each_above
+        (1..3).each do |delta|
+          expect(enum.next).to eq position.with_row(position.row - delta)
+        end
+      end
+
+      it "yields each position below itself" do
+        enum = position.each_below
+        (1..3).each do |delta|
+          expect(enum.next).to eq position.with_row(position.row + delta)
+        end
+      end
+    end
   end
 end
