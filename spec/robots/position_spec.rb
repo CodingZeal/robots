@@ -2,11 +2,11 @@ require "spec_helper"
 
 module Robots
   describe Position do
-    subject(:position) { described_class.new(row: 3, column: 5) }
+    subject(:position) { described_class[3, 5] }
 
     describe "comparison" do
-      let(:different_row) { described_class.new(row: 2, column: 5) }
-      let(:different_column) { described_class.new(row: 3, column: 1) }
+      let(:different_row) { described_class[2, 5] }
+      let(:different_column) { described_class[3, 1] }
 
       it { is_expected.to eq subject }
       it { is_expected.to eq subject.dup }
@@ -16,11 +16,11 @@ module Robots
 
     describe "immutable movement" do
       it "returns a clone in a different row" do
-        expect(position.with_row(42)).to eq described_class.new(row: 42, column: 5)
+        expect(position.with_row(42)).to eq described_class[42, 5]
       end
 
       it "returns a clone in a different column" do
-        expect(position.with_column(42)).to eq described_class.new(row: 3, column: 42)
+        expect(position.with_column(42)).to eq described_class[3, 42]
       end
     end
 

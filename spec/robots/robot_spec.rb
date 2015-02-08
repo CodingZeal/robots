@@ -5,8 +5,8 @@ module Robots
     subject(:robot) { described_class.new(at: start, on: board) }
 
     let(:board) { instance_double(Board) }
-    let(:start) { Position.new(row: 11, column: 6) }
-    let(:dest) { Position.new(row: 5, column: 8) }
+    let(:start) { Position[11, 6] }
+    let(:dest) { Position[5, 8] }
 
     describe "movement" do
       it "moves north" do

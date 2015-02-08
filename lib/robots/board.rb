@@ -46,10 +46,10 @@ module Robots
     BOARD_SIZE = 16
 
     ISLAND = [
-      Position.new(row: 7, column: 7),
-      Position.new(row: 7, column: 8),
-      Position.new(row: 8, column: 7),
-      Position.new(row: 8, column: 8)
+      Position[7, 7],
+      Position[7, 8],
+      Position[8, 7],
+      Position[8, 8]
     ]
     private_constant :BOARD_SIZE, :ISLAND
   end
