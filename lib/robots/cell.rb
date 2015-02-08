@@ -45,7 +45,8 @@ module Robots
       "#<#{self.class.name}:#{object_id} row=#{row} column=#{column}"
     end
 
-    # Should be private, but can't be because of enumerator above
+    protected
+
     def neighbor(direction)
       send(direction)
     end
