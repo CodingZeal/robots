@@ -2,17 +2,16 @@ require "spec_helper"
 
 module Robots
   describe Robot do
-    subject(:robot) { described_class.new(at: start, on: board) }
+    subject(:robot) { Robot.new(start) }
 
-    let(:board) { instance_double(Board) }
-    let(:start) { Position[11, 6] }
-    let(:dest) { Position[5, 8] }
+    let(:start) { instance_double(Cell) }
+    let(:dest) { instance_double(Cell) }
 
     describe "movement" do
-      it "moves as far as the board will let it" do
-        allow(board).to receive(:next_position).with(start, :any_direction) { dest }
+      it "moves as far as its cell will let it" do
+        allow(start).to receive(:next_cell).with(:any_direction) { dest }
         robot.move(:any_direction)
-        expect(robot.position).to eq dest
+        expect(robot.cell).to equal dest
       end
     end
   end

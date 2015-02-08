@@ -1,20 +1,15 @@
-require_relative "position"
+require_relative "cell"
 
 module Robots
   class Robot
-    attr_reader :position
+    attr_reader :cell
 
-    def initialize(at:, on:)
-      @position = at
-      @board = on
+    def initialize(cell)
+      @cell = cell
     end
 
     def move(direction)
-      @position = board.next_position(position, direction)
+      @cell = cell.next_cell(direction)
     end
-
-    private
-
-    attr_reader :board
   end
 end
