@@ -5,6 +5,10 @@ module Robots
     let(:board) { Board.new }
     let(:robot) { Robot.new(start) }
 
+    before do
+      BoardMaker.new(board).populate_example
+    end
+
     context "with no obstacles" do
       let(:start) { board.cell(5, 11) }
 

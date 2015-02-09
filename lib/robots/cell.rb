@@ -4,16 +4,6 @@ module Robots
   class Cell
     attr_reader :row, :column
 
-    def self.open(board, row, column)
-      Cell.new(board, row, column)
-    end
-
-    def self.closed(board, row, column)
-      open(board, row, column).tap do |cell|
-        cell.block(%i(up down left right))
-      end
-    end
-
     def initialize(board, row, column)
       @board = board
       @row = row
