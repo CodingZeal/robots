@@ -26,29 +26,5 @@ module Robots
         expect(board.cell(5, board.right + 1)).to be_nil
       end
     end
-
-    describe "stopping positions" do
-      context "with no obstacles" do
-        let(:start) { board.cell(5, 11) }
-
-        it "stops at the board's edge" do
-          expect(board.next_cell(start, :up)).to equal board.cell(board.top, start.column)
-        end
-      end
-
-      context "with center obstacle" do
-        context "when left of the obstacle" do
-          let(:start) { board.cell(7, board.left + 3) }
-
-          it "stops at the obstacle when moving right" do
-            expect(board.next_cell(start, :right)).to equal board.cell(start.row, 6)
-          end
-
-          it "stops at the board's edge when moving left" do
-            expect(board.next_cell(start, :left)).to equal board.cell(start.row, board.left)
-          end
-        end
-      end
-    end
   end
 end

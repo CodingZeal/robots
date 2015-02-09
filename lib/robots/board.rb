@@ -11,12 +11,6 @@ module Robots
       add_special_cells
     end
 
-    def next_cell(cell, direction)
-      cell.each_moving(direction).each_cons(2) do |from, to|
-        return from if blocked?(to, direction)
-      end
-    end
-
     def cell(row, column)
       return nil if off_board?(row, column)
 
@@ -81,10 +75,6 @@ module Robots
 
     def add_cell(cell)
       cells[cell.row][cell.column] = cell
-    end
-
-    def blocked?(cell, direction)
-      cell.nil? || cell.blocked?(direction)
     end
 
     def off_board?(row, column)

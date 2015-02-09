@@ -4,37 +4,27 @@ module Robots
   describe Cell do
     let(:board) { Board.new }
 
-    describe "enumeration" do
-      let(:cell) { Cell.open(board, 3, 5) }
+    describe "stopping positions" do
+      context "with no obstacles" do
+        let(:cell) { board.cell(5, 11) }
 
-      it "yields each cell above itself" do
-        enum = cell.each_moving(:up)
-        2.times { enum.next }
-        expect(enum.next).to equal board.cell(cell.row - 3, cell.column)
+        it "stops at the board's edge" do
+          expect(cell.next_cell(:up)).to equal board.cell(board.top, cell.column)
+        end
       end
 
-      it "yields each cell below itself" do
-        enum = cell.each_moving(:down)
-        2.times { enum.next }
-        expect(enum.next).to equal board.cell(cell.row + 3, cell.column)
-      end
+      context "with center obstacle" do
+        context "when left of the obstacle" do
+          let(:cell) { board.cell(7, board.left + 3) }
 
-      it "yields each cell left of itself" do
-        enum = cell.each_moving(:left)
-        2.times { enum.next }
-        expect(enum.next).to equal board.cell(cell.row, cell.column - 3)
-      end
+          it "stops at the obstacle when moving right" do
+            expect(cell.next_cell(:right)).to equal board.cell(cell.row, 6)
+          end
 
-      it "yields each cell right of itself" do
-        enum = cell.each_moving(:right)
-        2.times { enum.next }
-        expect(enum.next).to equal board.cell(cell.row, cell.column + 3)
-      end
-
-      it "yields nil past the edge of the board" do
-        enum = cell.each_moving(:up)
-        cell.row.times { enum.next }
-        expect(enum.next).to be_nil
+          it "stops at the board's edge when moving left" do
+            expect(cell.next_cell(:left)).to equal board.cell(cell.row, board.left)
+          end
+        end
       end
     end
 
