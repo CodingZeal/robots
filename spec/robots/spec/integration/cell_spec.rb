@@ -33,7 +33,9 @@ module Robots
         subject(:cell) { Cell.open(board, 3, 5) }
 
         it "is never blocked" do
-          expect(cell.blocked?(:any_direction)).to be false
+          %i(up down left right).each do |direction|
+            expect(cell.blocked?(direction)).to be false
+          end
         end
       end
 
@@ -41,7 +43,9 @@ module Robots
         subject(:cell) { Cell.closed(board, 8, 6) }
 
         it "is always blocked" do
-          expect(cell.blocked?(:any_direction)).to be true
+          %i(up down left right).each do |direction|
+            expect(cell.blocked?(direction)).to be true
+          end
         end
       end
 

@@ -9,7 +9,9 @@ module Robots
     end
 
     def self.closed(board, row, column)
-      ClosedCell.new(board, row, column)
+      open(board, row, column).tap do |cell|
+        cell.block(%i(up down left right))
+      end
     end
 
     def initialize(board, row, column)
@@ -19,8 +21,8 @@ module Robots
       @blocked = Set.new
     end
 
-    def block(direction)
-      blocked << direction
+    def block(directions)
+      blocked.merge(Array(directions))
     end
 
     def blocked?(direction)
@@ -71,12 +73,6 @@ module Robots
 
     def right
       board.cell(row, column + 1)
-    end
-  end
-
-  class ClosedCell < Cell
-    def blocked?(_direction)
-      true
     end
   end
 end
