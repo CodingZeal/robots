@@ -25,10 +25,6 @@ module Robots
       blocked.merge(Array(directions))
     end
 
-    def blocked?(direction)
-      blocked.include?(direction)
-    end
-
     def next_cell(direction)
       each_moving(direction).each_cons(2) do |from, to|
         return from if to.nil? || to.blocked?(direction)
@@ -43,6 +39,10 @@ module Robots
 
     def neighbor(direction)
       send(direction)
+    end
+
+    def blocked?(direction)
+      blocked.include?(direction)
     end
 
     private
