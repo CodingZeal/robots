@@ -3,6 +3,7 @@ require "set"
 module Robots
   class Cell
     attr_reader :row, :column
+    attr_writer :target
 
     def initialize(board, row, column)
       @board = board
@@ -21,6 +22,10 @@ module Robots
       end
     end
 
+    def goal?(goal)
+      target == goal
+    end
+
     def inspect
       "#<#{self.class.name}:#{object_id} row=#{row} column=#{column}"
     end
@@ -37,7 +42,7 @@ module Robots
 
     private
 
-    attr_reader :board, :blocked
+    attr_reader :board, :blocked, :target
 
     def each_moving(direction)
       Enumerator.new do |yielder|

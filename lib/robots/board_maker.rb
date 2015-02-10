@@ -8,6 +8,7 @@ module Robots
 
     def populate_example
       add_interior_walls
+      add_targets
     end
 
     private
@@ -23,6 +24,12 @@ module Robots
         walls.each do |row|
           add_wall_after_row(row, column)
         end
+      end
+    end
+
+    def add_targets
+      TARGETS.each do |row, column, color, shape|
+        board.cell(row, column).target = Target.new(color, shape)
       end
     end
 
@@ -74,6 +81,26 @@ module Robots
       [9],
       [1, 12],
       [4, 8]
+    ]
+
+    TARGETS = [
+      [1, 4, :red, :circle],
+      [1, 9, :green, :hex],
+      [2, 1, :green, :triangle],
+      [2, 14, :yellow, :circle],
+      [3, 6, :yellow, :hex],
+      [4, 10, :red, :square],
+      [6, 3, :blue, :square],
+      [6, 12, :blue, :triangle],
+      [8, 5, :yellow, :square],
+      [9, 2, :green, :circle],
+      [10, 8, :any, :vortex],
+      [10, 13, :red, :hex],
+      [11, 10, :green, :square],
+      [12, 14, :yellow, :triangle],
+      [13, 4, :blue, :hex],
+      [14, 1, :red, :triangle],
+      [14, 9, :blue, :circle]
     ]
 
     private_constant :VERTICAL_WALLS, :HORIZONTAL_WALLS

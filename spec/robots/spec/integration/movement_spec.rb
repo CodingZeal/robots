@@ -3,7 +3,7 @@ require "spec_helper"
 module Robots
   describe "Robot movement" do
     let(:board) { Board.new }
-    let(:robot) { Robot.new(start) }
+    let(:robot) { Robot.new(:silver, start) }
 
     before do
       BoardMaker.new(board).populate_example
