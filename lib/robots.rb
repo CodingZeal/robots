@@ -1,5 +1,7 @@
 require "robots/board"
 require "robots/board_maker"
 require "robots/robot"
+require "robots/solver"
+require "robots/solvers"
 require "robots/target"
 require "robots/version"

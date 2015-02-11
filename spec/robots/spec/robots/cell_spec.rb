@@ -26,6 +26,22 @@ module Robots
           end
         end
       end
+
+      context "when at the board edge" do
+        let(:cell) { board.cell(15, 4) }
+
+        it "stays in place" do
+          expect(cell.next_cell(:down)).to eq cell
+        end
+      end
+
+      context "when against the obstacle" do
+        let(:cell) { board.cell(7, 9) }
+
+        it "stays in place" do
+          expect(cell.next_cell(:left)).to eq cell
+        end
+      end
     end
   end
 end

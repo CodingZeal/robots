@@ -1,7 +1,10 @@
 require_relative "cell"
+require "equalizer"
 
 module Robots
   class Robot
+    include Equalizer.new(:color, :cell)
+
     attr_reader :cell
 
     def initialize(color, cell)

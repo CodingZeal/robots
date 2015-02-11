@@ -48,8 +48,8 @@ module Robots
       Enumerator.new do |yielder|
         cell = self
         loop do
-          cell = cell.neighbor(direction) if cell
           yielder << cell
+          cell = cell.neighbor(direction) if cell
         end
       end
     end
