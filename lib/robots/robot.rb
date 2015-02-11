@@ -9,8 +9,8 @@ module Robots
       @cell = cell
     end
 
-    def move(direction)
-      @cell = cell.next_cell(direction)
+    def moved(direction)
+      Robot.new(color, cell.next_cell(direction))
     end
 
     def home?(goal)

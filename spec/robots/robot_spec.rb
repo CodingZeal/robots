@@ -8,11 +8,18 @@ module Robots
 
     describe "movement" do
       let(:dest) { instance_double(Cell) }
+      let(:moved) { robot.moved(:any_direction) }
+
+      before do
+        allow(cell).to receive(:next_cell).with(:any_direction) { dest }
+      end
 
       it "moves as far as its cell will let it" do
-        allow(cell).to receive(:next_cell).with(:any_direction) { dest }
-        robot.move(:any_direction)
-        expect(robot.cell).to equal dest
+        expect(moved.cell).to equal dest
+      end
+
+      it "returns a new robot instance" do
+        expect(moved).not_to equal robot
       end
     end
 

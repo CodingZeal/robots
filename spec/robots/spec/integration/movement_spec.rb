@@ -13,13 +13,11 @@ module Robots
       let(:start) { board.cell(5, 11) }
 
       it "moves up" do
-        robot.move(:up)
-        expect(robot.cell).to equal board.cell(board.top, start.column)
+        expect(robot.moved(:up).cell).to equal board.cell(board.top, start.column)
       end
 
       it "moves right" do
-        robot.move(:right)
-        expect(robot.cell).to equal board.cell(start.row, board.right)
+        expect(robot.moved(:right).cell).to equal board.cell(start.row, board.right)
       end
     end
 
@@ -28,8 +26,7 @@ module Robots
         let(:start) { board.cell(board.top, 7) }
 
         it "stops at the obstacle" do
-          robot.move(:down)
-          expect(robot.cell).to equal board.cell(6, start.column)
+          expect(robot.moved(:down).cell).to equal board.cell(6, start.column)
         end
       end
 
@@ -37,8 +34,7 @@ module Robots
         let(:start) { board.cell(8, board.right) }
 
         it "stops at the obstacle" do
-          robot.move(:left)
-          expect(robot.cell).to equal board.cell(start.row, 9)
+          expect(robot.moved(:left).cell).to equal board.cell(start.row, 9)
         end
       end
     end
@@ -47,18 +43,14 @@ module Robots
       let(:start) { board.cell(board.top, board.right) }
 
       context "moving left" do
-        before { robot.move(:left) }
-
         it "stops at the wall" do
-          expect(robot.cell).to equal board.cell(start.row, 11)
+          expect(robot.moved(:left).cell).to equal board.cell(start.row, 11)
         end
       end
 
       context "moving down" do
-        before { robot.move(:down) }
-
         it "stops at the wall" do
-          expect(robot.cell).to equal board.cell(4, start.column)
+          expect(robot.moved(:down).cell).to equal board.cell(4, start.column)
         end
       end
     end
