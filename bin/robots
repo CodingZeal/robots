@@ -1,3 +1,21 @@
 #!/usr/bin/env ruby
 
 require "robots"
+
+module Robots
+  board = Board.new
+  BoardMaker.new(board).populate_example
+  robot = Robot.new(:green, board.cell(6, 14))
+  goal = Target.new(:green, :circle)
+
+  solver = Solvers::RecursiveDfs.new(robot, goal)
+
+  if solver.solved?
+    puts "Solved in #{solver.solution.size} moves:"
+    solver.solution.each_with_index do |move, index|
+      puts "  #{index+1}) #{move.capitalize}"
+    end
+  else
+    puts "No solution found."
+  end
+end
