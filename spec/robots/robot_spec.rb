@@ -42,8 +42,8 @@ module Robots
             allow(goal).to receive(:matches_color?) { false }
           end
 
-          it "is not home" do
-            expect(robot.home?(goal)).to be false
+          it "is home (for now - we're ignoring color)" do
+            expect(robot.home?(goal)).to be true
           end
         end
       end

@@ -17,7 +17,8 @@ module Robots
     end
 
     def home?(goal)
-      goal.matches_color?(color) && cell.goal?(goal)
+      # goal.matches_color?(color) && cell.goal?(goal)
+      cell.goal?(goal)
     end
 
     private

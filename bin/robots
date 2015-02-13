@@ -15,6 +15,10 @@ def parse_options
       options.all = true
     end
 
+    opts.on("-c", "--chain", "Solve all targets starting from the end of the previous solution") do
+      options.chain = true
+    end
+
     opts.on("-g", "--goal color,shape", Array,
             "The destination target for the robot to move to",
             "  (example: --goal green,circle or --goal vortex)") do |color, shape|
@@ -34,7 +38,7 @@ def parse_options
 
   parser.parse!
 
-  unless options.goal || options.all
+  unless options.goal || options.all || options.chain
     $stderr.puts "Please specify a goal for the robot"
     exit 1
   end

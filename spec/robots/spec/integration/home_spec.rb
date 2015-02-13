@@ -33,8 +33,8 @@ module Robots
         let(:cell) { board.cell(1, 4) }
         let(:robot_color) { :green }
 
-        it "is not home" do
-          expect(robot.home?(goal)).to be false
+        it "is home (for now - we're ignoring color)" do
+          expect(robot.home?(goal)).to be true
         end
       end
     end
