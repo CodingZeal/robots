@@ -2,6 +2,10 @@ require_relative "cell"
 
 module Robots
   class Board
+    def self.example
+      self.new.tap { |board| BoardMaker.new(board).populate_example }
+    end
+
     def initialize
       @cells = Array.new(BOARD_SIZE) do |row|
         Array.new(BOARD_SIZE) do |column|

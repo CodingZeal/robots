@@ -2,12 +2,8 @@ require "spec_helper"
 
 module Robots
   describe "Robot movement" do
-    let(:board) { Board.new }
+    let(:board) { Board.example }
     let(:robot) { Robot.new(:silver, start) }
-
-    before do
-      BoardMaker.new(board).populate_example
-    end
 
     context "with no obstacles" do
       let(:start) { board.cell(5, 11) }

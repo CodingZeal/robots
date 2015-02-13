@@ -2,8 +2,7 @@ module Robots
   class CLI
     def initialize(options)
       @options = options
-      @board = Board.new
-      BoardMaker.new(board).populate_example
+      @board = Board.example
     end
 
     def run(io = $stdout)

@@ -2,14 +2,10 @@ require "spec_helper"
 
 module Robots
   describe "robots at home" do
-    let(:board) { Board.new }
+    let(:board) { Board.example }
     let(:robot) { Robot.new(robot_color, cell) }
     let(:robot_color) { :red }
     let(:goal) { Target.new(:red, :circle) }
-
-    before do
-      BoardMaker.new(board).populate_example
-    end
 
     context "when the robot is in the goal cell" do
       context "when the goal is the same color as the robot" do

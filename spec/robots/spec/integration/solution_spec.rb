@@ -2,13 +2,9 @@ require "spec_helper"
 
 module Robots
   describe "Solutions" do
-    let(:board) { Board.new }
+    let(:board) { Board.example }
     let(:solver) { Solvers::RecursiveDfs.new(robot, goal) }
     let(:outcome) { solver.outcome }
-
-    before do
-      BoardMaker.new(board).populate_example
-    end
 
     context "with a single robot" do
       let(:robot) { Robot.new(:green, start) }
