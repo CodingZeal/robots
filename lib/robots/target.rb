@@ -4,21 +4,20 @@ module Robots
   class Target
     include Equalizer.new(:color, :shape)
 
+    attr_reader :color, :shape
+
     def self.vortex
-      new(:any, :vortex)
+      new(:vortex)
     end
 
-    def initialize(color, shape)
-      @color = color
-      @shape = shape
+    def initialize(color, shape = nil)
+      color = color.downcase.to_sym
+      @color = (color == :vortex) ? :any : color
+      @shape = (shape || :vortex).downcase.to_sym
     end
 
     def matches_color?(other)
       color == :any || color == other
     end
-
-    private
-
-    attr_reader :color, :shape
   end
 end

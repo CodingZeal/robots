@@ -94,7 +94,7 @@ module Robots
       [6, 12, :blue, :triangle],
       [8, 5, :yellow, :square],
       [9, 2, :green, :circle],
-      [10, 8, :any, :vortex],
+      [10, 8, :vortex],
       [10, 13, :red, :hex],
       [11, 10, :green, :square],
       [12, 14, :yellow, :triangle],

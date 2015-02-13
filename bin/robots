@@ -13,8 +13,8 @@ def parse_options
 
     opts.on("-g", "--goal color,shape", Array,
             "The destination target for the robot to move to",
-            "  (example: --goal green,circle)") do |color, shape|
-      options.goal = Robots::Target.new(color.to_sym, shape.to_sym)
+            "  (example: --goal green,circle or --goal vortex)") do |color, shape|
+      options.goal = Robots::Target.new(color, shape)
     end
 
     opts.on_tail("-h", "--help", "Shows this help screen") do
@@ -43,7 +43,10 @@ module Robots
 
   board = Board.new
   BoardMaker.new(board).populate_example
-  robot = Robot.new(:green, board.cell(6, 14))
+  goal = options.goal
+  color = goal.color
+  color = :silver if color == :any
+  robot = Robot.new(color, board.cell(6, 14))
 
   solver = Solvers::RecursiveDfs.new(robot, options.goal)
 
