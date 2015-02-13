@@ -1,8 +1,31 @@
 #!/usr/bin/env ruby
 
 require "robots"
+require "optparse"
+require "ostruct"
+
+def parse_options
+  parser = OptionParser.new do |opts|
+    opts.banner = "Usage: robots [options]"
+    opts.version = Robots::VERSION
+
+    opts.on_tail("-h", "--help", "Shows this help screen") do
+      puts opts
+      exit
+    end
+
+    opts.on_tail("--version", "Show version information") do
+      puts opts.ver
+      exit
+    end
+  end
+
+  parser.parse!
+end
 
 module Robots
+  parse_options
+
   board = Board.new
   BoardMaker.new(board).populate_example
   robot = Robot.new(:green, board.cell(6, 14))
