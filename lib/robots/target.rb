@@ -19,5 +19,9 @@ module Robots
     def matches_color?(other)
       color == :any || color == other
     end
+
+    def to_s
+      shape == :vortex ? "vortex" : "#{color} #{shape}"
+    end
   end
 end

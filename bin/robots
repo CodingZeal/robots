@@ -11,6 +11,10 @@ def parse_options
     opts.banner = "Usage: #{opts.program_name} [options]"
     opts.version = Robots::VERSION
 
+    opts.on("-a", "--all", "Iterate over all possible targets") do
+      options.all = true
+    end
+
     opts.on("-g", "--goal color,shape", Array,
             "The destination target for the robot to move to",
             "  (example: --goal green,circle or --goal vortex)") do |color, shape|
@@ -30,7 +34,7 @@ def parse_options
 
   parser.parse!
 
-  unless options.goal
+  unless options.goal || options.all
     $stderr.puts "Please specify a goal for the robot"
     exit 1
   end
