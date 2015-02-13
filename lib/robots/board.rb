@@ -35,6 +35,9 @@ module Robots
 
     private
 
+    BOARD_SIZE = 16
+    private_constant :BOARD_SIZE
+
     attr_reader :cells
 
     def add_center_island
@@ -52,8 +55,5 @@ module Robots
     def on_board?(row, column)
       row.between?(top, bottom) && column.between?(left, right)
     end
-
-    BOARD_SIZE = 16
-    private_constant :BOARD_SIZE
   end
 end

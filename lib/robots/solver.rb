@@ -1,8 +1,8 @@
 module Robots
   class Solver
-    def initialize(robot, target)
+    def initialize(robot, goal)
       @robot = robot
-      @target = target
+      @goal = goal
     end
 
     def solved?
@@ -15,7 +15,7 @@ module Robots
 
     protected
 
-    attr_reader :robot, :target
+    attr_reader :robot, :goal
 
     private
 

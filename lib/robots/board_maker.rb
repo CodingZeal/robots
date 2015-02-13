@@ -103,6 +103,6 @@ module Robots
       [14, 9, :blue, :circle]
     ]
 
-    private_constant :VERTICAL_WALLS, :HORIZONTAL_WALLS
+    private_constant :VERTICAL_WALLS, :HORIZONTAL_WALLS, :TARGETS
   end
 end

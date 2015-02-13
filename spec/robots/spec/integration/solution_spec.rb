@@ -3,7 +3,7 @@ require "spec_helper"
 module Robots
   describe "Solutions" do
     let(:board) { Board.new }
-    let(:solver) { Solvers::RecursiveDfs.new(robot, target) }
+    let(:solver) { Solvers::RecursiveDfs.new(robot, goal) }
 
     before do
       BoardMaker.new(board).populate_example
@@ -13,7 +13,7 @@ module Robots
       let(:robot) { Robot.new(:green, start) }
 
       context "when there are solutions" do
-        let(:target) { Target.new(:green, :circle) }
+        let(:goal) { Target.new(:green, :circle) }
         let(:start) { board.cell(6, 14) }
 
         it "finds a solution" do
@@ -34,7 +34,7 @@ module Robots
       end
 
       context "when there are no solutions" do
-        let(:target) { Target.new(:green, :triangle) }
+        let(:goal) { Target.new(:green, :triangle) }
         let(:start) { board.cell(0, 0) }
 
         it "finishes without a solution" do

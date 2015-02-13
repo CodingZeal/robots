@@ -17,7 +17,7 @@ module Robots
 
       def solve_recursively(robot, path, visited)
         return if visited.include?(robot)
-        return @candidates << path if path.size > 1 && robot.home?(target)
+        return @candidates << path if path.size > 1 && robot.home?(goal)
 
         allowable_moves(path).each do |direction|
           solve_recursively(robot.moved(direction), path + [direction], visited + [robot])
