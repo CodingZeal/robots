@@ -5,12 +5,8 @@ module Robots
       @goal = goal
     end
 
-    def solved?
-      !solution.empty?
-    end
-
-    def solution
-      @solution ||= solve
+    def outcome
+      @outcome ||= solve
     end
 
     protected

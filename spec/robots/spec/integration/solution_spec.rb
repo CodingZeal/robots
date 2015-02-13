@@ -4,6 +4,7 @@ module Robots
   describe "Solutions" do
     let(:board) { Board.new }
     let(:solver) { Solvers::RecursiveDfs.new(robot, goal) }
+    let(:outcome) { solver.outcome }
 
     before do
       BoardMaker.new(board).populate_example
@@ -17,18 +18,22 @@ module Robots
         let(:start) { board.cell(6, 14) }
 
         it "finds a solution" do
-          expect(solver).to be_solved
+          expect(outcome).to be_mission_accomplished
         end
 
         it "finds the shortest solution" do
-          expect(solver.solution.size).to eq 4
+          expect(outcome.length).to eq 4
+        end
+
+        it "remembers the final robot position" do
+          expect(outcome.final_state).to eq Robot.new(:green, board.cell(9, 2))
         end
 
         context "when there is a one-move solution" do
           let(:start) { board.cell(9, 12) }
 
           it "finds a longer solution" do
-            expect(solver.solution.size).to be > 1
+            expect(outcome.length).to be > 1
           end
         end
       end
@@ -38,7 +43,11 @@ module Robots
         let(:start) { board.cell(0, 0) }
 
         it "finishes without a solution" do
-          expect(solver).not_to be_solved
+          expect(outcome).not_to be_mission_accomplished
+        end
+
+        it "leaves the robot in its starting position" do
+          expect(outcome.final_state).to eq robot
         end
       end
     end

@@ -31,16 +31,8 @@ module Robots
 
       io.puts "Attempting to solve for #{goal}"
 
-      if solver.solved?
-        io.puts "Solved in #{solver.solution.size} moves:"
-        solver.solution.each_with_index do |move, index|
-          io.puts "  #{index + 1}) #{move.capitalize}"
-        end
-      else
-        io.puts "No solution found."
-      end
+      solver.outcome.write(io)
     end
-
 
     def solver
       @solver ||= Solvers::RecursiveDfs.new(robot, goal)

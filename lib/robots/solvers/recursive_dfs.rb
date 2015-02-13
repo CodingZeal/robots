@@ -12,12 +12,12 @@ module Robots
 
       def solve
         solve_recursively(robot, [], [])
-        candidates.min_by(&:size) || []
+        candidates.min_by(&:length) || Outcome.no_solution(robot)
       end
 
       def solve_recursively(robot, path, visited)
         return if visited.include?(robot)
-        return candidates << path if path.size > 1 && robot.home?(goal)
+        return candidates << Outcome.solved(path, robot) if path.size > 1 && robot.home?(goal)
 
         allowable_moves(path).each do |direction|
           solve_recursively(robot.moved(direction), path + [direction], visited + [robot])
