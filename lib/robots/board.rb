@@ -17,6 +17,13 @@ module Robots
       cells[row][column]
     end
 
+    def targets
+      each_cell.each_with_object([]) do |cell, result|
+        cell.target_into(result)
+        result
+      end
+    end
+
     def top
       0
     end
@@ -39,6 +46,12 @@ module Robots
     private_constant :BOARD_SIZE
 
     attr_reader :cells
+
+    def each_cell
+      return to_enum(:each_cell) unless block_given?
+
+      cells.each { |row| row.each { |cell| yield cell } }
+    end
 
     def add_center_island
       (7..8).each do |row|

@@ -26,6 +26,10 @@ module Robots
       target == goal
     end
 
+    def target_into(array)
+      array << target if target
+    end
+
     def inspect
       "#<#{self.class.name}:#{object_id} row=#{row} column=#{column}"
     end

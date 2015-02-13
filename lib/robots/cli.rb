@@ -17,12 +17,9 @@ module Robots
     private
 
     def run_all(io)
-      %i(red green blue yellow).each do |color|
-        %i(circle triangle square hex).each do |shape|
-          solve(Target.new(color, shape), io)
-        end
+      board.targets.shuffle.each do |target|
+        solve(target, io)
       end
-      solve(Target.vortex, io)
     end
 
     def solve(goal, io)

@@ -26,5 +26,18 @@ module Robots
         expect(board.cell(5, board.right + 1)).to be_nil
       end
     end
+
+    describe "targets" do
+      let(:targets) { [Target.new(:red, :circle), Target.vortex] }
+
+      before do
+        board.cell(2, 3).target = targets.first
+        board.cell(11, 8).target = targets.last
+      end
+
+      it "knows all of its targets" do
+        expect(board.targets).to match_array targets
+      end
+    end
   end
 end
