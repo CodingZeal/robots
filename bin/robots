@@ -25,6 +25,10 @@ def parse_options
       options.goal = Robots::Target.new(color, shape)
     end
 
+    opts.on("-s", "--seed SEED", Integer, "The seed for the random number generator") do |seed|
+      options.seed = seed
+    end
+
     opts.on_tail("-h", "--help", "Shows this help screen") do
       puts opts
       exit
