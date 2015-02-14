@@ -27,6 +27,30 @@ module Robots
       end
     end
 
+    describe "random cells" do
+      let(:random) { instance_double(Random) }
+
+      before do
+        allow(random).to receive(:rand).and_return(*random_values)
+      end
+
+      context "when no island cells are generated" do
+        let(:random_values) { [13, 4] }
+
+        it "returns the first generated cell" do
+          expect(board.random_cell(random)).to equal board.cell(13, 4)
+        end
+      end
+
+      context "when island cells are generated" do
+        let(:random_values) { [7, 8, 8, 7, 2, 15] }
+
+        it "generates new cells until a non-island cell is found" do
+          expect(board.random_cell(random)).to equal board.cell(2, 15)
+        end
+      end
+    end
+
     describe "targets" do
       let(:targets) { [Target.new(:red, :circle), Target.vortex] }
 

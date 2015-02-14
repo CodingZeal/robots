@@ -21,6 +21,10 @@ module Robots
       cell.goal?(goal)
     end
 
+    def to_s
+      "The #{color} robot is at #{cell}."
+    end
+
     private
 
     attr_reader :color

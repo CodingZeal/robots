@@ -44,6 +44,10 @@ module Robots
       blocked.include?(direction)
     end
 
+    def to_s
+      "row: #{row}, column: #{column}"
+    end
+
     private
 
     attr_reader :board, :blocked, :target

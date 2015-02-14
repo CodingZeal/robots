@@ -3,10 +3,11 @@ module Robots
     def initialize(options)
       @options = options
       @board = Board.example
+      @random = Random.new
     end
 
     def run(io = $stdout)
-      robot = Robot.new(:silver, board.cell(6, 14))
+      robot = Robot.new(:silver, board.random_cell(random))
       if options.all
         run_all(robot, io)
       elsif options.chain
@@ -19,8 +20,8 @@ module Robots
     private
 
     def run_all(robot, io)
-      board.targets.shuffle.each do |target|
-        solve(robot, target, io)
+      board.targets.shuffle(random: random).each do |goal|
+        solve(robot, goal, io)
       end
     end
 
@@ -34,6 +35,7 @@ module Robots
     def solve(robot, goal, io)
       solver = Solvers::RecursiveDfs.new(robot, goal)
 
+      io.puts "#{robot}"
       io.puts "Attempting to solve for #{goal}"
 
       solver.outcome.tap { |outcome| outcome.write(io) }
@@ -48,6 +50,6 @@ module Robots
       Robot.new(color, board.cell(6, 14))
     end
 
-    attr_reader :options, :board
+    attr_reader :options, :board, :random
   end
 end

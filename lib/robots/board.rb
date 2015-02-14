@@ -44,6 +44,15 @@ module Robots
       BOARD_SIZE - 1
     end
 
+    def random_cell(random)
+      loop do
+        row = random.rand(BOARD_SIZE)
+        column = random.rand(BOARD_SIZE)
+        cell = cell(row, column)
+        return cell unless island_cells.include?(cell)
+      end
+    end
+
     private
 
     BOARD_SIZE = 16
@@ -58,9 +67,17 @@ module Robots
     end
 
     def add_center_island
-      (7..8).each do |row|
-        (7..8).each do |column|
-          cell(row, column).block(%i(up down left right))
+      island_cells.each do |cell|
+        cell.block(%i(up down left right))
+      end
+    end
+
+    def island_cells
+      @island_cells ||= begin
+        (7..8).each_with_object([]) do |row, island|
+          (7..8).each do |column|
+            island << cell(row, column)
+          end
         end
       end
     end
