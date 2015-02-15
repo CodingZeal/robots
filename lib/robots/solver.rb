@@ -11,7 +11,7 @@ module Robots
     end
 
     def outcome
-      @outcome ||= solve
+      @outcome ||= record_time { solve }
     end
 
     protected
@@ -22,6 +22,14 @@ module Robots
 
     def solve
       fail "Subclasses must implement this"
+    end
+
+    def record_time
+      start_time = Time.now
+      yield
+    ensure
+      elapsed = Time.now - start_time
+      stats.solving_time = (elapsed * 1000).round(3)
     end
   end
 end
