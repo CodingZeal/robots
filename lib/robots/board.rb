@@ -3,7 +3,7 @@ require_relative "cell"
 module Robots
   class Board
     def self.example
-      self.new.tap { |board| BoardMaker.new(board).populate_example }
+      new.tap { |board| BoardMaker.new(board).populate_example }
     end
 
     def initialize
