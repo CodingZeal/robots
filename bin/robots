@@ -19,10 +19,14 @@ def parse_options
       options.chain = true
     end
 
-    opts.on("-g", "--goal color,shape", Array,
+    opts.on("-g", "--goal COLOR,SHAPE", Array,
             "The destination target for the robot to move to",
             "  (example: --goal green,circle or --goal vortex)") do |color, shape|
       options.goal = Robots::Target.new(color, shape)
+    end
+
+    opts.on("-r", "--robot ROW,COLUMN", Array, "The starting position for the robot") do |row, column|
+      options.start = [row.to_i, column.to_i]
     end
 
     opts.on("-s", "--seed SEED", Integer, "The seed for the random number generator") do |seed|

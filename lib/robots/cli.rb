@@ -9,7 +9,6 @@ module Robots
     def run(io = $stdout)
       io.puts "robots --seed #{seed}"
 
-      robot = Robot.new(:silver, board.random_cell(random))
       if options.all
         run_all(robot, io)
       elsif options.chain
@@ -47,8 +46,20 @@ module Robots
       board.targets.shuffle(random: random)
     end
 
+    def robot
+      @robot ||= Robot.new(:silver, start_cell)
+    end
+
     def solver
       @solver ||= Solvers::RecursiveDfs.new(robot, goal)
+    end
+
+    def start_cell
+      if options.start
+        board.cell(*options.start)
+      else
+        board.random_cell(random)
+      end
     end
 
     def robot_for_goal(goal)
