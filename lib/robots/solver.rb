@@ -1,8 +1,13 @@
+require "ostruct"
+
 module Robots
   class Solver
+    attr_reader :stats
+
     def initialize(robot, goal)
       @robot = robot
       @goal = goal
+      @stats = OpenStruct.new
     end
 
     def outcome

@@ -11,12 +11,19 @@ module Robots
       attr_reader :candidates
 
       def solve
+        stats.states_considered = 0
         solve_recursively(robot, [], [])
+        stats.solutions_found = candidates.size
+        longest_solution = candidates.max_by(&:length)
+        stats.longest_solution = longest_solution ? longest_solution.length : 0
         candidates.min_by(&:length) || Outcome.no_solution(robot)
       end
 
       def solve_recursively(robot, path, visited)
         return if visited.include?(robot)
+
+        stats.states_considered += 1
+
         return candidates << Outcome.solved(path, robot) if path.size > 1 && robot.home?(goal)
 
         allowable_moves(path).each do |direction|

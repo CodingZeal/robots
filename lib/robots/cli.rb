@@ -39,7 +39,15 @@ module Robots
       io.puts "#{robot}"
       io.puts "Attempting to solve for #{goal}"
 
-      solver.outcome.tap { |outcome| outcome.write(io) }
+      outcome = solver.outcome
+      outcome.write(io)
+
+      io.puts "Statistics:"
+      solver.stats.each_pair do |key, value|
+        io.puts "  #{key}: #{value}"
+      end
+
+      outcome
     end
 
     def target_disks
