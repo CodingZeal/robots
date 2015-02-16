@@ -4,7 +4,8 @@ module Robots
   describe Path do
     let(:robot) { instance_double(Robot) }
     let(:moves) { %i(down right up) }
-    let(:path) { Path.new(robot, moves) }
+    let(:visited) { [] }
+    let(:path) { Path.new(robot, moves, visited) }
     let(:goal) { instance_double(Target) }
 
     before do
@@ -88,6 +89,10 @@ module Robots
         it "appends the move" do
           expect(successor.moves.last).to eq direction
         end
+
+        it "visits the robot" do
+          expect(successor.visited).to include robot
+        end
       end
 
       context "when the robot can't move" do
@@ -133,10 +138,26 @@ module Robots
           expect(successors.size).to eq 3
         end
       end
+
+      context "when a successor contains a cycle" do
+        let(:up_robot) { instance_double(Robot, "up") }
+        let(:visited) { [up_robot] }
+
+        before do
+          allow(robot).to receive(:moved).with(:up) { up_robot }
+        end
+
+        it "excludes it" do
+          expect(successors.size).to eq 3
+        end
+      end
     end
 
     describe "cycle detection" do
+
       context "when there is a cycle" do
+        let(:visited) { [robot] }
+
         context "when starting on the goal cell" do
           it "doesn't detect a cycle"
         end
@@ -146,12 +167,16 @@ module Robots
         end
 
         context "when starting away from the goal cell" do
-          it "detects a cycle"
+          it "detects a cycle" do
+            expect(path.cycle?).to be true
+          end
         end
       end
 
       context "when there is not a cycle" do
-        it "doesn't detect a cycle"
+        it "doesn't detect a cycle" do
+          expect(path.cycle?).to be false
+        end
       end
     end
   end

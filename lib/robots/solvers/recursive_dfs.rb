@@ -11,19 +11,18 @@ module Robots
       attr_reader :candidates
 
       def solve
-        solve_recursively(Path.new(robot, []), [])
+        solve_recursively(Path.new(robot))
         record_stats
         candidates.min_by(&:length) || Outcome.no_solution(robot)
       end
 
-      def solve_recursively(path, visited)
-        return if visited.include?(path.robot)
-
+      def solve_recursively(path)
         note_state_considered
+
         return candidates << path.to_outcome(goal) if path.solved?(goal)
 
         path.allowable_successors.each do |successor|
-          solve_recursively(successor, visited + [path.robot])
+          solve_recursively(successor)
         end
       end
 
