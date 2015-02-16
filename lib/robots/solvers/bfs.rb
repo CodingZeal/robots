@@ -5,6 +5,7 @@ module Robots
 
       def solve
         paths = [Path.new(robot)]
+
         until paths.empty? do
           note_state_considered
           path = paths.shift

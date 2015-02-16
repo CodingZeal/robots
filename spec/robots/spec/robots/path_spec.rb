@@ -2,18 +2,32 @@ require "spec_helper"
 
 module Robots
   describe Path do
-    let(:robot) { instance_double(Robot) }
-    let(:moves) { %i(down right up) }
-    let(:visited) { [] }
-    let(:path) { Path.new(robot, moves, visited) }
+    let(:robot) { fake_robot("initial robot") }
+    let(:intermediate_robot) { fake_robot("intermediate robot") }
+    let(:final_robot) { fake_robot("final robot") }
     let(:goal) { instance_double(Target) }
+    let(:initial_path) { Path.new(robot) }
+    let(:path) { initial_path.successor(:up).successor(:left) }
+
+    def fake_robot(name = "robot")
+      instance_double(Robot, name, :home? => false)
+    end
+
+    def robot_is_home(robot)
+      allow(robot).to receive(:home?).with(goal) { true }
+    end
 
     before do
-      allow(robot).to receive(:home?).with(goal) { true }
+      allow(robot).to receive(:moved) { intermediate_robot }
+      allow(intermediate_robot).to receive(:moved) { final_robot }
     end
 
     describe "solving" do
       context "when on the goal cell" do
+        before do
+          robot_is_home(path.robot)
+        end
+
         context "when the path is long enough" do
           it "is solved" do
             expect(path).to be_solved(goal)
@@ -21,7 +35,7 @@ module Robots
         end
 
         context "when the path is too short" do
-          let(:moves) { %i(left) }
+          let(:path) { initial_path.successor(:down) }
 
           it "is not solved" do
             expect(path).not_to be_solved(goal)
@@ -30,10 +44,6 @@ module Robots
       end
 
       context "when not on the goal cell" do
-        before do
-          allow(robot).to receive(:home?).with(goal) { false }
-        end
-
         it "is not solved" do
           expect(path).not_to be_solved(goal)
         end
@@ -44,16 +54,20 @@ module Robots
       let(:outcome) { path.to_outcome(goal) }
 
       context "when solved" do
+        before do
+          robot_is_home(path.robot)
+        end
+
         it "returns a solved outcome" do
           expect(outcome).to be_mission_accomplished
         end
 
         it "includes the final robot position" do
-          expect(outcome.final_state).to be robot
+          expect(outcome.final_state).to be final_robot
         end
 
         it "includes the moves" do
-          expect(outcome.length).to eq moves.size
+          expect(outcome.length).to eq 2
         end
       end
 
@@ -67,15 +81,15 @@ module Robots
         end
 
         it "includes the final robot position" do
-          expect(outcome.final_state).to be robot
+          expect(outcome.final_state).to be final_robot
         end
       end
     end
 
     describe "successor" do
       let(:direction) { :left }
-      let(:successor) { path.successor(:left) }
-      let(:next_robot) { instance_double(Robot, "next robot") }
+      let(:successor) { initial_path.successor(direction) }
+      let(:next_robot) { fake_robot("next robot") }
 
       before do
         allow(robot).to receive(:moved).with(direction) { next_robot }
@@ -104,71 +118,33 @@ module Robots
       end
     end
 
-    describe "allowable successors" do
-      let(:moves) { [] }
-      let(:successors) { path.allowable_successors }
-
-      before do
-        %i(up down left right).each do |direction|
-          allow(robot).to receive(:moved).with(direction) { instance_double(Robot, direction.to_s) }
-        end
-      end
-
-      context "for the initial move" do
-        it "follows all four directions" do
-          expect(successors.size).to eq 4
-        end
-      end
-
-      context "for later moves" do
-        let(:moves) { %i(up left down) }
-        let(:successor_moves) { successors.map { |succ| succ.moves.last } }
-
-        it "turns 90 degrees from last move" do
-          expect(successor_moves).to eq %i(left right)
-        end
-      end
-
-      context "when a successor move is blocked" do
-        before do
-          allow(robot).to receive(:moved).with(:left) { robot }
-        end
-
-        it "excludes it" do
-          expect(successors.size).to eq 3
-        end
-      end
-
-      context "when a successor contains a cycle" do
-        let(:up_robot) { instance_double(Robot, "up") }
-        let(:visited) { [up_robot] }
-
-        before do
-          allow(robot).to receive(:moved).with(:up) { up_robot }
-        end
-
-        it "excludes it" do
-          expect(successors.size).to eq 3
-        end
-      end
-    end
-
     describe "cycle detection" do
-
       context "when there is a cycle" do
-        let(:visited) { [robot] }
+        let(:final_robot) { robot }
 
         context "when starting on the goal cell" do
-          it "doesn't detect a cycle"
+          before do
+            robot_is_home(robot)
+          end
+
+          pending "doesn't detect a cycle" do
+            expect(path).not_to be_cycle
+          end
         end
 
         context "when starting one move from the goal cell" do
-          it "doesn't detect a cycle"
+          before do
+            robot_is_home(intermediate_robot)
+          end
+
+          pending "doesn't detect a cycle" do
+            expect(path).not_to be_cycle
+          end
         end
 
         context "when starting away from the goal cell" do
           it "detects a cycle" do
-            expect(path.cycle?).to be true
+            expect(path).to be_cycle
           end
         end
       end
@@ -176,6 +152,56 @@ module Robots
       context "when there is not a cycle" do
         it "doesn't detect a cycle" do
           expect(path.cycle?).to be false
+        end
+      end
+    end
+
+    describe "allowable successors" do
+      let(:successors) { path.allowable_successors }
+      let(:successor_moves) { successors.map { |succ| succ.moves.last } }
+
+      context "for the initial move" do
+        let(:path) { initial_path }
+
+        it "follows all four directions" do
+          expect(successors.size).to eq 4
+        end
+      end
+
+      context "for later moves" do
+        let(:path) { initial_path.successor(:left).successor(:down) }
+
+        before do
+          allow(final_robot).to receive(:moved) { fake_robot }
+        end
+
+        it "turns 90 degrees from last move" do
+          expect(successor_moves).to eq %i(left right)
+        end
+      end
+
+      context "when a successor move is blocked" do
+        let(:path) { initial_path }
+
+        before do
+          allow(robot).to receive(:moved).with(:left) { robot }
+        end
+
+        it "excludes it" do
+          expect(successor_moves).not_to include :left
+        end
+      end
+
+      context "when a successor contains a cycle" do
+        let(:path) { initial_path.successor(:down).successor(:right) }
+
+        before do
+          allow(final_robot).to receive(:moved).with(:up) { robot }
+          allow(final_robot).to receive(:moved).with(:down) { fake_robot }
+        end
+
+        it "excludes it" do
+          expect(successor_moves).not_to include :up
         end
       end
     end
