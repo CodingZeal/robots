@@ -25,19 +25,19 @@ module Robots
     end
 
     def solved?
-      robot.home?(goal) && moves.size > 1
+      home?(robot) && moves.size > 1
     end
 
     def cycle?
-      visited.include?(robot)
+      index = visited.find_index(robot)
+      index && index >= cycle_detection_start
     end
 
     def to_outcome
       solved? ? Outcome.solved(moves, robot) : Outcome.no_solution(robot)
     end
 
-    protected
-
+    # private
     def self.successor(robot, goal, moves, visited)
       new(robot, goal, moves, visited)
     end
@@ -54,6 +54,18 @@ module Robots
           %i(up down)
         else
           %i(up down left right)
+      end
+    end
+
+    def home?(robot)
+      robot && robot.home?(goal)
+    end
+
+    def cycle_detection_start
+      @cycle_detection_start ||= begin
+        return 1 if home?(visited.first)
+        return 2 if home?(visited[1])
+        0
       end
     end
   end

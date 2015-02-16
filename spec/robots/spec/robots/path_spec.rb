@@ -127,7 +127,7 @@ module Robots
             robot_is_home(robot)
           end
 
-          pending "doesn't detect a cycle" do
+          it "doesn't detect a cycle" do
             expect(path).not_to be_cycle
           end
         end
@@ -137,7 +137,7 @@ module Robots
             robot_is_home(intermediate_robot)
           end
 
-          pending "doesn't detect a cycle" do
+          it "doesn't detect a cycle" do
             expect(path).not_to be_cycle
           end
         end

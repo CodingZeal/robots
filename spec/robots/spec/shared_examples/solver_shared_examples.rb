@@ -33,7 +33,7 @@ module Robots
           context "when the longer solution needs to retrace the shorter solution" do
             let(:start) { board.cell(9, 5) }
 
-            xit "finds the retraced solution" do
+            it "finds the retraced solution" do
               expect(outcome.length).to eq 5
             end
           end
@@ -42,7 +42,7 @@ module Robots
         context "when the robot starts on the goal" do
           let(:start) { board.cell(9, 2) }
 
-          xit "finds a different solution" do
+          it "finds a different solution" do
             expect(outcome.length).to eq 4
           end
         end
