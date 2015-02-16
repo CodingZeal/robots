@@ -17,13 +17,13 @@ module Robots
       end
 
       def solve_recursively(path, visited)
-        return if visited.include?(path.robot)
+        return if path.nil? || visited.include?(path.robot)
 
         note_state_considered
-        return candidates << Outcome.solved(path.moves, path.robot) if path.solved?(goal)
+        return candidates << path.to_outcome(goal) if path.solved?(goal)
 
         allowable_moves(path.moves).each do |direction|
-          solve_recursively(Path.new(path.robot.moved(direction), path.moves + [direction]), visited + [path.robot])
+          solve_recursively(path.successor(direction), visited + [path.robot])
         end
       end
 
