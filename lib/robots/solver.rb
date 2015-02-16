@@ -23,18 +23,6 @@ module Robots
       stats.states_considered += 1
     end
 
-    def allowable_moves(path)
-      last_move = path.last
-      case last_move
-        when :up, :down
-          [:left, :right]
-        when :left, :right
-          [:up, :down]
-        else
-          [:up, :down, :left, :right]
-      end
-    end
-
     private
 
     def solve

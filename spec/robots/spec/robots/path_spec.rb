@@ -99,17 +99,39 @@ module Robots
       end
     end
 
-    describe "all successors" do
+    describe "allowable successors" do
+      let(:moves) { [] }
+      let(:successors) { path.allowable_successors }
+
+      before do
+        %i(up down left right).each do |direction|
+          allow(robot).to receive(:moved).with(direction) { instance_double(Robot, direction.to_s) }
+        end
+      end
+
       context "for the initial move" do
-        it "follows all four directions"
+        it "follows all four directions" do
+          expect(successors.size).to eq 4
+        end
       end
 
       context "for later moves" do
-        it "turns in both new directions"
+        let(:moves) { %i(up left down) }
+        let(:successor_moves) { successors.map { |succ| succ.moves.last } }
+
+        it "turns 90 degrees from last move" do
+          expect(successor_moves).to eq %i(left right)
+        end
       end
 
       context "when a successor move is blocked" do
-        it "excludes it"
+        before do
+          allow(robot).to receive(:moved).with(:left) { robot }
+        end
+
+        it "excludes it" do
+          expect(successors.size).to eq 3
+        end
       end
     end
 
