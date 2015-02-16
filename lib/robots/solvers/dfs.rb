@@ -8,9 +8,9 @@ module Robots
       end
 
       def solve
-        solve_recursively(Path.initial(robot, goal))
+        solve_recursively(Path.initial(state, goal))
         record_stats
-        candidates.min_by(&:length) || Outcome.no_solution(BoardState.new(robot))
+        candidates.min_by(&:length) || Outcome.no_solution(state)
       end
 
       def solve_recursively(path)

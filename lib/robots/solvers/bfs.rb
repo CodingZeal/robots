@@ -4,7 +4,7 @@ module Robots
       private
 
       def solve
-        paths = [Path.initial(robot, goal)]
+        paths = [Path.initial(state, goal)]
 
         until paths.empty?
           note_state_considered
@@ -15,7 +15,7 @@ module Robots
           paths += path.allowable_successors
         end
 
-        Outcome.no_solution(BoardState.new(robot))
+        Outcome.no_solution(state)
       end
     end
   end

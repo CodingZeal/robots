@@ -6,7 +6,8 @@ module Robots
     let(:intermediate_robot) { fake_robot("intermediate robot") }
     let(:final_robot) { fake_robot("final robot") }
     let(:goal) { instance_double(Target) }
-    let(:initial_path) { Path.initial(robot, goal) }
+    let(:state) { BoardState.new(robot) }
+    let(:initial_path) { Path.initial(state, goal) }
     let(:path) { initial_path.successor(:up).successor(:left) }
 
     def fake_robot(name = "robot")
