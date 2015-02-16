@@ -34,7 +34,7 @@ module Robots
     end
 
     def solve(robot, goal, io)
-      solver = Solvers::RecursiveDfs.new(robot, goal)
+      solver = Solvers::Bfs.new(robot, goal)
 
       io.puts "#{robot}"
       io.puts "Attempting to solve for #{goal}"
