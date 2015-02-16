@@ -1,14 +1,11 @@
 module Robots
   module Solvers
     class RecursiveDfs < Solver
-      def initialize(*args)
-        super
-        @candidates = []
-      end
-
       private
 
-      attr_reader :candidates
+      def candidates
+        @candidates ||= []
+      end
 
       def solve
         solve_recursively(Path.initial(robot, goal))
