@@ -1,5 +1,6 @@
 require "robots/board"
 require "robots/board_maker"
+require "robots/board_state"
 require "robots/cli"
 require "robots/robot"
 require "robots/outcome"

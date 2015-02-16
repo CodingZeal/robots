@@ -9,34 +9,36 @@ module Robots
     def run(io = $stdout)
       io.puts "robots --seed #{seed}"
 
+      state = BoardState.new(robot)
+
       if options.all
-        run_all(robot, io)
+        run_all(state, io)
       elsif options.chain
-        run_chained(robot, io)
+        run_chained(state, io)
       else
-        solve(robot, options.goal, io)
+        solve(state, options.goal, io)
       end
     end
 
     private
 
-    def run_all(robot, io)
+    def run_all(state, io)
       target_disks.each do |goal|
-        solve(robot, goal, io)
+        solve(state, goal, io)
       end
     end
 
-    def run_chained(robot, io)
-      target_disks.inject(robot) do |state, target|
-        outcome = solve(state, target, io)
+    def run_chained(state, io)
+      target_disks.inject(state.robots.first) do |next_state, target|
+        outcome = solve(BoardState.new(next_state), target, io)
         outcome.final_state
       end
     end
 
-    def solve(robot, goal, io)
-      solver = solver_class.new(robot, goal)
+    def solve(state, goal, io)
+      solver = solver_class.new(state, goal)
 
-      io.puts "#{robot}"
+      io.puts "#{state}"
       io.puts "Attempting to solve for #{goal}"
 
       outcome = solver.outcome

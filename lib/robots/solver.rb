@@ -4,8 +4,8 @@ module Robots
   class Solver
     attr_reader :stats
 
-    def initialize(robot, goal)
-      @robot = robot
+    def initialize(state, goal)
+      @state = state
       @goal = goal
       @stats = OpenStruct.new
       stats.states_considered = 0
@@ -17,7 +17,11 @@ module Robots
 
     protected
 
-    attr_reader :robot, :goal
+    attr_reader :state, :robot, :goal
+
+    def robot
+      state.robots.first
+    end
 
     def note_state_considered
       stats.states_considered += 1
