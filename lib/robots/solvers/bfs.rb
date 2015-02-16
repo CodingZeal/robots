@@ -4,13 +4,13 @@ module Robots
       private
 
       def solve
-        paths = [Path.initial(robot)]
+        paths = [Path.initial(robot, goal)]
 
         until paths.empty? do
           note_state_considered
           path = paths.shift
 
-          return path.to_outcome(goal) if path.solved?(goal)
+          return path.to_outcome if path.solved?
 
           paths += path.allowable_successors
         end

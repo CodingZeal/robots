@@ -6,7 +6,7 @@ module Robots
     let(:intermediate_robot) { fake_robot("intermediate robot") }
     let(:final_robot) { fake_robot("final robot") }
     let(:goal) { instance_double(Target) }
-    let(:initial_path) { Path.initial(robot) }
+    let(:initial_path) { Path.initial(robot, goal) }
     let(:path) { initial_path.successor(:up).successor(:left) }
 
     def fake_robot(name = "robot")
@@ -30,7 +30,7 @@ module Robots
 
         context "when the path is long enough" do
           it "is solved" do
-            expect(path).to be_solved(goal)
+            expect(path).to be_solved
           end
         end
 
@@ -38,20 +38,20 @@ module Robots
           let(:path) { initial_path.successor(:down) }
 
           it "is not solved" do
-            expect(path).not_to be_solved(goal)
+            expect(path).not_to be_solved
           end
         end
       end
 
       context "when not on the goal cell" do
         it "is not solved" do
-          expect(path).not_to be_solved(goal)
+          expect(path).not_to be_solved
         end
       end
     end
 
     describe "converting to outcome" do
-      let(:outcome) { path.to_outcome(goal) }
+      let(:outcome) { path.to_outcome }
 
       context "when solved" do
         before do
@@ -151,7 +151,7 @@ module Robots
 
       context "when there is not a cycle" do
         it "doesn't detect a cycle" do
-          expect(path.cycle?).to be false
+          expect(path).not_to be_cycle
         end
       end
     end
