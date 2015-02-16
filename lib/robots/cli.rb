@@ -61,7 +61,7 @@ module Robots
     def solver_class
       case options.algorithm
         when 'dfs'
-          Solvers::RecursiveDfs
+          Solvers::Dfs
         else
           Solvers::Bfs
       end

@@ -1,6 +1,6 @@
 module Robots
   module Solvers
-    class RecursiveDfs < Solver
+    class Dfs < Solver
       private
 
       def candidates
