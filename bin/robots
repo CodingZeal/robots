@@ -15,6 +15,10 @@ def parse_options
       options.all = true
     end
 
+    opts.on("--algorithm ALGORITHM", "Choose the solving algorithm (default = bfs)") do |algorithm|
+      options.algorithm = algorithm
+    end
+
     opts.on("-c", "--chain", "Solve all targets starting from the end of the previous solution") do
       options.chain = true
     end

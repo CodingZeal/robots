@@ -34,7 +34,7 @@ module Robots
     end
 
     def solve(robot, goal, io)
-      solver = Solvers::Bfs.new(robot, goal)
+      solver = solver_class.new(robot, goal)
 
       io.puts "#{robot}"
       io.puts "Attempting to solve for #{goal}"
@@ -58,8 +58,13 @@ module Robots
       @robot ||= Robot.new(:silver, start_cell)
     end
 
-    def solver
-      @solver ||= Solvers::RecursiveDfs.new(robot, goal)
+    def solver_class
+      case options.algorithm
+        when 'dfs'
+          Solvers::RecursiveDfs
+        else
+          Solvers::Bfs
+      end
     end
 
     def start_cell
