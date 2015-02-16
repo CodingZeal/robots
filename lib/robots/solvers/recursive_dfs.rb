@@ -4,7 +4,6 @@ module Robots
       def initialize(*args)
         super
         @candidates = []
-        stats.states_considered = 0
       end
 
       private
@@ -12,32 +11,19 @@ module Robots
       attr_reader :candidates
 
       def solve
-        solve_recursively(robot, [], [])
+        solve_recursively(Path.new(robot, []), [])
         record_stats
         candidates.min_by(&:length) || Outcome.no_solution(robot)
       end
 
-      def solve_recursively(robot, path, visited)
-        return if visited.include?(robot)
+      def solve_recursively(path, visited)
+        return if visited.include?(path.robot)
 
-        stats.states_considered += 1
+        note_state_considered
+        return candidates << Outcome.solved(path.moves, path.robot) if path.solved?(goal)
 
-        return candidates << Outcome.solved(path, robot) if path.size > 1 && robot.home?(goal)
-
-        allowable_moves(path).each do |direction|
-          solve_recursively(robot.moved(direction), path + [direction], visited + [robot])
-        end
-      end
-
-      def allowable_moves(path)
-        last_move = path.last
-        case last_move
-          when :up, :down
-            [:left, :right]
-          when :left, :right
-            [:up, :down]
-          else
-            [:up, :down, :left, :right]
+        allowable_moves(path.moves).each do |direction|
+          solve_recursively(Path.new(path.robot.moved(direction), path.moves + [direction]), visited + [path.robot])
         end
       end
 

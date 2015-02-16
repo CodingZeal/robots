@@ -8,6 +8,7 @@ module Robots
       @robot = robot
       @goal = goal
       @stats = OpenStruct.new
+      stats.states_considered = 0
     end
 
     def outcome
@@ -17,6 +18,22 @@ module Robots
     protected
 
     attr_reader :robot, :goal
+
+    def note_state_considered
+      stats.states_considered += 1
+    end
+
+    def allowable_moves(path)
+      last_move = path.last
+      case last_move
+        when :up, :down
+          [:left, :right]
+        when :left, :right
+          [:up, :down]
+        else
+          [:up, :down, :left, :right]
+      end
+    end
 
     private
 
