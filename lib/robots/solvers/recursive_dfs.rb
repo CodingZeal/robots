@@ -11,7 +11,7 @@ module Robots
       attr_reader :candidates
 
       def solve
-        solve_recursively(Path.new(robot))
+        solve_recursively(Path.initial(robot))
         record_stats
         candidates.min_by(&:length) || Outcome.no_solution(robot)
       end

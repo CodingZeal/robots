@@ -2,6 +2,12 @@ module Robots
   class Path
     attr_reader :robot, :moves, :visited
 
+    def self.initial(robot)
+      new(robot)
+    end
+
+    private_class_method :new
+
     def initialize(robot, moves = [], visited = [])
       @robot = robot
       @moves = moves
@@ -10,7 +16,7 @@ module Robots
 
     def successor(direction)
       next_robot = robot.moved(direction)
-      next_robot == robot ? nil : self.class.new(next_robot, moves + [direction], visited + [robot])
+      next_robot == robot ? nil : self.class.successor(next_robot, moves + [direction], visited + [robot])
     end
 
     def allowable_successors
@@ -27,6 +33,12 @@ module Robots
 
     def to_outcome(goal)
       solved?(goal) ? Outcome.solved(moves, robot) : Outcome.no_solution(robot)
+    end
+
+    protected
+
+    def self.successor(robot, moves, visited)
+      new(robot, moves, visited)
     end
 
     private

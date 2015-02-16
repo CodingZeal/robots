@@ -4,7 +4,7 @@ module Robots
       private
 
       def solve
-        paths = [Path.new(robot)]
+        paths = [Path.initial(robot)]
 
         until paths.empty? do
           note_state_considered
