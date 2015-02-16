@@ -15,7 +15,7 @@ module Robots
           paths += path.allowable_successors
         end
 
-        Outcome.no_solution(robot)
+        Outcome.no_solution(BoardState.new(robot))
       end
     end
   end

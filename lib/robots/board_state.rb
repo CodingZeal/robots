@@ -1,9 +1,14 @@
+require "equalizer"
+require "set"
+
 module Robots
   class BoardState
+    include Equalizer.new(:robots)
+
     attr_reader :robots
 
     def initialize(robots)
-      @robots = Array(robots)
+      @robots = Array(robots).to_set
     end
 
     def to_s

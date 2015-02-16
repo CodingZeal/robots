@@ -63,7 +63,7 @@ module Robots
         end
 
         it "includes the final robot position" do
-          expect(outcome.final_state).to be final_robot
+          expect(outcome.final_state.robots.first).to be final_robot
         end
 
         it "includes the moves" do
@@ -81,7 +81,7 @@ module Robots
         end
 
         it "includes the final robot position" do
-          expect(outcome.final_state).to be final_robot
+          expect(outcome.final_state.robots.first).to be final_robot
         end
       end
     end

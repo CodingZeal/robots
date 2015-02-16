@@ -34,7 +34,8 @@ module Robots
     end
 
     def to_outcome
-      solved? ? Outcome.solved(moves, robot) : Outcome.no_solution(robot)
+      state = BoardState.new(robot)
+      solved? ? Outcome.solved(moves, state) : Outcome.no_solution(state)
     end
 
     # private

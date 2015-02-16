@@ -1,11 +1,13 @@
 module Robots
   RSpec.shared_examples "a solver" do
     let(:board) { Board.example }
-    let(:solver) { described_class.new(robot, goal) }
+    let(:state) { BoardState.new(robots) }
+    let(:solver) { described_class.new(state, goal) }
     let(:outcome) { solver.outcome }
 
     context "with a single robot" do
       let(:robot) { Robot.new(:green, start) }
+      let(:robots) { [robot] }
 
       context "when there are solutions" do
         let(:goal) { Target.new(:green, :circle) }
@@ -20,7 +22,7 @@ module Robots
         end
 
         it "remembers the final robot position" do
-          expect(outcome.final_state).to eq Robot.new(:green, board.cell(9, 2))
+          expect(outcome.final_state.robots.first).to eq Robot.new(:green, board.cell(9, 2))
         end
 
         context "when there is a one-move solution" do
@@ -57,8 +59,23 @@ module Robots
         end
 
         it "leaves the robot in its starting position" do
-          expect(outcome.final_state).to eq robot
+          expect(outcome.final_state.robots.first).to eq robot
         end
+      end
+    end
+
+    pending "with two robots" do
+      let(:robot) { Robot.new(:green, board.cell(6, 15)) }
+      let(:other_robot) { Robot.new(:silver, board.cell(10, 12)) }
+      let(:robots) { [robot, other_robot] }
+      let(:goal) { Target.new(:green, :circle) }
+
+      it "finds a solution" do
+        expect(outcome).to be_mission_accomplished
+      end
+
+      it "ricochets off the silver robot" do
+        expect(outcome.length).to eq 3
       end
     end
   end

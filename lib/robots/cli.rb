@@ -29,8 +29,8 @@ module Robots
     end
 
     def run_chained(state, io)
-      target_disks.inject(state.robots.first) do |next_state, target|
-        outcome = solve(BoardState.new(next_state), target, io)
+      target_disks.inject(state) do |next_state, goal|
+        outcome = solve(next_state, goal, io)
         outcome.final_state
       end
     end
