@@ -12,8 +12,8 @@ module Robots
       @cell = cell
     end
 
-    def moved(direction)
-      Robot.new(color, cell.next_cell(direction))
+    def moved(direction, board_state)
+      Robot.new(color, cell.next_cell(direction, board_state))
     end
 
     def home?(goal)

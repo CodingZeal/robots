@@ -1,6 +1,6 @@
 module Robots
   class Path
-    attr_reader :state, :robot, :moves, :visited
+    attr_reader :state, :moves, :visited
 
     def self.initial(state, goal)
       new(state, goal)
@@ -10,14 +10,13 @@ module Robots
 
     def initialize(state, goal, moves = [], visited = [])
       @state = state
-      @robot = state.robots.first
       @goal = goal
       @moves = moves
       @visited = visited
     end
 
     def successor(direction)
-      next_state = state.with_robot_moved(robot, direction)
+      next_state = state.with_robot_moved(primary_robot, direction)
       next_state == state ? nil : self.class.successor(next_state, goal, moves + [direction], visited + [state])
     end
 
@@ -26,7 +25,7 @@ module Robots
     end
 
     def solved?
-      home?(state) && moves.size > 1
+      game_over?(state) && moves.size > 1
     end
 
     def cycle?
@@ -47,6 +46,10 @@ module Robots
 
     attr_reader :goal
 
+    def primary_robot
+      state.robots.first
+    end
+
     def allowable_moves
       case moves.last
         when :up, :down
@@ -58,14 +61,14 @@ module Robots
       end
     end
 
-    def home?(state)
+    def game_over?(state)
       state && state.game_over?(goal)
     end
 
     def cycle_detection_start
       @cycle_detection_start ||= begin
-        return 1 if home?(visited.first)
-        return 2 if home?(visited[1])
+        return 1 if game_over?(visited.first)
+        return 2 if game_over?(visited[1])
         0
       end
     end

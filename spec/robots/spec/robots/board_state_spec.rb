@@ -5,9 +5,10 @@ module Robots
     let(:robot1) { fake_robot("robot1") }
     let(:robot2) { fake_robot("robot2") }
     let(:state) { BoardState.new([robot1, robot2]) }
+    let(:cell) { instance_double(Cell) }
 
     def fake_robot(name = "robot")
-      instance_double(Robot, name, :home? => false)
+      instance_double(Robot, name, :home? => false, cell: cell)
     end
 
     describe "end state" do
@@ -44,6 +45,26 @@ module Robots
 
       it "replaces the original robot with its moved version" do
         expect(new_state).to eq BoardState.new([robot1, moved_robot])
+      end
+    end
+
+    describe "blocking" do
+      let(:other_cell) { instance_double(Cell) }
+
+      context "when a robot is in a cell" do
+        before do
+          allow(robot1).to receive(:cell) { other_cell }
+        end
+
+        it "blocks the cell" do
+          expect(state).to be_blocked(other_cell)
+        end
+      end
+
+      context "when a robot is not in the cell" do
+        it "doesn't block the cell" do
+          expect(state).not_to be_blocked(other_cell)
+        end
       end
     end
   end

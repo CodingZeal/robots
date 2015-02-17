@@ -12,7 +12,11 @@ module Robots
     end
 
     def with_robot_moved(robot, direction)
-      self.class.new(robots.map { |each_robot| robot == each_robot ? each_robot.moved(direction) : each_robot} )
+      self.class.new(robots.map { |each_robot| each_robot == robot ? each_robot.moved(direction, self) : each_robot} )
+    end
+
+    def blocked?(cell)
+      robots.any? { |robot| robot.cell == cell }
     end
 
     def game_over?(goal)

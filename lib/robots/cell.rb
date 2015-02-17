@@ -16,9 +16,9 @@ module Robots
       blocked.merge(Array(directions))
     end
 
-    def next_cell(direction)
+    def next_cell(direction, board_state = nil)
       each_moving(direction).each_cons(2) do |from, to|
-        return from if to.nil? || to.blocked?(direction)
+        return from if to.nil? || board_state.blocked?(to) || to.blocked?(direction)
       end
     end
 
@@ -31,7 +31,7 @@ module Robots
     end
 
     def inspect
-      "#<#{self.class.name}:#{object_id} row=#{row} column=#{column}"
+      "#<#{self.class.name}:#{object_id} row=#{row} column=#{column}>"
     end
 
     protected

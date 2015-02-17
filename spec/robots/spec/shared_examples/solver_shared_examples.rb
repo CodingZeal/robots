@@ -64,7 +64,7 @@ module Robots
       end
     end
 
-    pending "with two robots" do
+    describe "with two robots" do
       let(:robot) { Robot.new(:green, board.cell(6, 15)) }
       let(:other_robot) { Robot.new(:silver, board.cell(10, 12)) }
       let(:robots) { [robot, other_robot] }

@@ -5,13 +5,14 @@ module Robots
     subject(:robot) { Robot.new(:red, cell) }
 
     let(:cell) { instance_double(Cell) }
+    let(:state) { instance_double(BoardState) }
 
     describe "movement" do
       let(:dest) { instance_double(Cell) }
-      let(:moved) { robot.moved(:any_direction) }
+      let(:moved) { robot.moved(:any_direction, state) }
 
       before do
-        allow(cell).to receive(:next_cell).with(:any_direction) { dest }
+        allow(cell).to receive(:next_cell).with(:any_direction, state) { dest }
       end
 
       it "moves as far as its cell will let it" do
