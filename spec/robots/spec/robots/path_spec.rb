@@ -2,31 +2,30 @@ require "spec_helper"
 
 module Robots
   describe Path do
-    let(:robot) { fake_robot("initial robot") }
-    let(:intermediate_robot) { fake_robot("intermediate robot") }
-    let(:final_robot) { fake_robot("final robot") }
     let(:goal) { instance_double(Target) }
-    let(:state) { BoardState.new(robot) }
+    let(:state) { fake_state("start state") }
+    let(:intermediate_state) { fake_state("intermediate state") }
+    let(:final_state) { fake_state("final state") }
     let(:initial_path) { Path.initial(state, goal) }
     let(:path) { initial_path.successor(:up).successor(:left) }
 
-    def fake_robot(name = "robot")
-      instance_double(Robot, name, :home? => false)
+    def fake_state(name = "state")
+      instance_double(BoardState, name, :game_over? => false, robots: [instance_double(Robot, name)])
     end
 
-    def robot_is_home(robot)
-      allow(robot).to receive(:home?).with(goal) { true }
+    def game_over(state)
+      allow(state).to receive(:game_over?).with(goal) { true }
     end
 
     before do
-      allow(robot).to receive(:moved) { intermediate_robot }
-      allow(intermediate_robot).to receive(:moved) { final_robot }
+      allow(state).to receive(:with_robot_moved) { intermediate_state }
+      allow(intermediate_state).to receive(:with_robot_moved) { final_state }
     end
 
     describe "solving" do
-      context "when on the goal cell" do
+      context "when the state is solved" do
         before do
-          robot_is_home(path.robot)
+          game_over(path.state)
         end
 
         context "when the path is long enough" do
@@ -56,7 +55,7 @@ module Robots
 
       context "when solved" do
         before do
-          robot_is_home(path.robot)
+          game_over(path.state)
         end
 
         it "returns a solved outcome" do
@@ -64,7 +63,7 @@ module Robots
         end
 
         it "includes the final robot position" do
-          expect(outcome.final_state.robots.first).to be final_robot
+          expect(outcome.final_state).to be final_state
         end
 
         it "includes the moves" do
@@ -73,16 +72,12 @@ module Robots
       end
 
       context "when not solved" do
-        before do
-          allow(robot).to receive(:home?).with(goal) { false }
-        end
-
         it "returns an unsolved outcome" do
           expect(outcome).not_to be_mission_accomplished
         end
 
         it "includes the final robot position" do
-          expect(outcome.final_state.robots.first).to be final_robot
+          expect(outcome.final_state).to be final_state
         end
       end
     end
@@ -90,28 +85,28 @@ module Robots
     describe "successor" do
       let(:direction) { :left }
       let(:successor) { initial_path.successor(direction) }
-      let(:next_robot) { fake_robot("next robot") }
+      let(:next_state) { fake_state("next state") }
 
       before do
-        allow(robot).to receive(:moved).with(direction) { next_robot }
+        allow(state).to receive(:with_robot_moved).with(Object, direction) { next_state }
       end
 
       context "when the robot can move" do
         it "moves the robot" do
-          expect(successor.robot).to be next_robot
+          expect(successor.state).to be next_state
         end
 
         it "appends the move" do
           expect(successor.moves.last).to eq direction
         end
 
-        it "visits the robot" do
-          expect(successor.visited).to include robot
+        it "visits the state" do
+          expect(successor.visited).to include state
         end
       end
 
       context "when the robot can't move" do
-        let(:next_robot) { robot }
+        let(:next_state) { state }
 
         it "returns nil" do
           expect(successor).to be nil
@@ -121,11 +116,11 @@ module Robots
 
     describe "cycle detection" do
       context "when there is a cycle" do
-        let(:final_robot) { robot }
+        let(:final_state) { state }
 
         context "when starting on the goal cell" do
           before do
-            robot_is_home(robot)
+            game_over(state)
           end
 
           it "doesn't detect a cycle" do
@@ -135,7 +130,7 @@ module Robots
 
         context "when starting one move from the goal cell" do
           before do
-            robot_is_home(intermediate_robot)
+            game_over(intermediate_state)
           end
 
           it "doesn't detect a cycle" do
@@ -173,7 +168,7 @@ module Robots
         let(:path) { initial_path.successor(:left).successor(:down) }
 
         before do
-          allow(final_robot).to receive(:moved) { fake_robot }
+          allow(final_state).to receive(:with_robot_moved) { fake_state }
         end
 
         it "turns 90 degrees from last move" do
@@ -185,7 +180,7 @@ module Robots
         let(:path) { initial_path }
 
         before do
-          allow(robot).to receive(:moved).with(:left) { robot }
+          allow(state).to receive(:with_robot_moved).with(Object, :left) { state }
         end
 
         it "excludes it" do
@@ -197,8 +192,8 @@ module Robots
         let(:path) { initial_path.successor(:down).successor(:right) }
 
         before do
-          allow(final_robot).to receive(:moved).with(:up) { robot }
-          allow(final_robot).to receive(:moved).with(:down) { fake_robot }
+          allow(final_state).to receive(:with_robot_moved).with(Object, :up) { state }
+          allow(final_state).to receive(:with_robot_moved).with(Object, :down) { fake_state }
         end
 
         it "excludes it" do

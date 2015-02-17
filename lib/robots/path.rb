@@ -1,6 +1,6 @@
 module Robots
   class Path
-    attr_reader :robot, :moves, :visited
+    attr_reader :state, :robot, :moves, :visited
 
     def self.initial(state, goal)
       new(state, goal)
@@ -17,8 +17,8 @@ module Robots
     end
 
     def successor(direction)
-      next_robot = robot.moved(direction)
-      next_robot == robot ? nil : self.class.successor(BoardState.new(next_robot), goal, moves + [direction], visited + [robot])
+      next_state = state.with_robot_moved(robot, direction)
+      next_state == state ? nil : self.class.successor(next_state, goal, moves + [direction], visited + [state])
     end
 
     def allowable_successors
@@ -26,11 +26,11 @@ module Robots
     end
 
     def solved?
-      home?(robot) && moves.size > 1
+      home?(state) && moves.size > 1
     end
 
     def cycle?
-      index = visited.find_index(robot)
+      index = visited.find_index(state)
       index && index >= cycle_detection_start
     end
 
@@ -45,7 +45,7 @@ module Robots
 
     private
 
-    attr_reader :state, :goal
+    attr_reader :goal
 
     def allowable_moves
       case moves.last
@@ -58,8 +58,8 @@ module Robots
       end
     end
 
-    def home?(robot)
-      robot && robot.home?(goal)
+    def home?(state)
+      state && state.game_over?(goal)
     end
 
     def cycle_detection_start
