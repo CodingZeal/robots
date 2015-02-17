@@ -6,6 +6,8 @@ require "ostruct"
 
 def parse_options
   options = OpenStruct.new
+  options.robots = Hash.new
+  options.robot_count = 1
 
   parser = OptionParser.new do |opts|
     opts.banner = "Usage: #{opts.program_name} [options]"
@@ -19,8 +21,8 @@ def parse_options
       options.algorithm = algorithm
     end
 
-    opts.on("-c", "--chain", "Solve all targets starting from the end of the previous solution") do
-      options.chain = true
+    opts.on("-c", "--count COUNT", Integer, "Specify the number of robots to play") do |count|
+      options.robot_count = count
     end
 
     opts.on("-g", "--goal COLOR,SHAPE", Array,
@@ -29,8 +31,12 @@ def parse_options
       options.goal = Robots::Target.new(color, shape)
     end
 
-    opts.on("-r", "--robot ROW,COLUMN", Array, "The starting position for the robot") do |row, column|
-      options.start = [row.to_i, column.to_i]
+    opts.on("-p", "--play", "Play a simulated game") do
+      options.simulated_game = true
+    end
+
+    opts.on("-r", "--robot COLOR,ROW,COLUMN", Array, "The starting position for the robot") do |color, row, column|
+      options.robots[color.downcase.to_sym] = [row.to_i, column.to_i]
     end
 
     opts.on("-s", "--seed SEED", Integer, "The seed for the random number generator") do |seed|
@@ -50,7 +56,7 @@ def parse_options
 
   parser.parse!
 
-  unless options.goal || options.all || options.chain
+  unless options.goal || options.all || options.simulated_game
     $stderr.puts "Please specify a goal for the robot"
     exit 1
   end

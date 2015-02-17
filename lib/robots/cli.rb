@@ -9,12 +9,12 @@ module Robots
     def run(io = $stdout)
       io.puts "robots --seed #{seed}"
 
-      state = BoardState.new(robot)
+      state = BoardState.new(robots)
 
       if options.all
         run_all(state, io)
-      elsif options.chain
-        run_chained(state, io)
+      elsif options.simulated_game
+        play_simulated_game(state, io)
       else
         solve(state, options.goal, io)
       end
@@ -28,7 +28,7 @@ module Robots
       end
     end
 
-    def run_chained(state, io)
+    def play_simulated_game(state, io)
       target_disks.inject(state) do |next_state, goal|
         outcome = solve(next_state, goal, io)
         outcome.final_state
@@ -56,8 +56,23 @@ module Robots
       board.targets.shuffle(random: random)
     end
 
-    def robot
-      @robot ||= Robot.new(:silver, start_cell)
+    def robots
+      @robots ||= initialize_robots
+    end
+
+    def initialize_robots
+      remaining_colors = %i(silver green red blue yellow)
+
+      result = options.robots.map do |color, (row, column)|
+        remaining_colors.delete(color)
+        Robot.new(color, board.cell(row, column))
+      end
+
+      remaining_count = [0, options.robot_count - result.size].max
+      remaining_colors.first(remaining_count).each do |color|
+        result << Robot.new(color, board.random_cell(random))
+      end
+      result
     end
 
     def solver_class

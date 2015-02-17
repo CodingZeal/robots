@@ -8,7 +8,7 @@ module Robots
     attr_reader :cell
 
     def initialize(color, cell)
-      @color = color
+      @color = color.downcase.to_sym
       @cell = cell
     end
 
