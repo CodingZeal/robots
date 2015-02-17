@@ -21,7 +21,7 @@ module Robots
         let(:goal) { Target.vortex }
 
         it "is home" do
-          expect(robot.home?(goal)).to be true
+          expect(robot).to be_home(goal)
         end
       end
 
@@ -29,8 +29,8 @@ module Robots
         let(:cell) { board.cell(1, 4) }
         let(:robot_color) { :green }
 
-        it "is home (for now - we're ignoring color)" do
-          expect(robot.home?(goal)).to be true
+        it "is not home" do
+          expect(robot).not_to be_home(goal)
         end
       end
     end
@@ -39,7 +39,7 @@ module Robots
       let(:cell) { board.cell(14, 1) }
 
       it "is not home" do
-        expect(robot.home?(goal)).to be false
+        expect(robot).not_to be_home(goal)
       end
     end
 
@@ -47,7 +47,7 @@ module Robots
       let(:cell) { board.cell(0, 0) }
 
       it "is not home" do
-        expect(robot.home?(goal)).to be false
+        expect(robot).not_to be_home(goal)
       end
     end
   end

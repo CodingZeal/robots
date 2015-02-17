@@ -13,12 +13,15 @@ module Robots
     end
 
     def moved(direction, board_state)
-      Robot.new(color, cell.next_cell(direction, board_state))
+      self.class.new(color, cell.next_cell(direction, board_state))
+    end
+
+    def with_color(new_color)
+      self.class.new(new_color, cell)
     end
 
     def home?(goal)
-      # goal.matches_color?(color) && cell.goal?(goal)
-      cell.goal?(goal)
+      goal.matches_color?(color) && cell.goal?(goal)
     end
 
     def to_s

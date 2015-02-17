@@ -30,6 +30,7 @@ module Robots
 
     def play_simulated_game(state, io)
       target_disks.inject(state) do |next_state, goal|
+        next_state.adjust_robots_for_goal(goal)
         outcome = solve(next_state, goal, io)
         outcome.final_state
       end
@@ -61,7 +62,7 @@ module Robots
     end
 
     def initialize_robots
-      remaining_colors = %i(silver green red blue yellow)
+      remaining_colors = %i(green red blue yellow silver)
 
       result = options.robots.map do |color, (row, column)|
         remaining_colors.delete(color)
