@@ -16,7 +16,7 @@ module Robots
     end
 
     def adjust_robots_for_goal(goal)
-      new_color = goal.color == :any ? :silver : goal.color
+      new_color = goal.color == :any ? :green : goal.color
       robots.unshift(robots.shift.with_color(new_color))
     end
 

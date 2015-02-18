@@ -39,6 +39,7 @@ module Robots
     def solve(state, goal, io)
       solver = solver_class.new(state, goal)
 
+      io.puts "*" * 50
       io.puts "#{state}"
       io.puts "Attempting to solve for #{goal}"
 
@@ -62,7 +63,7 @@ module Robots
     end
 
     def initialize_robots
-      remaining_colors = %i(green red blue yellow silver)
+      remaining_colors = %i(green silver red blue yellow)
 
       result = options.robots.map do |color, (row, column)|
         remaining_colors.delete(color)
