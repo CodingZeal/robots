@@ -7,10 +7,15 @@ module Robots
     let(:intermediate_state) { fake_state("intermediate state") }
     let(:final_state) { fake_state("final state") }
     let(:initial_path) { Path.initial(state, goal) }
-    let(:path) { initial_path.successor(:up).successor(:left) }
+    let(:robot) { instance_double(Robot) }
+    let(:path) do
+      initial_path
+        .successor(Move.new(robot, :up))
+        .successor(Move.new(robot, :left))
+    end
 
     def fake_state(name = "state")
-      instance_double(BoardState, name, :game_over? => false, robots: [instance_double(Robot, name)])
+      instance_double(BoardState, name, :game_over? => false, robots: [robot])
     end
 
     def game_over(state)
@@ -35,7 +40,7 @@ module Robots
         end
 
         context "when the path is too short" do
-          let(:path) { initial_path.successor(:down) }
+          let(:path) { initial_path.successor(Move.new(robot, :down)) }
 
           it "is not solved" do
             expect(path).not_to be_solved
@@ -84,7 +89,7 @@ module Robots
 
     describe "successor" do
       let(:direction) { :left }
-      let(:successor) { initial_path.successor(direction) }
+      let(:successor) { initial_path.successor(Move.new(robot, direction)) }
       let(:next_state) { fake_state("next state") }
 
       before do
@@ -97,7 +102,7 @@ module Robots
         end
 
         it "appends the move" do
-          expect(successor.moves.last).to eq direction
+          expect(successor.moves.last.direction).to eq direction
         end
 
         it "visits the state" do
@@ -154,7 +159,7 @@ module Robots
 
     describe "allowable successors" do
       let(:successors) { path.allowable_successors }
-      let(:successor_moves) { successors.map { |succ| succ.moves.last } }
+      let(:successor_moves) { successors.map { |succ| succ.moves.last.direction } }
 
       context "for the initial move" do
         let(:path) { initial_path }
@@ -165,7 +170,11 @@ module Robots
       end
 
       context "for later moves" do
-        let(:path) { initial_path.successor(:left).successor(:down) }
+        let(:path) do
+          initial_path
+            .successor(Move.new(robot, :left))
+            .successor(Move.new(robot, :down))
+        end
 
         before do
           allow(final_state).to receive(:with_robot_moved) { fake_state }
@@ -189,7 +198,11 @@ module Robots
       end
 
       context "when a successor contains a cycle" do
-        let(:path) { initial_path.successor(:down).successor(:right) }
+        let(:path) do
+          initial_path
+            .successor(Move.new(robot, :down))
+            .successor(Move.new(robot, :right))
+        end
 
         before do
           allow(final_state).to receive(:with_robot_moved).with(Object, :up) { state }

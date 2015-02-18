@@ -15,13 +15,13 @@ module Robots
       @visited = visited
     end
 
-    def successor(direction)
-      next_state = state.with_robot_moved(primary_robot, direction)
-      next_state == state ? nil : self.class.successor(next_state, goal, moves + [direction], visited + [state])
+    def successor(move)
+      next_state = state.with_robot_moved(move.robot, move.direction)
+      next_state == state ? nil : self.class.successor(next_state, goal, moves + [move], visited + [state])
     end
 
     def allowable_successors
-      allowable_moves.map { |direction| successor(direction) }.compact.reject(&:cycle?)
+      allowable_moves.map { |move| successor(move) }.compact.reject(&:cycle?)
     end
 
     def solved?
@@ -51,14 +51,17 @@ module Robots
     end
 
     def allowable_moves
-      case moves.last
+      last_move = moves.last
+      direction = last_move ? last_move.direction : nil
+
+      case direction
         when :up, :down
           %i(left right)
         when :left, :right
           %i(up down)
         else
           %i(up down left right)
-      end
+      end.map { |direction| Move.new(primary_robot, direction) }
     end
 
     def game_over?(state)

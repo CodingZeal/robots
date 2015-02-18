@@ -66,16 +66,31 @@ module Robots
 
     describe "with two robots" do
       let(:robot) { Robot.new(:green, board.cell(6, 15)) }
-      let(:other_robot) { Robot.new(:silver, board.cell(10, 12)) }
       let(:robots) { [robot, other_robot] }
       let(:goal) { Target.new(:green, :circle) }
 
-      it "finds a solution" do
-        expect(outcome).to be_mission_accomplished
+      context "when the second robot doesn't move" do
+        let(:other_robot) { Robot.new(:silver, board.cell(10, 12)) }
+
+        it "finds a solution" do
+          expect(outcome).to be_mission_accomplished
+        end
+
+        it "ricochets off the silver robot" do
+          expect(outcome.length).to eq 3
+        end
       end
 
-      it "ricochets off the silver robot" do
-        expect(outcome.length).to eq 3
+      xcontext "when the second robot moves" do
+        let(:other_robot) { Robot.new(:silver, board.cell(10, 10)) }
+
+        it "finds a solution" do
+          expect(outcome).to be_mission_accomplished
+        end
+
+        it "moves the silver robot to ricochet off of it" do
+          expect(outcome.length).to eq 4
+        end
       end
     end
   end

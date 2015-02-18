@@ -5,7 +5,7 @@ module Robots
   class Robot
     include Equalizer.new(:color, :cell)
 
-    attr_reader :cell
+    attr_reader :color, :cell
 
     def initialize(color, cell)
       @color = color.downcase.to_sym
@@ -27,9 +27,5 @@ module Robots
     def to_s
       "The #{color} robot is at #{cell}."
     end
-
-    private
-
-    attr_reader :color
   end
 end

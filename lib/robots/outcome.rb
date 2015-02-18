@@ -29,7 +29,7 @@ module Robots
       if mission_accomplished?
         io.puts "Solved in #{length} moves:"
         moves.each_with_index do |move, index|
-          io.puts "  #{index + 1}) #{move.capitalize}"
+          io.puts "  #{index + 1}) #{move}"
         end
       else
         io.puts "No solution found."
