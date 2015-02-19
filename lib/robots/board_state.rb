@@ -24,8 +24,12 @@ module Robots
       robots.any? { |robot| robot.cell == cell }
     end
 
+    def home_robot(goal)
+      robots.find { |robot| robot.home?(goal) }
+    end
+
     def game_over?(goal)
-      robots.any? { |robot| robot.home?(goal) }
+      !home_robot(goal).nil?
     end
 
     def to_s

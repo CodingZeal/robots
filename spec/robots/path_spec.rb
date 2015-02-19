@@ -26,6 +26,8 @@ module Robots
     before do
       allow(state).to receive(:with_robot_moved) { intermediate_state }
       allow(intermediate_state).to receive(:with_robot_moved) { final_state }
+
+      allow(final_state).to receive(:home_robot) { path.moves.last.robot }
     end
 
     describe "solving" do
@@ -34,14 +36,18 @@ module Robots
           game_over(path.state)
         end
 
-        context "when the path is long enough" do
+        context "when the goal robot has ricocheted" do
           it "is solved" do
             expect(path).to be_solved
           end
         end
 
-        context "when the path is too short" do
-          let(:path) { initial_path.successor(Move.new(robot, :down)) }
+        context "when the goal robot has not ricocheted" do
+          let(:path) do
+            initial_path
+              .successor(Move.new(other_robot, :down))
+              .successor(Move.new(robot, :left))
+          end
 
           it "is not solved" do
             expect(path).not_to be_solved

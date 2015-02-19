@@ -30,6 +30,28 @@ Or install it yourself as:
 
 TODO: Write usage instructions here
 
+## Examples
+
+These are currently here as notes for myself.
+
+### Play a Simulated Game
+
+```ruby
+bundle exec robots -p -c 2
+```
+
+### Not Solveable in a Reasonable Time
+
+```ruby
+be robots -g blue,circle -r blue,14,1 -r silver,0,0
+```
+
+### Watch for Cheating
+
+```ruby
+be robots -g red,triangle -r red,2,1 -r silver,4,0
+```
+
 ## Contributing
 
 1. Fork it ( https://github.com/randycoulman/robots/fork )

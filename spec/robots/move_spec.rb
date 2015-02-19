@@ -7,6 +7,34 @@ module Robots
     let(:robot) { instance_double(Robot, color: :red) }
     let(:other_robot) { instance_double(Robot, color: :green) }
 
+    describe "#for_robot?" do
+      context "with a null move" do
+        it "returns false" do
+          expect(Move.null).not_to be_for_robot(robot)
+        end
+      end
+
+      context "with the same robot" do
+        it "returns true" do
+          expect(move).to be_for_robot(robot)
+        end
+      end
+
+      context "with a different robot of the same color" do
+        let(:same_color) { instance_double(Robot, color: robot.color) }
+
+        it "returns true" do
+          expect(move).to be_for_robot(same_color)
+        end
+      end
+
+      context "with a robot of a different color" do
+        it "returns false" do
+          expect(move).not_to be_for_robot(other_robot)
+        end
+      end
+    end
+
     describe "successor moves" do
       context "for the last moved robot" do
         let(:moves) { move.successors(robot) }

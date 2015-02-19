@@ -25,7 +25,7 @@ module Robots
     end
 
     def solved?
-      game_over?(state) && moves.size > 1
+      game_over?(state) && ricocheted?(state.home_robot(goal))
     end
 
     def cycle?
@@ -54,6 +54,12 @@ module Robots
 
     def game_over?(state)
       state && state.game_over?(goal)
+    end
+
+    def ricocheted?(robot)
+      directions = moves.select { |move| move.for_robot?(robot) }.map(&:direction)
+      (directions.include?(:up) || directions.include?(:down)) &&
+        (directions.include?(:left) || directions.include?(:right))
     end
 
     def cycle_detection_start

@@ -22,11 +22,19 @@ module Robots
         specify "the game is over" do
           expect(state).to be_game_over(goal)
         end
+
+        it "knows which robot is home" do
+          expect(state.home_robot(goal)).to eq robot2
+        end
       end
 
       context "when no robots are home" do
         specify "the game is not over" do
           expect(state).not_to be_game_over(goal)
+        end
+
+        it "knows that no robot is home" do
+          expect(state.home_robot(goal)).to be_nil
         end
       end
     end
