@@ -40,6 +40,7 @@ module Robots
       solver = solver_class.new(state, goal)
 
       io.puts "*" * 50
+      io.puts "Initial state:"
       io.puts "#{state}"
       io.puts "Attempting to solve for #{goal}"
 
@@ -78,12 +79,10 @@ module Robots
     end
 
     def solver_class
-      case options.algorithm
-        when 'dfs'
-          Solvers::Dfs
-        else
+      # case options.algorithm
+      #   else
           Solvers::Bfs
-      end
+      # end
     end
 
     def start_cell

@@ -7,7 +7,8 @@ module Robots
     let(:intermediate_state) { fake_state("intermediate state") }
     let(:final_state) { fake_state("final state") }
     let(:initial_path) { Path.initial(state, goal) }
-    let(:robot) { instance_double(Robot) }
+    let(:robot) { instance_double(Robot, color: :yellow) }
+    let(:other_robot) { instance_double(Robot, color: :blue) }
     let(:path) do
       initial_path
         .successor(Move.new(robot, :up))
@@ -15,7 +16,7 @@ module Robots
     end
 
     def fake_state(name = "state")
-      instance_double(BoardState, name, :game_over? => false, robots: [robot])
+      instance_double(BoardState, name, :game_over? => false, robots: [robot, other_robot])
     end
 
     def game_over(state)
@@ -67,7 +68,7 @@ module Robots
           expect(outcome).to be_mission_accomplished
         end
 
-        it "includes the final robot position" do
+        it "includes the final board state" do
           expect(outcome.final_state).to be final_state
         end
 
@@ -81,7 +82,7 @@ module Robots
           expect(outcome).not_to be_mission_accomplished
         end
 
-        it "includes the final robot position" do
+        it "includes the final board state" do
           expect(outcome.final_state).to be final_state
         end
       end
@@ -89,11 +90,12 @@ module Robots
 
     describe "successor" do
       let(:direction) { :left }
-      let(:successor) { initial_path.successor(Move.new(robot, direction)) }
+      let(:move) { Move.new(robot, direction) }
+      let(:successor) { initial_path.successor(move) }
       let(:next_state) { fake_state("next state") }
 
       before do
-        allow(state).to receive(:with_robot_moved).with(Object, direction) { next_state }
+        allow(state).to receive(:with_robot_moved).with(robot, direction) { next_state }
       end
 
       context "when the robot can move" do
@@ -102,7 +104,7 @@ module Robots
         end
 
         it "appends the move" do
-          expect(successor.moves.last.direction).to eq direction
+          expect(successor.moves.last).to eq move
         end
 
         it "visits the state" do
@@ -159,20 +161,20 @@ module Robots
 
     describe "allowable successors" do
       let(:successors) { path.allowable_successors }
-      let(:successor_moves) { successors.map { |succ| succ.moves.last.direction } }
+      let(:successor_moves) { successors.map { |succ| succ.moves.last } }
 
       context "for the initial move" do
         let(:path) { initial_path }
 
-        it "follows all four directions" do
-          expect(successors.size).to eq 4
+        it "follows all four directions for both robots" do
+          expect(successors.size).to eq 8
         end
       end
 
       context "for later moves" do
         let(:path) do
           initial_path
-            .successor(Move.new(robot, :left))
+            .successor(Move.new(other_robot, :left))
             .successor(Move.new(robot, :down))
         end
 
@@ -180,8 +182,16 @@ module Robots
           allow(final_state).to receive(:with_robot_moved) { fake_state }
         end
 
-        it "turns 90 degrees from last move" do
-          expect(successor_moves).to eq %i(left right)
+        it "turns the last moved robot 90 degrees from its previous move" do
+          included = %i(left right).map { |direction| Move.new(robot, direction) }
+          excluded = %i(up down).map { |direction| Move.new(robot, direction)}
+          expect(successor_moves).to include *included
+          expect(successor_moves).not_to include *excluded
+        end
+
+        it "follows all four directions for other robots" do
+          moves = %i(up down left right).map { |direction| Move.new(other_robot, direction) }
+          expect(successor_moves).to include *moves
         end
       end
 
@@ -189,11 +199,11 @@ module Robots
         let(:path) { initial_path }
 
         before do
-          allow(state).to receive(:with_robot_moved).with(Object, :left) { state }
+          allow(state).to receive(:with_robot_moved).with(robot, :left) { state }
         end
 
         it "excludes it" do
-          expect(successor_moves).not_to include :left
+          expect(successor_moves).not_to include Move.new(robot, :left)
         end
       end
 
@@ -205,12 +215,12 @@ module Robots
         end
 
         before do
-          allow(final_state).to receive(:with_robot_moved).with(Object, :up) { state }
-          allow(final_state).to receive(:with_robot_moved).with(Object, :down) { fake_state }
+          allow(final_state).to receive(:with_robot_moved) { fake_state }
+          allow(final_state).to receive(:with_robot_moved).with(robot, :up) { state }
         end
 
         it "excludes it" do
-          expect(successor_moves).not_to include :up
+          expect(successor_moves).not_to include Move.new(robot, :up)
         end
       end
     end

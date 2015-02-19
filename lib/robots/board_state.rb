@@ -29,7 +29,7 @@ module Robots
     end
 
     def to_s
-      "Initial state:\n  " + robots.map(&:to_s).join("\n  ")
+      "  " + robots.map(&:to_s).join("\n  ")
     end
   end
 end

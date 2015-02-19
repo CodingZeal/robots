@@ -17,11 +17,7 @@ module Robots
 
     protected
 
-    attr_reader :state, :robot, :goal
-
-    def robot
-      state.robots.first
-    end
+    attr_reader :state, :goal
 
     def note_state_considered
       stats.states_considered += 1

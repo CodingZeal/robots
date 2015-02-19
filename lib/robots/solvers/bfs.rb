@@ -8,8 +8,8 @@ module Robots
 
         until paths.empty?
           note_state_considered
-          path = paths.shift
 
+          path = paths.shift
           return path.to_outcome if path.solved?
 
           paths += path.allowable_successors

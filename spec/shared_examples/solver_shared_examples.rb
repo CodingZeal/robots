@@ -69,7 +69,7 @@ module Robots
       let(:robots) { [robot, other_robot] }
       let(:goal) { Target.new(:green, :circle) }
 
-      context "when the second robot doesn't move" do
+      context "when the second robot doesn't need to move" do
         let(:other_robot) { Robot.new(:silver, board.cell(10, 12)) }
 
         it "finds a solution" do
@@ -81,7 +81,7 @@ module Robots
         end
       end
 
-      xcontext "when the second robot moves" do
+      context "when the second robot moves" do
         let(:other_robot) { Robot.new(:silver, board.cell(10, 10)) }
 
         it "finds a solution" do
