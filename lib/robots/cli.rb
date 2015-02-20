@@ -90,11 +90,6 @@ module Robots
       end
     end
 
-    def robot_for_goal(goal)
-      color = (goal.color == :any) ? :silver : goal.color
-      Robot.new(color, board.cell(6, 14))
-    end
-
     def seed
       options.seed ||= Random.new_seed.to_i % 0xFFFF
     end
