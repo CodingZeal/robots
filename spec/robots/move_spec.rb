@@ -41,7 +41,7 @@ module Robots
 
         it "turns 90 degrees" do
           expected = %i(left right).map { |direction| Move.new(robot, direction) }
-          expect(moves).to include *expected
+          expect(moves).to include(*expected)
         end
 
         it "doesn't continue in the same direction" do
@@ -58,7 +58,7 @@ module Robots
 
         it "moves in every direction" do
           expected = %i(up down left right).map { |direction| Move.new(other_robot, direction) }
-          expect(moves).to include *expected
+          expect(moves).to include(*expected)
         end
       end
     end

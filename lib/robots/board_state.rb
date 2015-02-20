@@ -12,7 +12,7 @@ module Robots
     end
 
     def with_robot_moved(robot, direction)
-      self.class.new(robots.map { |each_robot| each_robot == robot ? each_robot.moved(direction, self) : each_robot} )
+      self.class.new(robots.map { |each_robot| each_robot == robot ? each_robot.moved(direction, self) : each_robot })
     end
 
     def adjust_robots_for_goal(goal)

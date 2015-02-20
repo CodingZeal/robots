@@ -5,7 +5,7 @@ module Robots
     attr_reader :stats
 
     def initialize(state, goal)
-      @state = state
+      @initial_state = state
       @goal = goal
       @stats = OpenStruct.new
       stats.states_considered = 0
@@ -17,7 +17,7 @@ module Robots
 
     protected
 
-    attr_reader :state, :goal
+    attr_reader :initial_state, :goal
 
     def note_state_considered
       stats.states_considered += 1
@@ -34,7 +34,7 @@ module Robots
       yield
     ensure
       elapsed = Time.now - start_time
-      stats.solving_time = (elapsed * 1000).round(3)
+      stats.solving_time = "#{(elapsed * 1000).round(3)}ms"
     end
   end
 end

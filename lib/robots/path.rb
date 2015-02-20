@@ -1,6 +1,6 @@
 module Robots
   class Path
-    attr_reader :state, :moves, :visited
+    attr_reader :state, :moves
 
     def self.initial(state, goal)
       new(state, goal)
@@ -8,29 +8,23 @@ module Robots
 
     private_class_method :new
 
-    def initialize(state, goal, moves = [], visited = [])
+    def initialize(state, goal, moves = [])
       @state = state
       @goal = goal
       @moves = moves
-      @visited = visited
     end
 
     def allowable_successors
-      allowable_moves.map { |move| successor(move) }.compact.reject(&:cycle?)
+      allowable_moves.map { |move| successor(move) }.compact
     end
 
     def successor(move)
       next_state = state.with_robot_moved(move.robot, move.direction)
-      next_state == state ? nil : self.class.successor(next_state, goal, moves + [move], visited + [state])
+      next_state == state ? nil : self.class.successor(next_state, goal, moves + [move])
     end
 
     def solved?
       game_over?(state) && ricocheted?(state.home_robot(goal))
-    end
-
-    def cycle?
-      index = visited.find_index(state)
-      index && index >= cycle_detection_start
     end
 
     def to_outcome
@@ -38,8 +32,8 @@ module Robots
     end
 
     # private
-    def self.successor(state, goal, moves, visited)
-      new(state, goal, moves, visited)
+    def self.successor(state, goal, moves)
+      new(state, goal, moves)
     end
 
     private

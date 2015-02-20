@@ -40,7 +40,7 @@ These are currently here as notes for myself.
 bundle exec robots -p -c 2
 ```
 
-### Not Solveable in a Reasonable Time
+### Not Solvable in a Reasonable Time
 
 ```ruby
 be robots -g blue,circle -r blue,14,1 -r silver,0,0

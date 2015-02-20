@@ -79,10 +79,7 @@ module Robots
     end
 
     def solver_class
-      # case options.algorithm
-      #   else
-          Solvers::Bfs
-      # end
+      Solvers::Bfs
     end
 
     def start_cell

@@ -6,7 +6,7 @@ require "ostruct"
 
 def parse_options
   options = OpenStruct.new
-  options.robots = Hash.new
+  options.robots = {}
   options.robot_count = 1
 
   parser = OptionParser.new do |opts|

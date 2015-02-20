@@ -24,7 +24,7 @@ module Robots
     end
 
     def to_s
-      robot ? "#{robot.color.to_s.capitalize} #{direction.to_s}" : "Null move"
+      robot ? "#{robot.color.to_s.capitalize} #{direction}" : "Null move"
     end
 
     private

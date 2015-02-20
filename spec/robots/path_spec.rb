@@ -112,10 +112,6 @@ module Robots
         it "appends the move" do
           expect(successor.moves.last).to eq move
         end
-
-        it "visits the state" do
-          expect(successor.visited).to include state
-        end
       end
 
       context "when the robot can't move" do
@@ -123,44 +119,6 @@ module Robots
 
         it "returns nil" do
           expect(successor).to be nil
-        end
-      end
-    end
-
-    describe "cycle detection" do
-      context "when there is a cycle" do
-        let(:final_state) { state }
-
-        context "when starting on the goal cell" do
-          before do
-            game_over(state)
-          end
-
-          it "doesn't detect a cycle" do
-            expect(path).not_to be_cycle
-          end
-        end
-
-        context "when starting one move from the goal cell" do
-          before do
-            game_over(intermediate_state)
-          end
-
-          it "doesn't detect a cycle" do
-            expect(path).not_to be_cycle
-          end
-        end
-
-        context "when starting away from the goal cell" do
-          it "detects a cycle" do
-            expect(path).to be_cycle
-          end
-        end
-      end
-
-      context "when there is not a cycle" do
-        it "doesn't detect a cycle" do
-          expect(path).not_to be_cycle
         end
       end
     end
@@ -190,14 +148,14 @@ module Robots
 
         it "turns the last moved robot 90 degrees from its previous move" do
           included = %i(left right).map { |direction| Move.new(robot, direction) }
-          excluded = %i(up down).map { |direction| Move.new(robot, direction)}
-          expect(successor_moves).to include *included
-          expect(successor_moves).not_to include *excluded
+          excluded = %i(up down).map { |direction| Move.new(robot, direction) }
+          expect(successor_moves).to include(*included)
+          expect(successor_moves).not_to include(*excluded)
         end
 
         it "follows all four directions for other robots" do
           moves = %i(up down left right).map { |direction| Move.new(other_robot, direction) }
-          expect(successor_moves).to include *moves
+          expect(successor_moves).to include(*moves)
         end
       end
 
@@ -210,23 +168,6 @@ module Robots
 
         it "excludes it" do
           expect(successor_moves).not_to include Move.new(robot, :left)
-        end
-      end
-
-      context "when a successor contains a cycle" do
-        let(:path) do
-          initial_path
-            .successor(Move.new(robot, :down))
-            .successor(Move.new(robot, :right))
-        end
-
-        before do
-          allow(final_state).to receive(:with_robot_moved) { fake_state }
-          allow(final_state).to receive(:with_robot_moved).with(robot, :up) { state }
-        end
-
-        it "excludes it" do
-          expect(successor_moves).not_to include Move.new(robot, :up)
         end
       end
     end
