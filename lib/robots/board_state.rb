@@ -16,8 +16,8 @@ module Robots
     end
 
     def adjust_robots_for_goal(goal)
-      new_color = goal.color == :any ? :green : goal.color
-      robots.unshift(robots.shift.with_color(new_color))
+      new_color = (goal.color == :any) ? :silver : goal.color
+      robots.unshift(robots.shift.with_color(new_color)) unless robots.any? { |r| r.color == new_color }
     end
 
     def blocked?(cell)
