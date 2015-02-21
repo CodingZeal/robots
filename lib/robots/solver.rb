@@ -34,7 +34,8 @@ module Robots
       yield
     ensure
       elapsed = Time.now - start_time
-      stats.solving_time = "#{(elapsed * 1000).round(3)}ms"
+      stats.solving_time = "#{elapsed.round(3)}s"
+      stats.states_per_second = (stats.states_considered / elapsed).round
     end
   end
 end
