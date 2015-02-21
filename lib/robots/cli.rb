@@ -37,22 +37,29 @@ module Robots
     end
 
     def solve(state, goal, io)
-      solver = solver_class.new(state, goal)
+      preamble(state, goal, io)
 
+      solver = solver_class.new(state, goal)
+      outcome = solver.outcome
+
+      outcome.write(io)
+      write_stats(solver.stats, io)
+
+      outcome
+    end
+
+    def preamble(state, goal, io)
       io.puts "*" * 50
       io.puts "Initial state:"
       io.puts "#{state}"
       io.puts "Attempting to solve for #{goal}"
+    end
 
-      outcome = solver.outcome
-      outcome.write(io)
-
+    def write_stats(stats, io)
       io.puts "Statistics:"
-      solver.stats.each_pair do |key, value|
+      stats.each_pair do |key, value|
         io.puts "  #{key}: #{value}"
       end
-
-      outcome
     end
 
     def target_disks
