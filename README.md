@@ -37,19 +37,27 @@ These are currently here as notes for myself.
 ### Play a Simulated Game
 
 ```ruby
-bundle exec robots -p -c 2
-```
-
-### Not Solvable in a Reasonable Time
-
-```ruby
-be robots -g blue,circle -r blue,14,1 -r silver,0,0
+bundle exec robots -p -c 3
 ```
 
 ### Watch for Cheating
 
 ```ruby
 be robots -g red,triangle -r red,2,1 -r silver,4,0
+```
+
+### Five-robot games that need optimizing
+
+```ruby
+be robots -g green,hex -r green,2,1 -r silver,0,11 -r red,5,0 -r blue,6,15 -r yellow,2,14
+```
+
+```ruby
+be robots -g red,hex -r green,1,9 -r silver,0,11 -r red,5,0 -r blue,6,15 -r yellow,0,10
+```
+
+```ruby
+be robots -g green,circle -r green,11,10 -r silver,0,11 -r red,10,13 -r blue,13,9 -r yellow,0,10
 ```
 
 ## Contributing
