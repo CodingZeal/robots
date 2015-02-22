@@ -1,3 +1,6 @@
+require_relative "move"
+require_relative "outcome"
+
 module Robots
   class Path
     attr_reader :state, :moves

@@ -1,4 +1,5 @@
 require_relative "cell"
+require_relative "grid"
 
 module Robots
   class Board
@@ -7,18 +8,14 @@ module Robots
     end
 
     def initialize
-      @cells = Array.new(BOARD_SIZE) do |row|
-        Array.new(BOARD_SIZE) do |column|
-          Cell.new(self, row, column)
-        end
+      @cells = Grid.new(BOARD_SIZE) do |row, column|
+        Cell.new(self, row, column)
       end
       add_center_island
     end
 
     def cell(row, column)
-      return nil if off_board?(row, column)
-
-      cells[row][column]
+      cells.at(row, column)
     end
 
     def targets
@@ -29,26 +26,24 @@ module Robots
     end
 
     def top
-      0
+      cells.top
     end
 
     def left
-      0
+      cells.left
     end
 
     def bottom
-      BOARD_SIZE - 1
+      cells.bottom
     end
 
     def right
-      BOARD_SIZE - 1
+      cells.right
     end
 
     def random_cell(random)
       loop do
-        row = random.rand(BOARD_SIZE)
-        column = random.rand(BOARD_SIZE)
-        cell = cell(row, column)
+        cell = cells.random_element(random)
         return cell unless island_cells.include?(cell)
       end
     end
@@ -74,10 +69,8 @@ module Robots
 
     attr_reader :cells
 
-    def each_cell
-      return to_enum(:each_cell) unless block_given?
-
-      cells.each { |row| row.each { |cell| yield cell } }
+    def each_cell(&block)
+      cells.each_element(&block)
     end
 
     def add_center_island
@@ -98,7 +91,7 @@ module Robots
     end
 
     def on_board?(row, column)
-      row.between?(top, bottom) && column.between?(left, right)
+      cells.on_grid?(row, column)
     end
   end
 end

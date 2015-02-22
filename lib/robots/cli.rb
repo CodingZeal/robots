@@ -1,3 +1,8 @@
+require_relative "board"
+require_relative "board_state"
+require_relative "robot"
+require_relative "solvers"
+
 module Robots
   class CLI
     def initialize(options)

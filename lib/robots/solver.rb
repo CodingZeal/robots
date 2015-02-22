@@ -1,3 +1,4 @@
+require_relative "path"
 require "ostruct"
 
 module Robots
