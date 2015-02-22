@@ -52,31 +52,13 @@ module Robots
     end
 
     def add_wall_after_column(row, column)
-      left_of_wall = cell(row, column)
-      right_of_wall = cell(row, column + 1)
-      left_of_wall.each_moving(:left).each do |cell|
-        break if stopping_cell(cell, :right).column < left_of_wall.column
-        stopping_cells[:right].put(cell.row, cell.column, left_of_wall)
-      end
-      right_of_wall.each_moving(:right).each do |cell|
-        break if stopping_cell(cell, :left).column > right_of_wall.column
-        stopping_cells[:left].put(cell.row, cell.column, right_of_wall)
-      end
+      block(cell(row, column), :left)
+      block(cell(row, column + 1), :right)
     end
 
     def add_wall_after_row(row, column)
-      above_wall = cell(row, column)
-      below_wall = cell(row + 1, column)
-
-      above_wall.each_moving(:up).each do |cell|
-        break if stopping_cell(cell, :down).row < above_wall.row
-        stopping_cells[:down].put(cell.row, cell.column, above_wall)
-      end
-
-      below_wall.each_moving(:down).each do |cell|
-        break if stopping_cell(cell, :up).row > below_wall.row
-        stopping_cells[:up].put(cell.row, cell.column, below_wall)
-      end
+      block(cell(row, column), :up)
+      block(cell(row + 1, column), :down)
     end
 
     def add_target(row, column, target)
@@ -103,6 +85,14 @@ module Robots
       Grid.new(BOARD_SIZE, &block)
     end
 
+    def block(wall_cell, direction)
+      opposite_direction = opposite(direction)
+      wall_cell.each_moving(direction).each do |cell|
+        break if stopping_cell(cell, opposite_direction).between?(cell, wall_cell)
+        stopping_cells[opposite_direction].put(cell.row, cell.column, wall_cell)
+      end
+    end
+
     def add_center_island
       [6, 8].each do |i|
         [7, 8].each do |j|
@@ -118,6 +108,19 @@ module Robots
 
     def island_cells
       @island_cells ||= [cell(7, 7), cell(7, 8), cell(8, 7), cell(8, 8)]
+    end
+
+    def opposite(direction)
+      case direction
+        when :up
+          :down
+        when :down
+          :up
+        when :left
+          :right
+        when :right
+          :left
+      end
     end
   end
 end
