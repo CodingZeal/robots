@@ -2,13 +2,15 @@ require "spec_helper"
 
 module Robots
   describe BoardState do
-    let(:robot1) { fake_robot("robot1") }
-    let(:robot2) { fake_robot("robot2") }
+    let(:robot1) { fake_robot(:blue) }
+    let(:robot2) { fake_robot(:yellow) }
     let(:state) { BoardState.new([robot1, robot2]) }
     let(:cell) { instance_double(Cell) }
 
-    def fake_robot(name = "robot")
-      instance_double(Robot, name, :home? => false, cell: cell)
+    def fake_robot(color = :silver)
+      Robot.new(color, cell).tap do |robot|
+        allow(robot).to receive(:home?) { false }
+      end
     end
 
     describe "end state" do
@@ -72,6 +74,36 @@ module Robots
       context "when a robot is not in the cell" do
         it "doesn't block the cell" do
           expect(state).not_to be_blocked(other_cell)
+        end
+      end
+    end
+
+    describe "ensuring goal robot is present" do
+      let(:adjusted_state) { state.dup.tap { |s| s.ensure_goal_robot_present(goal) } }
+
+      context "when it is already present" do
+        let(:goal) { Target.new(robot2.color, :circle) }
+
+        it "makes no changes" do
+          expect(adjusted_state).to eq state
+        end
+      end
+
+      context "when it is not present" do
+        let(:goal) { Target.new(:green, :triangle) }
+        let(:replacement) { fake_robot(:green) }
+
+        it "substitutes the correct robot" do
+          expect(adjusted_state).to eq BoardState.new([replacement, robot2])
+        end
+      end
+
+      context "with the vortex" do
+        let(:goal) { Target.vortex }
+        let(:replacement) { fake_robot(:silver) }
+
+        it "substitutes the silver robot" do
+          expect(adjusted_state).to eq BoardState.new([replacement, robot2])
         end
       end
     end

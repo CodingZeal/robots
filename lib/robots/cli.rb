@@ -30,7 +30,7 @@ module Robots
 
     def play_simulated_game(state, io)
       target_disks.inject(state) do |next_state, goal|
-        next_state.adjust_robots_for_goal(goal)
+        next_state.ensure_goal_robot_present(goal)
         outcome = solve(next_state, goal, io)
         outcome.final_state
       end
