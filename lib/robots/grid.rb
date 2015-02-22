@@ -14,6 +14,12 @@ module Robots
       elements[row][column]
     end
 
+    def put(row, column, element)
+      return unless on_grid?(row, column)
+
+      elements[row][column] = element
+    end
+
     def random_element(random)
       row = random.rand(grid_size)
       column = random.rand(grid_size)

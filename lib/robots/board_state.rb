@@ -27,8 +27,10 @@ module Robots
       robots.unshift(robots.shift.with_color(new_color)) unless robots.any? { |r| r.color == new_color }
     end
 
-    def blocked?(cell)
-      robots.any? { |robot| robot.cell == cell }
+    def stopping_cell(cell, stop)
+      robots.inject(stop) do |result, robot|
+        robot.cell != cell && robot.between?(cell, result) ? robot.neighbor_nearest(cell) : result
+      end
     end
 
     def home_robot(goal)

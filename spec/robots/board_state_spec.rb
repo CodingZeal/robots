@@ -58,22 +58,47 @@ module Robots
       end
     end
 
-    describe "blocking" do
-      let(:other_cell) { instance_double(Cell) }
+    describe "stopping cells" do
+      let(:start_cell) { instance_double(Cell, "start") }
+      let(:original_stop_cell) { instance_double(Cell, "stop") }
+      let(:neighbor) { instance_double(Cell, "neighbor") }
+      let(:direction) { :up }
+      let(:stop_cell) { state.stopping_cell(start_cell, original_stop_cell) }
 
-      context "when a robot is in a cell" do
+      context "when one robot is between the start and stop cells" do
         before do
-          allow(robot1).to receive(:cell) { other_cell }
+          allow(robot1).to receive(:between?) { false }
+          allow(robot2).to receive(:between?) { true }
+          allow(robot2).to receive(:neighbor_nearest) { neighbor }
         end
 
-        it "blocks the cell" do
-          expect(state).to be_blocked(other_cell)
+        it "returns the robot's neighboring cell" do
+          expect(stop_cell).to equal neighbor
         end
       end
 
-      context "when a robot is not in the cell" do
-        it "doesn't block the cell" do
-          expect(state).not_to be_blocked(other_cell)
+      context "when there are multiple robots between the start and stop cells" do
+        let(:robot1_neighbor) { instance_double(Cell, "robot1 neighbor") }
+        before do
+          allow(robot1).to receive(:between?).with(start_cell, original_stop_cell) { true }
+          allow(robot1).to receive(:neighbor_nearest) { robot1_neighbor }
+
+          allow(robot2).to receive(:between?).with(start_cell, robot1_neighbor) { true }
+          allow(robot2).to receive(:neighbor_nearest) { neighbor }
+        end
+
+        it "returns the nearest robot's neighboring cell" do
+          expect(stop_cell).to equal neighbor
+        end
+      end
+
+      context "when there is no robot between the start and stop cells" do
+        before do
+          allow(cell).to receive(:between?).with(start_cell, original_stop_cell) { false }
+        end
+
+        it "returns the original stopping cell" do
+          expect(stop_cell).to equal original_stop_cell
         end
       end
     end

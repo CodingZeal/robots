@@ -8,14 +8,17 @@ module Robots
     end
 
     def initialize
-      @cells = Grid.new(BOARD_SIZE) do |row, column|
-        Cell.new(self, row, column)
-      end
+      @cells = new_grid { |row, column| Cell.new(self, row, column) }
+      precompute_stopping_cells
       add_center_island
     end
 
     def cell(row, column)
       cells.at(row, column)
+    end
+
+    def stopping_cell(cell, direction)
+      stopping_cells[direction].at(cell.row, cell.column)
     end
 
     def targets
@@ -49,13 +52,35 @@ module Robots
     end
 
     def add_wall_after_column(row, column)
-      cell(row, column).block(:left)
-      cell(row, column + 1).block(:right)
+      left_of_wall = cell(row, column)
+      right_of_wall = cell(row, column + 1)
+      left_of_wall.block(:left)
+      left_of_wall.each_moving(:left).each do |cell|
+        break if stopping_cell(cell, :right).column < left_of_wall.column
+        stopping_cells[:right].put(cell.row, cell.column, left_of_wall)
+      end
+      right_of_wall.block(:right)
+      right_of_wall.each_moving(:right).each do |cell|
+        break if stopping_cell(cell, :left).column > right_of_wall.column
+        stopping_cells[:left].put(cell.row, cell.column, right_of_wall)
+      end
     end
 
     def add_wall_after_row(row, column)
-      cell(row, column).block(:up)
-      cell(row + 1, column).block(:down)
+      above_wall = cell(row, column)
+      below_wall = cell(row + 1, column)
+
+      above_wall.block(:up)
+      above_wall.each_moving(:up).each do |cell|
+        break if stopping_cell(cell, :down).row < above_wall.row
+        stopping_cells[:down].put(cell.row, cell.column, above_wall)
+      end
+
+      below_wall.block(:down)
+      below_wall.each_moving(:down).each do |cell|
+        break if stopping_cell(cell, :up).row > below_wall.row
+        stopping_cells[:up].put(cell.row, cell.column, below_wall)
+      end
     end
 
     def add_target(row, column, target)
@@ -67,10 +92,19 @@ module Robots
     BOARD_SIZE = 16
     private_constant :BOARD_SIZE
 
-    attr_reader :cells
+    attr_reader :cells, :stopping_cells
 
-    def each_cell(&block)
-      cells.each_element(&block)
+    def precompute_stopping_cells
+      @stopping_cells = {
+        up: new_grid { |_, column| cell(top, column) },
+        down: new_grid { |_, column| cell(bottom, column) },
+        left: new_grid { |row, _| cell(row, left) },
+        right: new_grid { |row, _| cell(row, right) }
+      }
+    end
+
+    def new_grid(&block)
+      Grid.new(BOARD_SIZE, &block)
     end
 
     def add_center_island
@@ -82,16 +116,12 @@ module Robots
       end
     end
 
+    def each_cell(&block)
+      cells.each_element(&block)
+    end
+
     def island_cells
       @island_cells ||= [cell(7, 7), cell(7, 8), cell(8, 7), cell(8, 8)]
-    end
-
-    def off_board?(row, column)
-      !on_board?(row, column)
-    end
-
-    def on_board?(row, column)
-      cells.on_grid?(row, column)
     end
   end
 end

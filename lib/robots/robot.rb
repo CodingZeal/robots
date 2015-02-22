@@ -20,6 +20,14 @@ module Robots
       self.class.new(new_color, cell)
     end
 
+    def neighbor_nearest(other_cell)
+      cell.neighbor_nearest(other_cell)
+    end
+
+    def between?(first_cell, second_cell)
+      cell.between?(first_cell, second_cell)
+    end
+
     def home?(goal)
       goal.matches_color?(color) && cell.goal?(goal)
     end

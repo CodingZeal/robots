@@ -5,19 +5,15 @@ module Robots
     let(:board) { Board.new }
     let(:state) { instance_double(BoardState) }
 
-    before do
-      allow(state).to receive(:blocked?) { false }
-    end
-
-    def next_cell(direction)
-      cell.next_cell(direction, state)
-    end
-
-    def place_robot_at(row, column)
-      allow(state).to receive(:blocked?).with(board.cell(row, column)) { true }
-    end
-
     describe "stopping positions" do
+      before do
+        allow(state).to receive(:stopping_cell) { |_, stop| stop }
+      end
+
+      def next_cell(direction)
+        cell.next_cell(direction, state)
+      end
+
       context "with no obstacles" do
         let(:cell) { board.cell(5, 11) }
 
@@ -60,11 +56,132 @@ module Robots
         let(:cell) { board.cell(0, 0) }
 
         before do
-          place_robot_at(0, 4)
+          allow(state).to receive(:stopping_cell) { board.cell(0, 3) }
         end
 
         it "stops next to the robot" do
           expect(next_cell(:right)).to eq board.cell(0, 3)
+        end
+      end
+    end
+
+    describe "#between?" do
+      let(:cell) { board.cell(3, 5) }
+      let(:between) { cell.between?(first, last) && cell.between?(last, first) }
+
+      context "when in the same row" do
+        let(:first) { board.cell(cell.row, cell.column - 1) }
+        let(:last) { board.cell(cell.row, cell.column + 1) }
+
+        context "when in the middle" do
+          it "returns true" do
+            expect(between).to be true
+          end
+        end
+
+        context "when before first" do
+          let(:first) { last }
+
+          it "returns false" do
+            expect(between).to be false
+          end
+        end
+
+        context "when after last" do
+          let(:last) { first }
+
+          it "returns false" do
+            expect(between).to be false
+          end
+        end
+      end
+
+      context "when in the same column" do
+        let(:first) { board.cell(cell.row - 1, cell.column) }
+        let(:last) { board.cell(cell.row + 1, cell.column) }
+
+        context "when in the middle" do
+          it "returns true" do
+            expect(between).to be true
+          end
+        end
+
+        context "when before first" do
+          let(:first) { last }
+
+          it "returns false" do
+            expect(between).to be false
+          end
+        end
+
+        context "when after last" do
+          let(:last) { first }
+
+          it "returns false" do
+            expect(between).to be false
+          end
+        end
+      end
+
+      context "when in different row and column" do
+        let(:first) { board.cell(cell.row - 1, cell.column + 1) }
+        let(:last) { board.cell(cell.row + 1, cell.column - 1) }
+
+        it "returns false" do
+          expect(between).to be false
+        end
+      end
+    end
+
+    describe "nearest neighbor" do
+      let(:cell) { board.cell(3, 5) }
+      let(:neighbor) { cell.neighbor_nearest(other) }
+
+      context "to the left" do
+        let(:other) { board.cell(cell.row, board.left) }
+
+        it "finds the left neighbor" do
+          expect(neighbor).to eq cell.left
+        end
+      end
+
+      context "to the right" do
+        let(:other) { board.cell(cell.row, board.right) }
+
+        it "finds the right neighbor" do
+          expect(neighbor).to eq cell.right
+        end
+      end
+
+      context "above" do
+        let(:other) { board.cell(board.top, cell.column) }
+
+        it "finds the neighbor above" do
+          expect(neighbor).to eq cell.up
+        end
+      end
+
+      context "below" do
+        let(:other) { board.cell(board.bottom, cell.column) }
+
+        it "finds the neighbor below" do
+          expect(neighbor).to eq cell.down
+        end
+      end
+
+      context "to itself" do
+        let(:other) { cell }
+
+        it "returns nil" do
+          expect(neighbor).to be_nil
+        end
+      end
+
+      context "in other row and column" do
+        let(:other) { board.cell(cell.row + 1, cell.column - 1) }
+
+        it "returns nil" do
+          expect(neighbor).to be_nil
         end
       end
     end
