@@ -81,19 +81,16 @@ module Robots
     end
 
     def add_center_island
-      island_cells.each do |cell|
-        cell.block(%i(up down left right))
+      [6, 8].each do |i|
+        [7, 8].each do |j|
+          add_wall_after_row(i, j)
+          add_wall_after_column(j, i)
+        end
       end
     end
 
     def island_cells
-      @island_cells ||= begin
-        (7..8).each_with_object([]) do |row, island|
-          (7..8).each do |column|
-            island << cell(row, column)
-          end
-        end
-      end
+      @island_cells ||= [cell(7, 7), cell(7, 8), cell(8, 7), cell(8, 8)]
     end
 
     def off_board?(row, column)
