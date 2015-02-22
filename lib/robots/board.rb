@@ -54,12 +54,10 @@ module Robots
     def add_wall_after_column(row, column)
       left_of_wall = cell(row, column)
       right_of_wall = cell(row, column + 1)
-      left_of_wall.block(:left)
       left_of_wall.each_moving(:left).each do |cell|
         break if stopping_cell(cell, :right).column < left_of_wall.column
         stopping_cells[:right].put(cell.row, cell.column, left_of_wall)
       end
-      right_of_wall.block(:right)
       right_of_wall.each_moving(:right).each do |cell|
         break if stopping_cell(cell, :left).column > right_of_wall.column
         stopping_cells[:left].put(cell.row, cell.column, right_of_wall)
@@ -70,13 +68,11 @@ module Robots
       above_wall = cell(row, column)
       below_wall = cell(row + 1, column)
 
-      above_wall.block(:up)
       above_wall.each_moving(:up).each do |cell|
         break if stopping_cell(cell, :down).row < above_wall.row
         stopping_cells[:down].put(cell.row, cell.column, above_wall)
       end
 
-      below_wall.block(:down)
       below_wall.each_moving(:down).each do |cell|
         break if stopping_cell(cell, :up).row > below_wall.row
         stopping_cells[:up].put(cell.row, cell.column, below_wall)

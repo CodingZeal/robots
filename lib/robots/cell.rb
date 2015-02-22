@@ -9,11 +9,9 @@ module Robots
       @board = board
       @row = row
       @column = column
-      @blocked = Set.new
     end
 
     def block(directions)
-      blocked.merge(Array(directions))
     end
 
     def next_cell(direction, board_state = nil)
@@ -98,7 +96,7 @@ module Robots
 
     private
 
-    attr_reader :board, :blocked, :target
+    attr_reader :board, :target
 
     def column_between?(first, second)
       row == first.row && row == second.row &&
