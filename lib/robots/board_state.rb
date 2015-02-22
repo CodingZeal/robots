@@ -15,6 +15,13 @@ module Robots
       self.class.new(robots.map { |each_robot| each_robot == robot ? each_robot.moved(direction, self) : each_robot })
     end
 
+    def ensure_goal_robot_first(goal)
+      return if goal.color == :any
+
+      goal_index = robots.index { |robot| robot.color == goal.color }
+      robots.rotate!(goal_index)
+    end
+
     def ensure_goal_robot_present(goal)
       new_color = (goal.color == :any) ? :silver : goal.color
       robots.unshift(robots.shift.with_color(new_color)) unless robots.any? { |r| r.color == new_color }

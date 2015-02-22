@@ -1,0 +1,345 @@
+robots --seed 16947
+**************************************************
+Initial state:
+  The green robot is at row: 2, column: 6.
+  The silver robot is at row: 11, column: 15.
+  The red robot is at row: 0, column: 9.
+  The blue robot is at row: 13, column: 3.
+  The yellow robot is at row: 12, column: 15.
+Attempting to solve for red hex
+Solved in 6 moves:
+  1) Red left
+  2) Red down
+  3) Red right
+  4) Red down
+  5) Red right
+  6) Red up
+Statistics:
+  states_considered: 15510
+  solving_time: 8.488s
+  states_per_second: 1827
+**************************************************
+Initial state:
+  The red robot is at row: 10, column: 13.
+  The blue robot is at row: 13, column: 3.
+  The yellow robot is at row: 12, column: 15.
+  The green robot is at row: 2, column: 6.
+  The silver robot is at row: 11, column: 15.
+Attempting to solve for blue hex
+Solved in 4 moves:
+  1) Blue right
+  2) Blue down
+  3) Yellow down
+  4) Blue up
+Statistics:
+  states_considered: 1555
+  solving_time: 0.764s
+  states_per_second: 2036
+**************************************************
+Initial state:
+  The blue robot is at row: 13, column: 4.
+  The yellow robot is at row: 15, column: 15.
+  The green robot is at row: 2, column: 6.
+  The silver robot is at row: 11, column: 15.
+  The red robot is at row: 10, column: 13.
+Attempting to solve for yellow square
+Solved in 8 moves:
+  1) Yellow up
+  2) Yellow left
+  3) Yellow up
+  4) Green up
+  5) Yellow left
+  6) Yellow up
+  7) Yellow right
+  8) Yellow down
+Statistics:
+  states_considered: 60491
+  solving_time: 34.967s
+  states_per_second: 1730
+**************************************************
+Initial state:
+  The yellow robot is at row: 8, column: 5.
+  The green robot is at row: 0, column: 6.
+  The silver robot is at row: 11, column: 15.
+  The red robot is at row: 10, column: 13.
+  The blue robot is at row: 13, column: 4.
+Attempting to solve for blue triangle
+Solved in 6 moves:
+  1) Blue left
+  2) Blue up
+  3) Blue right
+  4) Blue down
+  5) Blue left
+  6) Blue up
+Statistics:
+  states_considered: 7548
+  solving_time: 3.935s
+  states_per_second: 1918
+**************************************************
+Initial state:
+  The blue robot is at row: 6, column: 12.
+  The yellow robot is at row: 8, column: 5.
+  The green robot is at row: 0, column: 6.
+  The silver robot is at row: 11, column: 15.
+  The red robot is at row: 10, column: 13.
+Attempting to solve for red triangle
+Solved in 10 moves:
+  1) Red down
+  2) Red left
+  3) Red up
+  4) Red right
+  5) Red up
+  6) Green down
+  7) Green left
+  8) Green down
+  9) Red left
+  10) Red down
+Statistics:
+  states_considered: 272309
+  solving_time: 178.181s
+  states_per_second: 1528
+**************************************************
+Initial state:
+  The red robot is at row: 14, column: 1.
+  The blue robot is at row: 6, column: 12.
+  The yellow robot is at row: 8, column: 5.
+  The green robot is at row: 5, column: 0.
+  The silver robot is at row: 11, column: 15.
+Attempting to solve for green square
+Solved in 7 moves:
+  1) Green right
+  2) Blue right
+  3) Blue down
+  4) Blue left
+  5) Green down
+  6) Green left
+  7) Green down
+Statistics:
+  states_considered: 20802
+  solving_time: 14.146s
+  states_per_second: 1470
+**************************************************
+Initial state:
+  The green robot is at row: 11, column: 10.
+  The silver robot is at row: 11, column: 15.
+  The red robot is at row: 14, column: 1.
+  The blue robot is at row: 8, column: 9.
+  The yellow robot is at row: 8, column: 5.
+Attempting to solve for yellow triangle
+Solved in 8 moves:
+  1) Yellow right
+  2) Yellow up
+  3) Yellow left
+  4) Yellow down
+  5) Green up
+  6) Green right
+  7) Yellow right
+  8) Yellow down
+Statistics:
+  states_considered: 61236
+  solving_time: 35.159s
+  states_per_second: 1742
+**************************************************
+Initial state:
+  The yellow robot is at row: 12, column: 14.
+  The green robot is at row: 5, column: 15.
+  The silver robot is at row: 11, column: 15.
+  The red robot is at row: 14, column: 1.
+  The blue robot is at row: 8, column: 9.
+Attempting to solve for red circle
+Solved in 9 moves:
+  1) Red up
+  2) Red left
+  3) Red down
+  4) Red right
+  5) Red up
+  6) Red left
+  7) Red down
+  8) Red right
+  9) Red up
+Statistics:
+  states_considered: 143574
+  solving_time: 85.421s
+  states_per_second: 1681
+**************************************************
+Initial state:
+  The red robot is at row: 1, column: 4.
+  The blue robot is at row: 8, column: 9.
+  The yellow robot is at row: 12, column: 14.
+  The green robot is at row: 5, column: 15.
+  The silver robot is at row: 11, column: 15.
+Attempting to solve for green circle
+Solved in 7 moves:
+  1) Green down
+  2) Blue up
+  3) Green left
+  4) Green down
+  5) Green left
+  6) Green up
+  7) Green left
+Statistics:
+  states_considered: 30976
+  solving_time: 18.047s
+  states_per_second: 1716
+**************************************************
+Initial state:
+  The green robot is at row: 9, column: 2.
+  The silver robot is at row: 11, column: 15.
+  The red robot is at row: 1, column: 4.
+  The blue robot is at row: 2, column: 9.
+  The yellow robot is at row: 12, column: 14.
+Attempting to solve for yellow circle
+Solved in 4 moves:
+  1) Yellow up
+  2) Yellow left
+  3) Green down
+  4) Yellow right
+Statistics:
+  states_considered: 477
+  solving_time: 0.341s
+  states_per_second: 1398
+**************************************************
+Initial state:
+  The yellow robot is at row: 2, column: 14.
+  The green robot is at row: 15, column: 2.
+  The silver robot is at row: 11, column: 15.
+  The red robot is at row: 1, column: 4.
+  The blue robot is at row: 2, column: 9.
+Attempting to solve for blue square
+Solved in 5 moves:
+  1) Blue down
+  2) Yellow left
+  3) Blue up
+  4) Blue left
+  5) Blue down
+Statistics:
+  states_considered: 3094
+  solving_time: 1.655s
+  states_per_second: 1869
+**************************************************
+Initial state:
+  The blue robot is at row: 6, column: 3.
+  The yellow robot is at row: 2, column: 2.
+  The green robot is at row: 15, column: 2.
+  The silver robot is at row: 11, column: 15.
+  The red robot is at row: 1, column: 4.
+Attempting to solve for blue circle
+Solved in 9 moves:
+  1) Blue right
+  2) Blue down
+  3) Blue left
+  4) Blue up
+  5) Silver left
+  6) Silver down
+  7) Silver left
+  8) Blue down
+  9) Blue right
+Statistics:
+  states_considered: 291236
+  solving_time: 195.36s
+  states_per_second: 1491
+**************************************************
+Initial state:
+  The blue robot is at row: 14, column: 9.
+  The yellow robot is at row: 2, column: 2.
+  The green robot is at row: 15, column: 2.
+  The silver robot is at row: 15, column: 6.
+  The red robot is at row: 1, column: 4.
+Attempting to solve for green hex
+Solved in 10 moves:
+  1) Silver right
+  2) Silver up
+  3) Blue left
+  4) Blue up
+  5) Green up
+  6) Green right
+  7) Green down
+  8) Green right
+  9) Green up
+  10) Green left
+Statistics:
+  states_considered: 814189
+  solving_time: 723.332s
+  states_per_second: 1126
+**************************************************
+Initial state:
+  The green robot is at row: 1, column: 9.
+  The silver robot is at row: 0, column: 11.
+  The red robot is at row: 1, column: 4.
+  The blue robot is at row: 9, column: 2.
+  The yellow robot is at row: 2, column: 2.
+Attempting to solve for vortex
+Solved in 8 moves:
+  1) Blue right
+  2) Yellow right
+  3) Yellow down
+  4) Yellow right
+  5) Blue down
+  6) Blue left
+  7) Silver down
+  8) Silver left
+Statistics:
+  states_considered: 90069
+  solving_time: 77.759s
+  states_per_second: 1158
+**************************************************
+Initial state:
+  The green robot is at row: 1, column: 9.
+  The silver robot is at row: 10, column: 8.
+  The red robot is at row: 1, column: 4.
+  The blue robot is at row: 11, column: 11.
+  The yellow robot is at row: 12, column: 15.
+Attempting to solve for yellow hex
+Solved in 11 moves:
+  1) Yellow left
+  2) Yellow up
+  3) Yellow left
+  4) Yellow up
+  5) Green up
+  6) Green left
+  7) Red right
+  8) Red up
+  9) Green right
+  10) Yellow right
+  11) Yellow down
+Statistics:
+  states_considered: 1338222
+  solving_time: 1523.592s
+  states_per_second: 878
+**************************************************
+Initial state:
+  The yellow robot is at row: 3, column: 6.
+  The green robot is at row: 0, column: 7.
+  The silver robot is at row: 10, column: 8.
+  The red robot is at row: 0, column: 8.
+  The blue robot is at row: 11, column: 11.
+Attempting to solve for red square
+Solved in 2 moves:
+  1) Red right
+  2) Red down
+Statistics:
+  states_considered: 24
+  solving_time: 0.009s
+  states_per_second: 2645
+**************************************************
+Initial state:
+  The red robot is at row: 4, column: 10.
+  The blue robot is at row: 11, column: 11.
+  The yellow robot is at row: 3, column: 6.
+  The green robot is at row: 0, column: 7.
+  The silver robot is at row: 10, column: 8.
+Attempting to solve for green triangle
+Solved in 5 moves:
+  1) Green right
+  2) Red left
+  3) Green down
+  4) Green left
+  5) Green up
+Statistics:
+  states_considered: 4490
+  solving_time: 3.874s
+  states_per_second: 1159
+
+real	48m28.267s
+user	47m43.768s
+sys	0m42.314s

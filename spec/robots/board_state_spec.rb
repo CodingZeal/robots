@@ -107,5 +107,33 @@ module Robots
         end
       end
     end
+
+    describe "ensuring the goal robot is first" do
+      let(:adjusted_state) { state.dup.tap { |s| s.ensure_goal_robot_first(goal) } }
+
+      context "when it is already first" do
+        let(:goal) { Target.new(robot1.color, :circle) }
+
+        it "makes no changes" do
+          expect(adjusted_state).to eq state
+        end
+      end
+
+      context "when it is not first" do
+        let(:goal) { Target.new(robot2.color, :triangle) }
+
+        it "moves the goal robot to the beginning" do
+          expect(adjusted_state).to eq BoardState.new([robot2, robot1])
+        end
+      end
+
+      context "with the vortex" do
+        let(:goal) { Target.vortex }
+
+        it "makes no changes" do
+          expect(adjusted_state).to eq state
+        end
+      end
+    end
   end
 end

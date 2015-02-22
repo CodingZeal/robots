@@ -86,7 +86,12 @@ module Robots
     end
 
     def solver_class
-      Solvers::Bfs
+      case options.algorithm
+        when "bfs"
+          Solvers::Bfs
+        else
+          Solvers::GoalRobotFirst
+      end
     end
 
     def start_cell

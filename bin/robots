@@ -18,7 +18,7 @@ def parse_options
     end
 
     opts.on("--algorithm ALGORITHM", "Choose the solving algorithm (default = bfs)") do |algorithm|
-      options.algorithm = algorithm
+      options.algorithm = algorithm.downcase.strip
     end
 
     opts.on("-c", "--count COUNT", Integer, "Specify the number of robots to play") do |count|
