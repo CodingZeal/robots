@@ -17,11 +17,15 @@ module Robots
 
         until paths.empty?
           path = paths.shift
-          return path.to_outcome if path.solved?
 
           visit(path) || next
 
-          paths.concat(path.allowable_successors)
+          successors = path.allowable_successors
+          solution = successors.find(&:solved?)
+
+          return solution.to_outcome if solution
+
+          paths.concat(successors)
         end
 
         Outcome.no_solution(initial_state)

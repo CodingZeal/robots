@@ -56,11 +56,6 @@ def parse_options
 
   parser.parse!
 
-  unless options.goal || options.all || options.simulated_game
-    $stderr.puts "Please specify a goal for the robot"
-    exit 1
-  end
-
   options
 end
 
