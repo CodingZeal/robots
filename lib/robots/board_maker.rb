@@ -16,31 +16,21 @@ module Robots
     def add_interior_walls
       VERTICAL_WALLS.each_with_index do |walls, row|
         walls.each do |column|
-          add_wall_after_column(row, column)
+          board.add_wall_after_column(row, column)
         end
       end
 
       HORIZONTAL_WALLS.each_with_index do |walls, column|
         walls.each do |row|
-          add_wall_after_row(row, column)
+          board.add_wall_after_row(row, column)
         end
       end
     end
 
     def add_targets
       TARGETS.each do |row, column, color, shape|
-        board.cell(row, column).target = Target.new(color, shape)
+        board.add_target(row, column, Target.new(color, shape))
       end
-    end
-
-    def add_wall_after_column(row, column)
-      board.cell(row, column).block(:left)
-      board.cell(row, column + 1).block(:right)
-    end
-
-    def add_wall_after_row(row, column)
-      board.cell(row, column).block(:up)
-      board.cell(row + 1, column).block(:down)
     end
 
     attr_reader :board

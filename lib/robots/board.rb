@@ -53,6 +53,20 @@ module Robots
       end
     end
 
+    def add_wall_after_column(row, column)
+      cell(row, column).block(:left)
+      cell(row, column + 1).block(:right)
+    end
+
+    def add_wall_after_row(row, column)
+      cell(row, column).block(:up)
+      cell(row + 1, column).block(:down)
+    end
+
+    def add_target(row, column, target)
+      cell(row, column).target = target
+    end
+
     private
 
     BOARD_SIZE = 16
