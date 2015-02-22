@@ -16,9 +16,7 @@ module Robots
     end
 
     def ensure_goal_robot_first(goal)
-      return if goal.color == :any
-
-      goal_index = robots.index { |robot| robot.color == goal.color }
+      goal_index = robots.index { |robot| goal.matches_color?(robot.color) }
       robots.rotate!(goal_index)
     end
 
