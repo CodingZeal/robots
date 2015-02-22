@@ -16,7 +16,7 @@ module Robots
       elsif options.simulated_game
         play_simulated_game(state, io)
       else
-        solve(state, options.goal, io)
+        solve(state, goal, io)
       end
     end
 
@@ -68,6 +68,10 @@ module Robots
 
     def robots
       @robots ||= initialize_robots
+    end
+
+    def goal
+      options.goal || target_disks.first
     end
 
     def initialize_robots
