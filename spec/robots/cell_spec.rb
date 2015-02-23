@@ -185,5 +185,13 @@ module Robots
         end
       end
     end
+
+    describe "#position_hash" do
+      let(:cell) { board.cell(11, 5) }
+
+      it "computes a unique hash" do
+        expect(cell.position_hash).to eq 181
+      end
+    end
   end
 end

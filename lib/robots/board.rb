@@ -28,6 +28,10 @@ module Robots
       end
     end
 
+    def size
+      BOARD_SIZE
+    end
+
     def top
       cells.top
     end
@@ -82,7 +86,7 @@ module Robots
     end
 
     def new_grid(&block)
-      Grid.new(BOARD_SIZE, &block)
+      Grid.new(size, &block)
     end
 
     def block(wall_cell, direction)

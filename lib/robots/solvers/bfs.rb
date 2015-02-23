@@ -32,14 +32,15 @@ module Robots
       end
 
       def visit(path)
-        return false if visited.include?(path.state)
+        equivalence_class = path.state.equivalence_class
+        return false if visited.include?(equivalence_class)
 
         note_state_considered
 
         if short_win?(path)
           visited.clear
         else
-          visited << path.state
+          visited << equivalence_class
         end
 
         true

@@ -4,7 +4,7 @@ module Robots
   describe BoardState do
     let(:robot1) { fake_robot(:blue) }
     let(:robot2) { fake_robot(:yellow) }
-    let(:goal) { Target.new(:blue, :circle) }
+    let(:goal) { Target.new(robot1.color, :circle) }
     let(:state) { BoardState.new([robot1, robot2], goal) }
     let(:cell) { instance_double(Cell) }
 
@@ -168,6 +168,23 @@ module Robots
         it "makes no changes" do
           expect(adjusted_state).to eq state
         end
+      end
+    end
+
+    describe "#equivalence_class" do
+      let(:equivalence_class) { state.equivalence_class }
+
+      before do
+        allow(robot1).to receive(:position_hash) { 42 }
+        allow(robot2).to receive(:position_hash) { 58 }
+      end
+
+      it "increases the position hash of the active robot" do
+        expect(equivalence_class).to include 1042
+      end
+
+      it "uses the position hash of non-active robots" do
+        expect(equivalence_class).to include 58
       end
     end
   end

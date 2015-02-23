@@ -41,6 +41,12 @@ module Robots
       !home_robot.nil?
     end
 
+    def equivalence_class
+      @equivalence_class ||= begin
+        Set.new(robots.map { |robot| robot.position_hash + (robot.active?(goal) ? 1000 : 0) })
+      end
+    end
+
     def to_s
       "  " + robots.map(&:to_s).join("\n  ") + "\nAttempting to solve for #{goal}"
     end

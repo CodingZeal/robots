@@ -24,6 +24,10 @@ module Robots
       cell.neighbor_nearest(other_cell)
     end
 
+    def position_hash
+      cell.position_hash
+    end
+
     def between?(first_cell, second_cell)
       cell.between?(first_cell, second_cell)
     end

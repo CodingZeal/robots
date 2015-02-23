@@ -30,6 +30,10 @@ module Robots
       end
     end
 
+    def position_hash
+      row * board.size + column
+    end
+
     def goal?(goal)
       target == goal
     end
