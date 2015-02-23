@@ -115,7 +115,7 @@ module Robots
       end
     end
 
-    describe "ensuring goal robot is present" do
+    describe "ensuring active robot is present" do
       context "when it is already present" do
         let(:goal) { Target.new(robot2.color, :circle) }
 
@@ -137,14 +137,14 @@ module Robots
         let(:goal) { Target.vortex }
         let(:replacement) { fake_robot(:silver) }
 
-        it "substitutes the silver robot" do
-          expect(state).to eq BoardState.new([replacement, robot2], goal)
+        it "makes no changes" do
+          expect(state).to eq BoardState.new([robot1, robot2], goal)
         end
       end
     end
 
-    describe "ensuring the goal robot is first" do
-      let(:adjusted_state) { state.dup.tap { |s| s.ensure_goal_robot_first } }
+    describe "ensuring the active robot is first" do
+      let(:adjusted_state) { state.dup.tap { |s| s.ensure_active_robot_first } }
 
       context "when it is already first" do
         let(:goal) { Target.new(robot1.color, :circle) }

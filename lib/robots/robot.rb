@@ -29,7 +29,11 @@ module Robots
     end
 
     def home?(goal)
-      goal.matches_color?(color) && cell.goal?(goal)
+      active?(goal) && cell.goal?(goal)
+    end
+
+    def active?(goal)
+      goal.matches_color?(color)
     end
 
     def to_s

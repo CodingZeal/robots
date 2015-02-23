@@ -10,7 +10,7 @@ module Robots
     def initialize(robots, goal)
       @robots = Array(robots)
       @goal = goal
-      ensure_goal_robot_present
+      ensure_active_robot_present
     end
 
     def with_robot_moved(robot, direction)
@@ -22,8 +22,8 @@ module Robots
       self.class.new(robots.dup, new_goal)
     end
 
-    def ensure_goal_robot_first
-      goal_index = robots.index { |robot| goal.matches_color?(robot.color) }
+    def ensure_active_robot_first
+      goal_index = robots.index { |robot| robot.active?(goal) }
       robots.rotate!(goal_index)
     end
 
@@ -49,9 +49,8 @@ module Robots
 
     attr_reader :goal
 
-    def ensure_goal_robot_present
-      new_color = (goal.color == :any) ? :silver : goal.color
-      robots.unshift(robots.shift.with_color(new_color)) unless robots.any? { |r| r.color == new_color }
+    def ensure_active_robot_present
+      robots.unshift(robots.shift.with_color(goal.color)) unless robots.any? { |robot| robot.active?(goal) }
     end
   end
 end
