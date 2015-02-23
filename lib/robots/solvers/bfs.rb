@@ -13,7 +13,7 @@ module Robots
       attr_reader :visited
 
       def solve
-        paths = [Path.initial(initial_state, goal)]
+        paths = [Path.initial(initial_state)]
 
         until paths.empty?
           path = paths.shift
@@ -46,7 +46,7 @@ module Robots
       end
 
       def short_win?(path)
-        path.state.game_over?(goal) && path.moves.size < 2
+        path.state.game_over? && path.moves.size < 2
       end
     end
   end

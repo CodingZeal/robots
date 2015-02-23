@@ -4,7 +4,7 @@ module Robots
   describe "Robot movement" do
     let(:board) { Board.example }
     let(:robot) { Robot.new(:silver, start) }
-    let(:state) { BoardState.new(robot) }
+    let(:state) { BoardState.new(robot, Target.vortex) }
 
     context "with no obstacles" do
       let(:start) { board.cell(5, 11) }

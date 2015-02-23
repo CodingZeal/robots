@@ -1,8 +1,8 @@
 module Robots
   RSpec.shared_examples "a solver" do
     let(:board) { Board.example }
-    let(:state) { BoardState.new(robots) }
-    let(:solver) { described_class.new(state, goal) }
+    let(:state) { BoardState.new(robots, goal) }
+    let(:solver) { described_class.new(state) }
     let(:outcome) { solver.outcome }
 
     context "with a single robot" do

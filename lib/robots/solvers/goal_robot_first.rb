@@ -5,7 +5,7 @@ module Robots
     class GoalRobotFirst < Bfs
       def initialize(*args)
         super
-        initial_state.ensure_goal_robot_first(goal)
+        initial_state.ensure_goal_robot_first
       end
     end
   end

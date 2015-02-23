@@ -5,15 +5,14 @@ module Robots
   class Path
     attr_reader :state, :moves
 
-    def self.initial(state, goal)
-      new(state, goal)
+    def self.initial(state)
+      new(state)
     end
 
     private_class_method :new
 
-    def initialize(state, goal, moves = [])
+    def initialize(state, moves = [])
       @state = state
-      @goal = goal
       @moves = moves
     end
 
@@ -23,11 +22,11 @@ module Robots
 
     def successor(move)
       next_state = state.with_robot_moved(move.robot, move.direction)
-      next_state == state ? nil : self.class.successor(next_state, goal, moves + [move])
+      next_state == state ? nil : self.class.successor(next_state, moves + [move])
     end
 
     def solved?
-      game_over?(state) && ricocheted?(state.home_robot(goal))
+      game_over?(state) && ricocheted?(state.home_robot)
     end
 
     def to_outcome
@@ -35,13 +34,11 @@ module Robots
     end
 
     # private
-    def self.successor(state, goal, moves)
-      new(state, goal, moves)
+    def self.successor(state, moves)
+      new(state, moves)
     end
 
     private
-
-    attr_reader :goal
 
     def allowable_moves
       state.robots.flat_map do |robot|
@@ -50,7 +47,7 @@ module Robots
     end
 
     def game_over?(state)
-      state && state.game_over?(goal)
+      state && state.game_over?
     end
 
     def ricocheted?(robot)

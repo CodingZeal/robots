@@ -14,14 +14,14 @@ module Robots
     def run(io = $stdout)
       io.puts "robots --seed #{seed}"
 
-      state = BoardState.new(robots)
+      state = BoardState.new(robots, goal)
 
       if options.all
         run_all(state, io)
       elsif options.simulated_game
         play_simulated_game(state, io)
       else
-        solve(state, goal, io)
+        solve(state, io)
       end
     end
 
@@ -29,22 +29,21 @@ module Robots
 
     def run_all(state, io)
       target_disks.each do |goal|
-        solve(state, goal, io)
+        solve(state.with_goal(goal), io)
       end
     end
 
     def play_simulated_game(state, io)
       target_disks.inject(state) do |next_state, goal|
-        next_state.ensure_goal_robot_present(goal)
-        outcome = solve(next_state, goal, io)
+        outcome = solve(next_state.with_goal(goal), io)
         outcome.final_state
       end
     end
 
-    def solve(state, goal, io)
-      preamble(state, goal, io)
+    def solve(state, io)
+      preamble(state, io)
 
-      solver = solver_class.new(state, goal)
+      solver = solver_class.new(state)
       outcome = solver.outcome
 
       outcome.write(io)
@@ -53,11 +52,10 @@ module Robots
       outcome
     end
 
-    def preamble(state, goal, io)
+    def preamble(state, io)
       io.puts "*" * 50
       io.puts "Initial state:"
       io.puts "#{state}"
-      io.puts "Attempting to solve for #{goal}"
     end
 
     def write_stats(stats, io)
@@ -68,7 +66,7 @@ module Robots
     end
 
     def target_disks
-      board.targets.shuffle(random: random)
+      @target_disks ||= board.targets.shuffle(random: random)
     end
 
     def robots

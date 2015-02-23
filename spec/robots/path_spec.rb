@@ -6,7 +6,7 @@ module Robots
     let(:state) { fake_state("start state") }
     let(:intermediate_state) { fake_state("intermediate state") }
     let(:final_state) { fake_state("final state") }
-    let(:initial_path) { Path.initial(state, goal) }
+    let(:initial_path) { Path.initial(state) }
     let(:robot) { instance_double(Robot, color: :yellow) }
     let(:other_robot) { instance_double(Robot, color: :blue) }
     let(:path) do
@@ -20,7 +20,7 @@ module Robots
     end
 
     def game_over(state)
-      allow(state).to receive(:game_over?).with(goal) { true }
+      allow(state).to receive(:game_over?) { true }
     end
 
     before do
