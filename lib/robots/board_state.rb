@@ -17,7 +17,7 @@ module Robots
       moved_robot = robot.moved(direction, self)
       return self if moved_robot.equal?(robot)
 
-      moved_robots = robots.map { |each_robot| each_robot == robot ? moved_robot : each_robot }
+      moved_robots = robots.map { |each_robot| each_robot.equal?(robot) ? moved_robot : each_robot }
       self.class.new(moved_robots, goal)
     end
 
