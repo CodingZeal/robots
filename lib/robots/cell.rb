@@ -11,9 +11,6 @@ module Robots
       @column = column
     end
 
-    def block(directions)
-    end
-
     def next_cell(direction, board_state = nil)
       stop = board.stopping_cell(self, direction)
       board_state.stopping_cell(self, stop)
