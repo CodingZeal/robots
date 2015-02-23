@@ -43,7 +43,7 @@ module Robots
 
     def equivalence_class
       @equivalence_class ||= begin
-        Set.new(robots.map { |robot| robot.position_hash + (robot.active?(goal) ? 1000 : 0) })
+        robots.map { |robot| robot.position_hash + (robot.active?(goal) ? 1000 : 0) }.sort!
       end
     end
 
