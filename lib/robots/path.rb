@@ -55,13 +55,5 @@ module Robots
       (directions.include?(:up) || directions.include?(:down)) &&
         (directions.include?(:left) || directions.include?(:right))
     end
-
-    def cycle_detection_start
-      @cycle_detection_start ||= begin
-        return 1 if game_over?(visited.first)
-        return 2 if game_over?(visited[1])
-        0
-      end
-    end
   end
 end
