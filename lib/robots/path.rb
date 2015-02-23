@@ -22,7 +22,7 @@ module Robots
 
     def successor(move)
       next_state = state.with_robot_moved(move.robot, move.direction)
-      next_state == state ? nil : self.class.successor(next_state, moves + [move])
+      next_state.equal?(state) ? nil : self.class.successor(next_state, moves + [move])
     end
 
     def solved?

@@ -13,7 +13,8 @@ module Robots
     end
 
     def moved(direction, board_state)
-      self.class.new(color, cell.next_cell(direction, board_state))
+      next_cell = cell.next_cell(direction, board_state)
+      next_cell == cell ? self : self.class.new(color, next_cell)
     end
 
     def with_color(new_color)

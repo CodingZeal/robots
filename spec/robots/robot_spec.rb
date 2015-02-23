@@ -8,19 +8,30 @@ module Robots
     let(:state) { instance_double(BoardState) }
 
     describe "movement" do
-      let(:dest) { instance_double(Cell) }
       let(:moved) { robot.moved(:any_direction, state) }
 
       before do
         allow(cell).to receive(:next_cell).with(:any_direction, state) { dest }
       end
 
-      it "moves as far as its cell will let it" do
-        expect(moved.cell).to equal dest
+      context "when the robot can move" do
+        let(:dest) { instance_double(Cell) }
+
+        it "moves as far as its cell will let it" do
+          expect(moved.cell).to equal dest
+        end
+
+        it "returns a new robot instance" do
+          expect(moved).not_to equal robot
+        end
       end
 
-      it "returns a new robot instance" do
-        expect(moved).not_to equal robot
+      context "when the robot can't move" do
+        let(:dest) { robot.cell }
+
+        it "returns the same robot instance" do
+          expect(moved).to be robot
+        end
       end
     end
 
