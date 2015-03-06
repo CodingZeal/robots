@@ -7,7 +7,7 @@ require "ostruct"
 def parse_options
   options = OpenStruct.new
   options.robots = {}
-  options.robot_count = 1
+  options.robot_count = 5
 
   parser = OptionParser.new do |opts|
     opts.banner = "Usage: #{opts.program_name} [options]"
