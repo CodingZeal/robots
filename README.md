@@ -1,14 +1,11 @@
 # Robots
 
-This repo contains a solver for the [Ricochet Robots](http://boardgamegeek.com/boardgame/51/ricochet-robots) game.
+This repo contains a solver for the
+[Ricochet Robots](http://boardgamegeek.com/boardgame/51/ricochet-robots)
+game.
 
-It is the basis for my talk at [Mountain West Ruby Conference 2015](http://mtnwestrubyconf.org/).
-
-**This is under active development and is likely to change drastically as I prepare the talk.
-I reserve the right to force push to this repo without notice, so clone at your own risk.**
-
-Once everything has stabilized, I'll maintain this repo in a much friendlier manner.
-
+It is the basis for my talk at
+[Mountain West Ruby Conference 2015](http://mtnwestrubyconf.org/).
 
 ## Installation
 
@@ -28,41 +25,67 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+The `robots` executable will solve Ricochet Robots using the
+command-line options provided.  Currently, only a single fixed board
+layout has been implemented.
+
+There are three modes:
+
+* `-g/--goal COLOR,SHAPE`: Solve for a single goal target.
+
+* `-p/--play`: Play a simulated game of Ricochet Robots.  All 17 goal targets
+  are solved in a random order.  Each goal will be solved starting
+  from the ending positions after solving the previous goal.
+
+* `-a/--all`: Solve all 17 goal targets in a random order, always starting
+  from the same starting state.  Before each goal, all of the robots
+  will be moved back to their initial positions.
+
+Unless otherwise specified, all five robots will be placed at random
+starting positions on the board.  This can be changed with the
+following options:
+
+* `-c/--count COUNT`: Use `COUNT` robots instead of the default five.
+The program does not support more than five robots.
+
+* `-r/--robot COLOR,ROW,COLUMN`: Place the `COLOR` robot at position
+  (`ROW`, `COLUMN`).  Positions are 0-based starting from the upper
+  right corner of the board.  This option can be used up to five
+  times, for five robots.  If fewer `-r` options are specified than
+  `COUNT` above, the remaining robots will be randomly placed on the
+  board.
+
+There are a couple of other options that are more useful for testing:
+
+* `--algorithm ALGORITHM`: Specify the solving algorithm to be used.
+  The default is the current best algorithm, `goal_first`, but you can
+  also specify `bfs` to run the standard breadth-first solver.
+
+* `--s/--seed SEED`: Use the specified value as the seed for the
+  random-number generator.  This is most useful for repeating a
+  previous game, which allows somewhat repeatable performance testing.
 
 ## Examples
-
-These are currently here as notes for myself.
 
 ### Play a Simulated Game
 
 ```ruby
-bundle exec robots -p -c 3
+bundle exec robots -p -c 5
 ```
 
-### Watch for Cheating
+### Re-play a Previous Game
+
+When running `robots`, it prints out a seed value.  If you re-run the
+game with the same options and provide the seed, it will re-play the
+exact same game.
 
 ```ruby
-bundle exec robots -g red,triangle -r red,2,1 -r silver,4,0
-```
-
-### Five-robot games that need optimizing
-
-```ruby
-bundle exec robots -g green,hex -r green,2,1 -r silver,0,11 -r red,5,0 -r blue,6,15 -r yellow,2,14
-```
-
-```ruby
-bundle exec robots -g red,hex -r green,1,9 -r silver,0,11 -r red,5,0 -r blue,6,15 -r yellow,0,10
-```
-
-```ruby
-bundle exec robots -g green,circle -r green,11,10 -r silver,0,11 -r red,10,13 -r blue,13,9 -r yellow,0,10
+bundle exec robots -p -c 5 --seed 4347
 ```
 
 ## Contributing
 
-1. Fork it ( https://github.com/randycoulman/robots/fork )
+1. Fork it ( https://github.com/CodingZeal/robots/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
