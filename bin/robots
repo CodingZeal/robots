@@ -17,7 +17,7 @@ def parse_options
       options.all = true
     end
 
-    opts.on("--algorithm ALGORITHM", "Choose the solving algorithm (default = bfs)") do |algorithm|
+    opts.on("--algorithm ALGORITHM", "Choose the solving algorithm (default = goal_first)") do |algorithm|
       options.algorithm = algorithm.downcase.strip
     end
 
