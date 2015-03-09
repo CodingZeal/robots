@@ -20,6 +20,11 @@ module Robots
       color == :any || color == other
     end
 
+    def to_command_line_args
+      args = (shape == :vortex) ? "vortex" : "#{color},#{shape}"
+      "-g #{args}"
+    end
+
     def to_s
       shape == :vortex ? "vortex" : "#{color} #{shape}"
     end

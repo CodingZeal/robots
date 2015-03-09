@@ -41,6 +41,10 @@ module Robots
       goal.matches_color?(color)
     end
 
+    def to_command_line_args
+      "-r #{color},#{cell.to_command_line_args}"
+    end
+
     def to_s
       "The #{color} robot is at #{cell}."
     end

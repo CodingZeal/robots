@@ -85,6 +85,10 @@ module Robots
       "#<#{self.class.name}:#{object_id} row=#{row} column=#{column}>"
     end
 
+    def to_command_line_args
+      "#{row},#{column}"
+    end
+
     def to_s
       "row: #{row}, column: #{column}"
     end

@@ -49,6 +49,8 @@ module Robots
       outcome.write(io)
       write_stats(solver.stats, io)
 
+      io.puts "robots #{outcome.to_command_line_args}"
+
       outcome
     end
 

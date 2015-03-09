@@ -36,6 +36,10 @@ module Robots
       end
     end
 
+    def to_command_line_args
+      final_state.to_command_line_args
+    end
+
     private
 
     attr_reader :moves

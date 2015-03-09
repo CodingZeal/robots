@@ -50,6 +50,18 @@ module Robots
       end
     end
 
+    def to_command_line_args
+      "#{robots_args} #{goal_args}"
+    end
+
+    def robots_args
+      robots.map(&:to_command_line_args).join(" ")
+    end
+
+    def goal_args
+      goal.to_command_line_args
+    end
+
     def to_s
       "  " + robots.map(&:to_s).join("\n  ") + "\nAttempting to solve for #{goal}"
     end
