@@ -25,6 +25,10 @@ module Robots
       next_state.equal?(state) ? nil : self.class.successor(next_state, moves + [move])
     end
 
+    def length
+      moves.size
+    end
+    
     def solved?
       game_over?(state) && ricocheted?(state.home_robot)
     end

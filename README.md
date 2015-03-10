@@ -65,6 +65,9 @@ There are a couple of other options that are more useful for testing:
   random-number generator.  This is most useful for repeating a
   previous game, which allows somewhat repeatable performance testing.
 
+* `--v/--verbose`: Prints additional information about in-progress
+  solutions while solving boards.
+
 ## Examples
 
 ### Play a Simulated Game

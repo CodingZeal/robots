@@ -6,17 +6,20 @@ module Robots
       def initialize(*args)
         super
         @visited = Set.new
+        @last_path_length = 0
       end
 
       private
 
-      attr_reader :visited
+      attr_reader :visited, :last_path_length
 
       def solve
         paths = [Path.initial(initial_state)]
 
         until paths.empty?
           path = paths.shift
+
+          report_progress(path) if verbose?
 
           visit(path) || next
 
@@ -48,6 +51,13 @@ module Robots
 
       def short_win?(path)
         path.state.game_over? && path.moves.size < 2
+      end
+
+      def report_progress(path)
+        return if path.length == last_path_length
+
+        puts "Considering paths of length #{path.length} (#{stats.states_considered} states considered)"
+        @last_path_length = path.length
       end
     end
   end

@@ -43,6 +43,10 @@ def parse_options
       options.seed = seed
     end
 
+    opts.on("-v", "--verbose", "Print additional information while solving") do |verbose|
+      options.verbose = true
+    end
+
     opts.on_tail("-h", "--help", "Shows this help screen") do
       puts opts
       exit

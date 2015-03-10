@@ -43,7 +43,7 @@ module Robots
     def solve(state, io)
       preamble(state, io)
 
-      solver = solver_class.new(state)
+      solver = solver_class.new(state, verbose: options.verbose)
       outcome = solver.outcome
 
       outcome.write(io)
