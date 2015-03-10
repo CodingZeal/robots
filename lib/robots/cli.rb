@@ -89,7 +89,11 @@ module Robots
 
       remaining_count = [0, options.robot_count - result.size].max
       remaining_colors.first(remaining_count).each do |color|
-        result << Robot.new(color, board.random_cell(random))
+        begin
+          cell = board.random_cell(random)
+        end while result.any? { |robot| robot.cell == cell }
+
+        result << Robot.new(color, cell)
       end
       result
     end
