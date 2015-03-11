@@ -20,7 +20,7 @@ module Robots
     end
 
     context "in upper left quadrant" do
-      let(:quadrant) { :upper_left }
+      let(:quadrant) { Quadrant::UpperLeft.new }
 
       it "places targets directly on the board" do
         expect(board).to have_received(:add_target).with(1, 4, expected_target)
@@ -36,7 +36,7 @@ module Robots
     end
 
     context "in upper right quadrant" do
-      let(:quadrant) { :upper_right }
+      let(:quadrant) { Quadrant::UpperRight.new }
 
       it "rotates 90 degrees before placing targets" do
         expect(board).to have_received(:add_target).with(4, 14, expected_target)
@@ -52,7 +52,7 @@ module Robots
     end
 
     context "in lower right quadrant" do
-      let(:quadrant) { :lower_right }
+      let(:quadrant) { Quadrant::LowerRight.new }
 
       it "rotates 180 degrees before placing targets" do
         expect(board).to have_received(:add_target).with(14, 11, expected_target)
@@ -68,7 +68,7 @@ module Robots
     end
 
     context "in lower left quadrant" do
-      let(:quadrant) { :lower_left }
+      let(:quadrant) { Quadrant::LowerLeft.new }
 
       it "rotates 270 degrees before placing targets" do
         expect(board).to have_received(:add_target).with(11, 1, expected_target)
