@@ -2,6 +2,14 @@ require_relative "tile"
 
 module Robots
   module Tiles
+    def self.groups
+      [[A1, A2], [B1, B2], [C1, C2], [D1, D2]]
+    end
+
+    def self.random_layout(random)
+      groups.shuffle(random).map { |group| group.sample(random) }
+    end
+
     A1 = Tile.new(
      targets: [
        [1, 4, :red, :circle],
@@ -24,6 +32,29 @@ module Robots
      ]
     )
 
+    A2 = Tile.new(
+      targets: [
+        [1, 6, :yellow, :hex],
+        [2, 1, :green, :triangle],
+        [5, 6, :blue, :square],
+        [6, 3, :red, :circle]
+      ],
+      vertical_walls: [
+        [0, 4],
+        [1, 6],
+        [2, 0],
+        [5, 6],
+        [6, 2]
+      ],
+      horizontal_walls: [
+        [1, 1],
+        [1, 6],
+        [4, 6],
+        [5, 0],
+        [6, 3]
+      ]
+    )
+
     B1 = Tile.new(
       targets: [
         [1, 2, :yellow, :circle],
@@ -44,6 +75,29 @@ module Robots
         [4, 0],
         [4, 4],
         [6, 1]
+      ]
+    )
+
+    B2 = Tile.new(
+      targets: [
+        [1, 5, :green, :hex],
+        [2, 1, :red, :square],
+        [4, 6, :yellow, :circle],
+        [6, 2, :blue, :triangle]
+      ],
+      vertical_walls: [
+        [0, 3],
+        [1, 5],
+        [2, 0],
+        [4, 5],
+        [6, 2]
+      ],
+      horizontal_walls: [
+        [1, 5],
+        [2, 1],
+        [3, 0],
+        [3, 6],
+        [5, 2]
       ]
     )
 
@@ -73,6 +127,32 @@ module Robots
       ]
     )
 
+    C2 = Tile.new(
+      targets: [
+        [1, 2, :red, :hex],
+        [3, 1, :green, :square],
+        [4, 6, :yellow, :triangle],
+        [6, 5, :blue, :circle],
+        [7, 3, :vortex]
+      ],
+      vertical_walls: [
+        [0, 4],
+        [1, 2],
+        [3, 0],
+        [4, 5],
+        [6, 5],
+        [7, 3]
+      ],
+      horizontal_walls: [
+        [1, 2],
+        [3, 1],
+        [3, 6],
+        [4, 0],
+        [5, 5],
+        [7, 3]
+      ]
+    )
+
     D1 = Tile.new(
       targets: [
         [1, 1, :red, :triangle],
@@ -93,6 +173,29 @@ module Robots
         [4, 2],
         [4, 7],
         [5, 0]
+      ]
+    )
+
+    D2 = Tile.new(
+      targets: [
+        [2, 5, :blue, :hex],
+        [4, 2, :green, :circle],
+        [5, 7, :red, :triangle],
+        [6, 1, :yellow, :square]
+      ],
+      vertical_walls: [
+        [0, 3],
+        [2, 5],
+        [4, 2],
+        [5, 6],
+        [6, 0]
+      ],
+      horizontal_walls: [
+        [2, 5],
+        [3, 2],
+        [4, 0],
+        [5, 1],
+        [5, 7]
       ]
     )
   end

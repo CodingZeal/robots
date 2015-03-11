@@ -8,15 +8,22 @@ module Robots
       @board = board
     end
 
+    def populate_random(random)
+      populate_with_tiles(Tiles.random_layout(random))
+    end
+
     def populate_example
-      tiles = [Tiles::A1, Tiles::B1, Tiles::C1, Tiles::D1]
-      tiles.zip(Quadrant.all) do |tile, quadrant|
-        tile.populate(board, quadrant: quadrant)
-      end
+      populate_with_tiles(Tiles.groups.map(&:first))
     end
 
     private
 
     attr_reader :board
+
+    def populate_with_tiles(tiles)
+      tiles.zip(Quadrant.all) do |tile, quadrant|
+        tile.populate(board, quadrant: quadrant)
+      end
+    end
   end
 end
