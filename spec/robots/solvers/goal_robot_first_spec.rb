@@ -1,5 +1,5 @@
 require "spec_helper"
-require_relative "../shared_examples/solver_shared_examples"
+require_relative "../../shared_examples/solver_shared_examples"
 
 module Robots
   describe Solvers::GoalRobotFirst do
