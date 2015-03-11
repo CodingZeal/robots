@@ -1,4 +1,8 @@
 module Quadrant
+  def self.all
+    [UpperLeft, UpperRight, LowerRight, LowerLeft].map(&:new)
+  end
+
   class UpperLeft
     def add_target(board, row, column, target)
       board.add_target(row, column, target)

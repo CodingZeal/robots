@@ -1,4 +1,6 @@
 require_relative "board"
+require_relative "quadrant"
+require_relative "tiles"
 
 module Robots
   class BoardMaker
@@ -7,92 +9,14 @@ module Robots
     end
 
     def populate_example
-      add_interior_walls
-      add_targets
+      tiles = [Tiles::A1, Tiles::B1, Tiles::C1, Tiles::D1]
+      tiles.zip(Quadrant.all) do |tile, quadrant|
+        tile.populate(board, quadrant: quadrant)
+      end
     end
 
     private
 
-    def add_interior_walls
-      VERTICAL_WALLS.each_with_index do |walls, row|
-        walls.each do |column|
-          board.add_wall_after_column(row, column)
-        end
-      end
-
-      HORIZONTAL_WALLS.each_with_index do |walls, column|
-        walls.each do |row|
-          board.add_wall_after_row(row, column)
-        end
-      end
-    end
-
-    def add_targets
-      TARGETS.each do |row, column, color, shape|
-        board.add_target(row, column, Target.new(color, shape))
-      end
-    end
-
     attr_reader :board
-
-    VERTICAL_WALLS = [
-      [1, 10],
-      [3, 8],
-      [1, 14],
-      [6],
-      [10],
-      [],
-      [2, 11],
-      [],
-      [4],
-      [1],
-      [7, 12],
-      [10],
-      [13],
-      [4],
-      [1, 9],
-      [5, 11]
-    ]
-
-    HORIZONTAL_WALLS = [
-      [5, 11],
-      [1, 14],
-      [8],
-      [6],
-      [0, 12],
-      [8],
-      [3],
-      [],
-      [9],
-      [1, 13],
-      [4, 11],
-      [],
-      [5],
-      [9],
-      [1, 12],
-      [4, 8]
-    ]
-
-    TARGETS = [
-      [1, 4, :red, :circle],
-      [1, 9, :green, :hex],
-      [2, 1, :green, :triangle],
-      [2, 14, :yellow, :circle],
-      [3, 6, :yellow, :hex],
-      [4, 10, :red, :square],
-      [6, 3, :blue, :square],
-      [6, 12, :blue, :triangle],
-      [8, 5, :yellow, :square],
-      [9, 2, :green, :circle],
-      [10, 8, :vortex],
-      [10, 13, :red, :hex],
-      [11, 10, :green, :square],
-      [12, 14, :yellow, :triangle],
-      [13, 4, :blue, :hex],
-      [14, 1, :red, :triangle],
-      [14, 9, :blue, :circle]
-    ]
-
-    private_constant :VERTICAL_WALLS, :HORIZONTAL_WALLS, :TARGETS
   end
 end
