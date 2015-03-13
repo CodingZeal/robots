@@ -3,7 +3,7 @@ require "spec_helper"
 module Robots
   describe Tile do
     subject(:tile) do
-      Tile.new(targets: targets, vertical_walls: vertical_walls, horizontal_walls: horizontal_walls)
+      Tile.new("test", targets: targets, vertical_walls: vertical_walls, horizontal_walls: horizontal_walls)
     end
 
     let(:board) { instance_double(Board, size: 16) }

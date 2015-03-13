@@ -7,10 +7,10 @@ module Robots
     end
 
     def self.random_layout(random)
-      groups.shuffle(random).map { |group| group.sample(random) }
+      groups.shuffle(random: random).map { |group| group.sample(random: random) }
     end
 
-    A1 = Tile.new(
+    A1 = Tile.new("A1",
      targets: [
        [1, 4, :red, :circle],
        [2, 1, :green, :triangle],
@@ -32,7 +32,7 @@ module Robots
      ]
     )
 
-    A2 = Tile.new(
+    A2 = Tile.new("A2",
       targets: [
         [1, 6, :yellow, :hex],
         [2, 1, :green, :triangle],
@@ -55,7 +55,7 @@ module Robots
       ]
     )
 
-    B1 = Tile.new(
+    B1 = Tile.new("B1",
       targets: [
         [1, 2, :yellow, :circle],
         [3, 6, :blue, :triangle],
@@ -78,7 +78,7 @@ module Robots
       ]
     )
 
-    B2 = Tile.new(
+    B2 = Tile.new("B2",
       targets: [
         [1, 5, :green, :hex],
         [2, 1, :red, :square],
@@ -101,7 +101,7 @@ module Robots
       ]
     )
 
-    C1 = Tile.new(
+    C1 = Tile.new("C1",
       targets: [
         [1, 6, :blue, :circle],
         [3, 1, :yellow, :triangle],
@@ -127,7 +127,7 @@ module Robots
       ]
     )
 
-    C2 = Tile.new(
+    C2 = Tile.new("C2",
       targets: [
         [1, 2, :red, :hex],
         [3, 1, :green, :square],
@@ -153,7 +153,7 @@ module Robots
       ]
     )
 
-    D1 = Tile.new(
+    D1 = Tile.new("D1",
       targets: [
         [1, 1, :red, :triangle],
         [2, 6, :green, :circle],
@@ -176,7 +176,7 @@ module Robots
       ]
     )
 
-    D2 = Tile.new(
+    D2 = Tile.new("D2",
       targets: [
         [2, 5, :blue, :hex],
         [4, 2, :green, :circle],

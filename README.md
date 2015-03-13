@@ -42,11 +42,11 @@ There are three modes:
   will be moved back to their initial positions.
 
 Unless otherwise specified, all five robots will be placed at random
-starting positions on the board.  This can be changed with the
-following options:
+starting positions on a randomly-configured board.  This can be changed with 
+the following options:
 
 * `-c/--count COUNT`: Use `COUNT` robots instead of the default five.
-The program does not support more than five robots.
+  The program does not support more than five robots.
 
 * `-r/--robot COLOR,ROW,COLUMN`: Place the `COLOR` robot at position
   (`ROW`, `COLUMN`).  Positions are 0-based starting from the upper
@@ -54,6 +54,12 @@ The program does not support more than five robots.
   times, for five robots.  If fewer `-r` options are specified than
   `COUNT` above, the remaining robots will be randomly placed on the
   board.
+
+* `-t/--tiles T1,T2,T3,T4`: Use the specified tiles to populate the 
+  board.  Allowable tile specifiers are `A1`, `A2`, `B1`, `B2`, `C1`,
+  `C2`, `D1`, and `D2`.  The tiles are positioned in the upper-left,
+  upper-right, lower-right, and lower-left quadrants in order.  Only
+  one tile from each group (A, B, C, D) may be used at a time.
 
 There are a couple of other options that are more useful for testing:
 

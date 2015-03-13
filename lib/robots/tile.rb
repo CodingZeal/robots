@@ -1,6 +1,7 @@
 module Robots
   class Tile
-    def initialize(targets:, vertical_walls:, horizontal_walls:)
+    def initialize(name, targets:, vertical_walls:, horizontal_walls:)
+      @name = name
       @targets = targets
       @vertical_walls = vertical_walls
       @horizontal_walls = horizontal_walls
@@ -12,9 +13,13 @@ module Robots
       add_horizontal_walls(board, quadrant)
     end
 
+    def to_s
+      name
+    end
+
     private
 
-    attr_reader :targets, :vertical_walls, :horizontal_walls
+    attr_reader :name, :targets, :vertical_walls, :horizontal_walls
 
     def add_targets(board, quadrant)
       targets.each do |row, column, color, shape|

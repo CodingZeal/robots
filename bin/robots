@@ -43,6 +43,13 @@ def parse_options
       options.seed = seed
     end
 
+    opts.on("-t", "--tiles T1,T2,T3,T4", Array,
+            "The tiles to use when populating the board", <<LONG) do |tiles|
+Tiles are A1, A2, B1, B2, C1, C2, D1, D2.  Specified tiles are placed clockwise starting at the upper-left quadrant.
+LONG
+      options.tiles = tiles
+    end
+
     opts.on("-v", "--verbose", "Print additional information while solving") do |verbose|
       options.verbose = true
     end

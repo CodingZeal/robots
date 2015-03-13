@@ -7,13 +7,14 @@ module Robots
   class CLI
     def initialize(options)
       @options = options
-      @board = Board.example
+      @board = Board.new
       @random = Random.new(seed)
     end
 
     def run(io = $stdout)
       io.puts "robots --seed #{seed}"
-
+      io.puts "Tiles: #{tiles.join(" ")}"
+      populate_board
       state = BoardState.new(robots, goal)
 
       if options.all
@@ -26,6 +27,20 @@ module Robots
     end
 
     private
+
+    def populate_board
+      BoardMaker.new(board).populate_with_tiles(tiles)
+    end
+
+    def tiles
+      @tiles ||= if options.tiles
+                   options.tiles.map do |tile_name|
+                     Tiles.const_get(tile_name.upcase)
+                   end
+                 else
+                   Tiles.random_layout(random)
+                 end
+    end
 
     def run_all(state, io)
       target_disks.each do |goal|
