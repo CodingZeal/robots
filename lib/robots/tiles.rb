@@ -99,11 +99,11 @@ module Robots
         [5, 0],
         [5, 2],
         [6, 3]
-      ] #,
-      # diagonal_walls: [
-      #   [1, 4, :green],
-      #   [7, 5, :yellow]
-      # ]
+      ],
+      diagonal_walls: [
+        [1, 4, :green],
+        [7, 5, :yellow]
+      ]
     )
 
     # Blue in new game
@@ -195,11 +195,11 @@ module Robots
         [5, 1],
         [6, 0],
         [6, 4]
-      ] #,
-      # diagonal_walls: [
-      #   [1, 2, :blue],
-      #   [4, 7, :red]
-      # ]
+      ],
+      diagonal_walls: [
+        [1, 2, :blue],
+        [4, 7, :red]
+      ]
     )
 
     # Yellow in new game
@@ -303,11 +303,11 @@ module Robots
         [5, 1],
         [6, 0],
         [7, 5]
-      ] #,
-      # diagonal_walls: [
-      #   [1, 2, :red],
-      #   [6, 3, :green]
-      # ]
+      ],
+      diagonal_walls: [
+        [1, 2, :red],
+        [6, 3, :green]
+      ]
     )
 
     # Red in new game
@@ -399,11 +399,11 @@ module Robots
         [3, 2],
         [4, 3],
         [5, 5]
-      ] #,
-      # diagonal_walls: [
-      #   [1, 4, :blue],
-      #   [3, 6, :yellow]
-      # ]
+      ],
+      diagonal_walls: [
+        [1, 4, :blue],
+        [3, 6, :yellow]
+      ]
     )
   end
 end
