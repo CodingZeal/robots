@@ -15,7 +15,7 @@ module Robots
       def solve
         paths = make_paths(Path.initial(initial_state))
 
-        until paths.empty?
+        until empty?(paths)
           path = next_path(paths)
 
           report_progress(path) if verbose?
@@ -43,6 +43,10 @@ module Robots
 
       def add_paths(paths, successors)
         fail NotImplementedError, "Subclasses must implement this"
+      end
+
+      def empty?(paths)
+        paths.empty?
       end
 
       def visit(path)

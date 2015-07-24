@@ -1,5 +1,4 @@
 require_relative "tree_solver"
-require "set"
 
 module Robots
   module Solvers

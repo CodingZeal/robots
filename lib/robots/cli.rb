@@ -117,6 +117,10 @@ module Robots
       case options.algorithm
         when "bfs"
           Solvers::Bfs
+        when "best"
+          Solvers::BestFirst
+        when "goal"
+          Solvers::GoalRobotFirst
         else
           Solvers::GoalRobotFirst
       end
