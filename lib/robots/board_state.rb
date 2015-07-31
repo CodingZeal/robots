@@ -5,7 +5,7 @@ module Robots
   class BoardState
     include Equalizer.new(:robots, :goal)
 
-    attr_reader :robots
+    attr_reader :robots, :goal
 
     def initialize(robots, goal)
       @robots = Array(robots)
@@ -67,8 +67,6 @@ module Robots
     end
 
     private
-
-    attr_reader :goal
 
     def ensure_active_robot_present
       robots.unshift(robots.shift.with_color(goal.color)) unless robots.any? { |robot| robot.active?(goal) }

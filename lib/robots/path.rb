@@ -28,13 +28,21 @@ module Robots
     def length
       moves.size
     end
-    
+
+    def last_moved_robot
+      moves.last && moves.last.robot
+    end
+
     def solved?
       game_over?(state) && ricocheted?(state.home_robot)
     end
 
     def to_outcome
       solved? ? Outcome.solved(moves, state) : Outcome.no_solution(state)
+    end
+
+    def to_s
+      (moves.map { |move| [move.robot.color, move.direction] }).to_s
     end
 
     # private
