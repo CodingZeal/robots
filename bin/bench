@@ -1,0 +1,25 @@
+#!/bin/sh
+
+ALGORITHM=${1:-goal}
+
+robots() {
+    bundle exec robots -t A1,B1,C1,D1 --algorithm $ALGORITHM "$@"
+}
+
+robots -r green,2,6 -r silver,11,15 -r red,0,9 -r blue,13,3 -r yellow,12,15 -g red,hex
+robots -r red,10,13 -r blue,13,3 -r yellow,12,15 -r green,2,6 -r silver,11,15 -g blue,hex
+robots -r blue,13,4 -r yellow,15,15 -r green,2,6 -r silver,11,15 -r red,10,13 -g yellow,square
+robots -r yellow,8,5 -r green,0,6 -r silver,11,15 -r red,10,13 -r blue,13,4 -g blue,triangle
+robots -r blue,6,12 -r yellow,8,5 -r green,0,6 -r silver,11,15 -r red,10,13 -g red,triangle
+robots -r red,14,1 -r blue,6,12 -r yellow,8,5 -r green,5,0 -r silver,11,15 -g green,square
+robots -r green,11,10 -r silver,11,15 -r red,14,1 -r blue,8,9 -r yellow,8,5 -g yellow,triangle
+robots -r yellow,12,14 -r green,5,15 -r silver,11,15 -r red,14,1 -r blue,8,9 -g red,circle
+robots -r red,1,4 -r blue,8,9 -r yellow,12,14 -r green,5,15 -r silver,11,15 -g green,circle
+robots -r green,9,2 -r silver,11,15 -r red,1,4 -r blue,2,9 -r yellow,12,14 -g yellow,circle
+robots -r yellow,2,14 -r green,15,2 -r silver,11,15 -r red,1,4 -r blue,2,9 -g blue,square
+robots -r blue,6,3 -r yellow,2,2 -r green,15,2 -r silver,11,15 -r red,1,4 -g blue,circle
+robots -r blue,14,9 -r yellow,2,2 -r green,15,2 -r silver,15,6 -r red,1,4 -g green,hex
+robots -r green,1,9 -r silver,0,11 -r red,1,4 -r blue,9,2 -r yellow,2,2 -g vortex
+robots -r green,1,9 -r silver,10,8 -r red,1,4 -r blue,11,11 -r yellow,12,15 -g yellow,hex
+robots -r yellow,3,6 -r green,0,7 -r silver,10,8 -r red,0,8 -r blue,11,11 -g red,square
+robots -r red,4,10 -r blue,11,11 -r yellow,3,6 -r green,0,7 -r silver,10,8 -g green,triangle
