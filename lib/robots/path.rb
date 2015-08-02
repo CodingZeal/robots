@@ -34,7 +34,7 @@ module Robots
     end
 
     def solved?
-      game_over?(state) && ricocheted?(state.home_robot)
+      state.game_over? && ricocheted?(state.home_robot)
     end
 
     def to_outcome
@@ -56,10 +56,6 @@ module Robots
       state.robots.flat_map do |robot|
         (moves.last || Move.null).successors(robot)
       end
-    end
-
-    def game_over?(state)
-      state && state.game_over?
     end
 
     def ricocheted?(robot)
