@@ -12,7 +12,7 @@ module Robots
       instance_double(BoardState, name, :game_over? => false, robots: [robot, other_robot])
     end
 
-    def game_over(state)
+    def be_goal_state(state)
       allow(state).to receive(:game_over?) { true }
     end
 
@@ -23,7 +23,7 @@ module Robots
     describe "solving" do
       context "when the state is solved" do
         before do
-          game_over(path.state)
+          be_goal_state(state)
         end
 
         context "when the goal robot has ricocheted" do
@@ -48,12 +48,53 @@ module Robots
       end
     end
 
+    describe "prunability" do
+      context "when in the goal state" do
+        before { be_goal_state(state) }
+
+        context "when solved" do
+          it "is prunable" do
+            expect(path).to be_prunable
+          end
+        end
+
+        context "when not solved (illegal solution)" do
+          let(:moves) { [Move.new(robot, :left)] }
+
+          it "is not prunable" do
+            expect(path).not_to be_prunable
+          end
+        end
+      end
+
+      context "when not in the goal state" do
+        it "is prunable" do
+          expect(path).to be_prunable
+        end
+      end
+
+      context "when its predecessor is not prunable" do
+        let(:move) { Move.new(robot, :up) }
+        let(:successor) { path.successor(move) }
+
+        before do
+          allow(state).to receive(:with_robot_moved) { fake_state }
+
+          path.be_unprunable
+        end
+
+        it "is not prunable" do
+          expect(successor).not_to be_prunable
+        end
+      end
+    end
+
     describe "converting to outcome" do
       let(:outcome) { path.to_outcome }
 
       context "when solved" do
         before do
-          game_over(path.state)
+          be_goal_state(state)
         end
 
         it "returns a solved outcome" do

@@ -14,11 +14,12 @@ module Robots
       new(state, moves, prunable)
     end
 
-    def initialize(state, moves = [])
     # private - tests only
+    def initialize(state, moves = [], prunable = true)
       @state = state
       @moves = moves
       @solved = state.game_over? && ricocheted?(state.home_robot)
+      @prunable = prunable && (solved? || !state.game_over?)
     end
 
     def allowable_successors
@@ -27,7 +28,7 @@ module Robots
 
     def successor(move)
       next_state = state.with_robot_moved(move.robot, move.direction)
-      next_state.equal?(state) ? nil : self.class.successor(next_state, moves + [move])
+      next_state.equal?(state) ? nil : self.class.successor(next_state, moves + [move], prunable?)
     end
 
     def length
@@ -38,10 +39,16 @@ module Robots
       moves.last && moves.last.robot
     end
 
+    def be_unprunable
+      @prunable = false
+    end
+
     def solved?
       @solved
     end
 
+    def prunable?
+      @prunable
     end
 
     def to_outcome
