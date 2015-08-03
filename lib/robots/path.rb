@@ -9,11 +9,16 @@ module Robots
       new(state)
     end
 
-    private_class_method :new
+    # private
+    def self.successor(state, moves, prunable)
+      new(state, moves, prunable)
+    end
 
     def initialize(state, moves = [])
+    # private - tests only
       @state = state
       @moves = moves
+      @solved = state.game_over? && ricocheted?(state.home_robot)
     end
 
     def allowable_successors
@@ -34,7 +39,9 @@ module Robots
     end
 
     def solved?
-      state.game_over? && ricocheted?(state.home_robot)
+      @solved
+    end
+
     end
 
     def to_outcome
@@ -43,11 +50,6 @@ module Robots
 
     def to_s
       (moves.map { |move| [move.robot.color, move.direction] }).to_s
-    end
-
-    # private
-    def self.successor(state, moves)
-      new(state, moves)
     end
 
     private

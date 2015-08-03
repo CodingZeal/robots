@@ -2,18 +2,11 @@ require "spec_helper"
 
 module Robots
   describe Path do
-    let(:goal) { instance_double(Target) }
-    let(:state) { fake_state("start state") }
-    let(:intermediate_state) { fake_state("intermediate state") }
-    let(:final_state) { fake_state("final state") }
-    let(:initial_path) { Path.initial(state) }
+    let(:path) { Path.new(state, moves) }
+    let(:state) { fake_state("state") }
+    let(:moves) { [Move.new(robot, :up), Move.new(robot, :left)] }
     let(:robot) { instance_double(Robot, color: :yellow) }
     let(:other_robot) { instance_double(Robot, color: :blue) }
-    let(:path) do
-      initial_path
-        .successor(Move.new(robot, :up))
-        .successor(Move.new(robot, :left))
-    end
 
     def fake_state(name = "state")
       instance_double(BoardState, name, :game_over? => false, robots: [robot, other_robot])
@@ -24,10 +17,7 @@ module Robots
     end
 
     before do
-      allow(state).to receive(:with_robot_moved) { intermediate_state }
-      allow(intermediate_state).to receive(:with_robot_moved) { final_state }
-
-      allow(final_state).to receive(:home_robot) { path.moves.last.robot }
+      allow(state).to receive(:home_robot) { moves.last.robot }
     end
 
     describe "solving" do
@@ -43,11 +33,7 @@ module Robots
         end
 
         context "when the goal robot has not ricocheted" do
-          let(:path) do
-            initial_path
-              .successor(Move.new(other_robot, :down))
-              .successor(Move.new(robot, :left))
-          end
+          let(:moves) { [Move.new(other_robot, :down), Move.new(robot, :left)] }
 
           it "is not solved" do
             expect(path).not_to be_solved
@@ -75,7 +61,7 @@ module Robots
         end
 
         it "includes the final board state" do
-          expect(outcome.final_state).to be final_state
+          expect(outcome.final_state).to be state
         end
 
         it "includes the moves" do
@@ -89,15 +75,16 @@ module Robots
         end
 
         it "includes the final board state" do
-          expect(outcome.final_state).to be final_state
+          expect(outcome.final_state).to be state
         end
       end
     end
 
     describe "successor" do
+      let(:path) { Path.initial(state) }
       let(:direction) { :left }
       let(:move) { Move.new(robot, direction) }
-      let(:successor) { initial_path.successor(move) }
+      let(:successor) { path.successor(move) }
       let(:next_state) { fake_state("next state") }
 
       before do
@@ -127,8 +114,12 @@ module Robots
       let(:successors) { path.allowable_successors }
       let(:successor_moves) { successors.map { |succ| succ.moves.last } }
 
+      before do
+        allow(state).to receive(:with_robot_moved) { fake_state }
+      end
+
       context "for the initial move" do
-        let(:path) { initial_path }
+        let(:path) { Path.initial(state) }
 
         it "follows all four directions for both robots" do
           expect(successors.size).to eq 8
@@ -136,14 +127,10 @@ module Robots
       end
 
       context "for later moves" do
-        let(:path) do
-          initial_path
-            .successor(Move.new(other_robot, :left))
-            .successor(Move.new(robot, :down))
-        end
+        let(:moves) { [Move.new(other_robot, :left), Move.new(robot, :down)] }
 
         before do
-          allow(final_state).to receive(:with_robot_moved) { fake_state }
+          allow(state).to receive(:with_robot_moved) { fake_state }
         end
 
         it "turns the last moved robot 90 degrees from its previous move" do
@@ -160,7 +147,7 @@ module Robots
       end
 
       context "when a successor move is blocked" do
-        let(:path) { initial_path }
+        let(:path) { Path.initial(state) }
 
         before do
           allow(state).to receive(:with_robot_moved).with(robot, :left) { state }
