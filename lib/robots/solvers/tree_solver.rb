@@ -13,7 +13,10 @@ module Robots
       attr_reader :visited
 
       def solve
-        paths = make_paths(Path.initial(initial_state))
+        initial_path = Path.initial(initial_state)
+        initial_path.be_unprunable if initial_path.allowable_successors.any?(&:illegal_solution?)
+
+        paths = make_paths(initial_path)
 
         until empty?(paths)
           path = next_path(paths)
@@ -55,17 +58,9 @@ module Robots
 
         note_state_considered
 
-        if short_win?(path)
-          visited.clear
-        else
-          visited << equivalence_class
-        end
+        visited << equivalence_class if path.prunable?
 
         true
-      end
-
-      def short_win?(path)
-        path.state.game_over? && path.moves.size < 2
       end
 
       def report_progress(path)

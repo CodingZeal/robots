@@ -18,8 +18,9 @@ module Robots
     def initialize(state, moves = [], prunable = true)
       @state = state
       @moves = moves
-      @solved = state.game_over? && ricocheted?(state.home_robot)
-      @prunable = prunable && (solved? || !state.game_over?)
+      game_over = state.game_over?
+      @solved = game_over && ricocheted?(state.home_robot)
+      @prunable = prunable && (solved? || !game_over)
     end
 
     def allowable_successors
@@ -37,6 +38,10 @@ module Robots
 
     def last_moved_robot
       moves.last && moves.last.robot
+    end
+
+    def illegal_solution?
+      !prunable?
     end
 
     def be_unprunable

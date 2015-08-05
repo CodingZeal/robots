@@ -93,5 +93,16 @@ module Robots
         end
       end
     end
+
+    describe "fix for pruning bug" do
+      let(:robot) { Robot.new(:blue, board.cell(13, 3)) }
+      let(:other_robot) { Robot.new(:red, board.cell(10, 13)) }
+      let(:robots) { [robot, other_robot] }
+      let(:goal) { Target.new(:blue, :hex) }
+
+      it "finds the shortest solution" do
+        expect(outcome.length).to eq 4
+      end
+    end
   end
 end
