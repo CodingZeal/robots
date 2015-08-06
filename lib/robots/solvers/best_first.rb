@@ -4,7 +4,14 @@ require "fc"
 module Robots
   module Solvers
     class BestFirst < TreeSolver
+      def initialize(state, scorer:, verbose: false)
+        super(state, verbose: verbose)
+        @scorer = scorer
+      end
+
       private
+
+      attr_reader :scorer
 
       def make_paths(path)
         FastContainers::PriorityQueue.new(:min).tap do |paths|
@@ -27,14 +34,7 @@ module Robots
       end
 
       def score(path)
-        (path.length * 10) + (last_robot_active?(path) ? 0 : 1)
-      end
-
-      def last_robot_active?(path)
-        last_robot = path.last_moved_robot
-        return false unless last_robot
-
-        last_robot.active?(path.state.goal)
+        scorer.score(path)
       end
     end
   end

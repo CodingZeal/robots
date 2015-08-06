@@ -58,7 +58,7 @@ module Robots
     def solve(state, io)
       preamble(state, io)
 
-      solver = solver_class.new(state, verbose: options.verbose)
+      solver = make_solver(state)
       outcome = solver.outcome
 
       outcome.write(io)
@@ -113,16 +113,28 @@ module Robots
       result
     end
 
-    def solver_class
+    def make_solver(state)
       case options.algorithm
+        when /best-(.+)/
+          scorer = make_scorer($1)
+          Solvers::BestFirst.new(state, scorer: scorer, verbose: options.algorithm)
         when "bfs"
-          Solvers::Bfs
-        when "best"
-          Solvers::BestFirst
+          Solvers::Bfs.new(state, verbose: options.verbose)
         when "goal"
-          Solvers::GoalRobotFirst
+          Solvers::GoalRobotFirst.new(state, verbose: options.verbose)
         else
-          Solvers::GoalRobotFirst
+          Solvers::GoalRobotFirst.new(state, verbose: options.verbose)
+      end
+    end
+
+    def make_scorer(description)
+      case description
+        when "shortest"
+          Solvers::Scorers::ShortestFirst.new
+        when "shortest-active"
+          Solvers::Scorers::ShortestThenActiveFirst.new
+        else
+          fail "Unknown scoring strategy: #{description}"
       end
     end
 
