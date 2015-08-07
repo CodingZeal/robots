@@ -116,7 +116,7 @@ module Robots
     def make_solver(state)
       case options.algorithm
         when /best-(.+)/
-          scorer = make_scorer($1)
+          scorer = make_scorer($1, state)
           Solvers::BestFirst.new(state, scorer: scorer, verbose: options.algorithm)
         when "bfs"
           Solvers::Bfs.new(state, verbose: options.verbose)
@@ -127,8 +127,10 @@ module Robots
       end
     end
 
-    def make_scorer(description)
+    def make_scorer(description, state)
       case description
+        when "a-star"
+          Solvers::Scorers::AStar.new(board, state)
         when "shortest"
           Solvers::Scorers::ShortestFirst.new
         when "shortest-active"

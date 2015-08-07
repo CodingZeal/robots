@@ -3,7 +3,7 @@ module Robots
     def initialize(size)
       @elements = Array.new(size) do |row|
         Array.new(size) do |column|
-          yield(row, column)
+          yield(row, column) if block_given?
         end
       end
     end
@@ -46,6 +46,10 @@ module Robots
 
     def right
       grid_size - 1
+    end
+
+    def to_s
+      elements.map { |row| row.map { |cell| cell ? cell.to_s : "X" }.join(" ") }.join("\n")
     end
 
     private

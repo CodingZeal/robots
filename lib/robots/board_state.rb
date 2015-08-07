@@ -36,6 +36,10 @@ module Robots
       end
     end
 
+    def active_robots
+      robots.select { |robot| robot.active?(goal) }
+    end
+
     def home_robot
       robots.find { |robot| robot.home?(goal) }
     end

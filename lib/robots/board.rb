@@ -17,6 +17,10 @@ module Robots
       cells.at(row, column)
     end
 
+    def target_cell(goal)
+      each_cell.find { |cell| cell.goal?(goal) }
+    end
+
     def stopping_cell(cell, direction)
       stopping_cells[direction].at(cell.row, cell.column)
     end
