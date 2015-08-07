@@ -1,4 +1,4 @@
-robots --seed 60764
+robots --seed 19291
 Tiles: A1 B1 C1 D1
 **************************************************
 Initial state:
@@ -16,11 +16,11 @@ Solved in 6 moves:
   5) Red right
   6) Red up
 Statistics:
-  states_considered: 3488
-  solving_time: 0.598s
-  states_per_second: 5830
+  states_considered: 10181
+  solving_time: 2.067s
+  states_per_second: 4925
 robots -r green,2,6 -r silver,11,15 -r red,10,13 -r blue,13,3 -r yellow,12,15 -g red,hex
-robots --seed 53368
+robots --seed 36746
 Tiles: A1 B1 C1 D1
 **************************************************
 Initial state:
@@ -36,11 +36,11 @@ Solved in 4 moves:
   3) Silver left
   4) Blue up
 Statistics:
-  states_considered: 1846
-  solving_time: 0.293s
-  states_per_second: 6298
+  states_considered: 434
+  solving_time: 0.06s
+  states_per_second: 7230
 robots -r red,10,13 -r blue,13,4 -r yellow,12,15 -r green,2,6 -r silver,11,11 -g blue,hex
-robots --seed 9927
+robots --seed 47229
 Tiles: A1 B1 C1 D1
 **************************************************
 Initial state:
@@ -51,20 +51,20 @@ Initial state:
   The red robot is at row: 10, column: 13.
 Attempting to solve for yellow square
 Solved in 8 moves:
-  1) Green up
-  2) Yellow up
-  3) Yellow left
-  4) Yellow up
+  1) Yellow up
+  2) Yellow left
+  3) Yellow up
+  4) Green up
   5) Yellow left
   6) Yellow up
   7) Yellow right
   8) Yellow down
 Statistics:
-  states_considered: 32195
-  solving_time: 5.437s
-  states_per_second: 5922
+  states_considered: 25188
+  solving_time: 4.82s
+  states_per_second: 5226
 robots -r blue,13,4 -r yellow,8,5 -r green,0,6 -r silver,11,15 -r red,10,13 -g yellow,square
-robots --seed 34361
+robots --seed 41953
 Tiles: A1 B1 C1 D1
 **************************************************
 Initial state:
@@ -82,11 +82,11 @@ Solved in 6 moves:
   5) Blue left
   6) Blue up
 Statistics:
-  states_considered: 2899
-  solving_time: 0.472s
-  states_per_second: 6139
+  states_considered: 4315
+  solving_time: 0.727s
+  states_per_second: 5935
 robots -r yellow,8,5 -r green,0,6 -r silver,11,15 -r red,10,13 -r blue,6,12 -g blue,triangle
-robots --seed 4372
+robots --seed 39840
 Tiles: A1 B1 C1 D1
 **************************************************
 Initial state:
@@ -97,22 +97,22 @@ Initial state:
   The red robot is at row: 10, column: 13.
 Attempting to solve for red triangle
 Solved in 10 moves:
-  1) Green down
-  2) Green left
-  3) Green down
-  4) Red down
-  5) Red left
-  6) Red up
+  1) Red down
+  2) Red left
+  3) Red up
+  4) Blue right
+  5) Blue up
+  6) Blue left
   7) Red right
   8) Red up
   9) Red left
   10) Red down
 Statistics:
-  states_considered: 152319
-  solving_time: 32.061s
-  states_per_second: 4751
-robots -r blue,6,12 -r yellow,8,5 -r green,5,0 -r silver,11,15 -r red,14,1 -g red,triangle
-robots --seed 8621
+  states_considered: 122036
+  solving_time: 25.615s
+  states_per_second: 4764
+robots -r blue,5,0 -r yellow,8,5 -r green,0,6 -r silver,11,15 -r red,14,1 -g red,triangle
+robots --seed 25484
 Tiles: A1 B1 C1 D1
 **************************************************
 Initial state:
@@ -124,18 +124,18 @@ Initial state:
 Attempting to solve for green square
 Solved in 7 moves:
   1) Blue right
-  2) Blue down
-  3) Blue left
-  4) Green right
+  2) Green right
+  3) Blue down
+  4) Blue left
   5) Green down
   6) Green left
   7) Green down
 Statistics:
-  states_considered: 7487
-  solving_time: 1.268s
-  states_per_second: 5905
+  states_considered: 9287
+  solving_time: 1.488s
+  states_per_second: 6241
 robots -r red,14,1 -r blue,8,9 -r yellow,8,5 -r green,11,10 -r silver,11,15 -g green,square
-robots --seed 52244
+robots --seed 18565
 Tiles: A1 B1 C1 D1
 **************************************************
 Initial state:
@@ -146,20 +146,20 @@ Initial state:
   The yellow robot is at row: 8, column: 5.
 Attempting to solve for yellow triangle
 Solved in 8 moves:
-  1) Blue right
-  2) Blue up
-  3) Yellow right
-  4) Yellow up
+  1) Green up
+  2) Yellow right
+  3) Yellow up
+  4) Green right
   5) Yellow left
   6) Yellow down
   7) Yellow right
   8) Yellow down
 Statistics:
-  states_considered: 15951
-  solving_time: 2.771s
-  states_per_second: 5756
-robots -r green,11,10 -r silver,11,15 -r red,14,1 -r blue,5,15 -r yellow,12,14 -g yellow,triangle
-robots --seed 44385
+  states_considered: 25329
+  solving_time: 4.601s
+  states_per_second: 5505
+robots -r green,5,15 -r silver,11,15 -r red,14,1 -r blue,8,9 -r yellow,12,14 -g yellow,triangle
+robots --seed 1035
 Tiles: A1 B1 C1 D1
 **************************************************
 Initial state:
@@ -170,21 +170,21 @@ Initial state:
   The blue robot is at row: 8, column: 9.
 Attempting to solve for red circle
 Solved in 9 moves:
-  1) Red up
-  2) Red left
-  3) Red down
-  4) Red right
+  1) Green left
+  2) Blue right
+  3) Blue up
+  4) Blue left
   5) Red up
-  6) Red left
+  6) Red right
   7) Red down
   8) Red right
   9) Red up
 Statistics:
-  states_considered: 47475
-  solving_time: 9.223s
-  states_per_second: 5148
-robots -r yellow,12,14 -r green,5,15 -r silver,11,15 -r red,1,4 -r blue,8,9 -g red,circle
-robots --seed 8665
+  states_considered: 64371
+  solving_time: 12.816s
+  states_per_second: 5023
+robots -r yellow,12,14 -r green,5,0 -r silver,11,15 -r red,1,4 -r blue,5,1 -g red,circle
+robots --seed 48393
 Tiles: A1 B1 C1 D1
 **************************************************
 Initial state:
@@ -195,19 +195,19 @@ Initial state:
   The silver robot is at row: 11, column: 15.
 Attempting to solve for green circle
 Solved in 7 moves:
-  1) Blue right
-  2) Green down
+  1) Green down
+  2) Blue up
   3) Green left
   4) Green down
-  5) Blue left
+  5) Green left
   6) Green up
   7) Green left
 Statistics:
-  states_considered: 8873
-  solving_time: 1.444s
-  states_per_second: 6143
-robots -r red,1,4 -r blue,8,9 -r yellow,12,14 -r green,9,2 -r silver,11,15 -g green,circle
-robots --seed 46725
+  states_considered: 16794
+  solving_time: 3.167s
+  states_per_second: 5303
+robots -r red,1,4 -r blue,2,9 -r yellow,12,14 -r green,9,2 -r silver,11,15 -g green,circle
+robots --seed 11737
 Tiles: A1 B1 C1 D1
 **************************************************
 Initial state:
@@ -218,16 +218,16 @@ Initial state:
   The yellow robot is at row: 12, column: 14.
 Attempting to solve for yellow circle
 Solved in 4 moves:
-  1) Yellow right
-  2) Red down
-  3) Yellow left
-  4) Yellow up
+  1) Yellow up
+  2) Yellow left
+  3) Green down
+  4) Yellow right
 Statistics:
-  states_considered: 155
-  solving_time: 0.024s
-  states_per_second: 6434
-robots -r green,9,2 -r silver,11,15 -r red,12,4 -r blue,2,9 -r yellow,2,14 -g yellow,circle
-robots --seed 29734
+  states_considered: 393
+  solving_time: 0.07s
+  states_per_second: 5636
+robots -r green,15,2 -r silver,11,15 -r red,1,4 -r blue,2,9 -r yellow,2,14 -g yellow,circle
+robots --seed 18943
 Tiles: A1 B1 C1 D1
 **************************************************
 Initial state:
@@ -244,11 +244,11 @@ Solved in 5 moves:
   4) Blue left
   5) Blue down
 Statistics:
-  states_considered: 1278
-  solving_time: 0.198s
-  states_per_second: 6456
+  states_considered: 1651
+  solving_time: 0.303s
+  states_per_second: 5440
 robots -r yellow,2,2 -r green,15,2 -r silver,11,15 -r red,1,4 -r blue,6,3 -g blue,square
-robots --seed 52658
+robots --seed 44830
 Tiles: A1 B1 C1 D1
 **************************************************
 Initial state:
@@ -259,21 +259,21 @@ Initial state:
   The red robot is at row: 1, column: 4.
 Attempting to solve for blue circle
 Solved in 9 moves:
-  1) Green right
-  2) Blue right
-  3) Blue down
-  4) Silver left
-  5) Red down
+  1) Blue right
+  2) Silver left
+  3) Silver down
+  4) Blue down
+  5) Blue right
   6) Blue up
   7) Blue left
   8) Blue down
   9) Blue right
 Statistics:
-  states_considered: 83509
-  solving_time: 15.818s
-  states_per_second: 5279
-robots -r blue,14,9 -r yellow,2,2 -r green,15,5 -r silver,11,11 -r red,12,4 -g blue,circle
-robots --seed 64522
+  states_considered: 81150
+  solving_time: 15.666s
+  states_per_second: 5180
+robots -r blue,14,9 -r yellow,2,2 -r green,15,2 -r silver,15,11 -r red,1,4 -g blue,circle
+robots --seed 39694
 Tiles: A1 B1 C1 D1
 **************************************************
 Initial state:
@@ -284,22 +284,22 @@ Initial state:
   The red robot is at row: 1, column: 4.
 Attempting to solve for green hex
 Solved in 10 moves:
-  1) Blue left
-  2) Blue up
-  3) Silver right
-  4) Silver up
-  5) Green up
-  6) Green right
-  7) Green down
+  1) Silver right
+  2) Blue left
+  3) Blue up
+  4) Green up
+  5) Green right
+  6) Green down
+  7) Silver up
   8) Green right
   9) Green up
   10) Green left
 Statistics:
-  states_considered: 152497
-  solving_time: 31.284s
-  states_per_second: 4875
+  states_considered: 214410
+  solving_time: 45.324s
+  states_per_second: 4731
 robots -r blue,9,2 -r yellow,2,2 -r green,1,9 -r silver,0,11 -r red,1,4 -g green,hex
-robots --seed 44646
+robots --seed 17380
 Tiles: A1 B1 C1 D1
 **************************************************
 Initial state:
@@ -320,10 +320,10 @@ Solved in 8 moves:
   8) Silver left
 Statistics:
   states_considered: 28871
-  solving_time: 5.402s
-  states_per_second: 5345
+  solving_time: 5.446s
+  states_per_second: 5301
 robots -r green,1,9 -r silver,10,8 -r red,1,4 -r blue,11,11 -r yellow,12,15 -g vortex
-robots --seed 6963
+robots --seed 57111
 Tiles: A1 B1 C1 D1
 **************************************************
 Initial state:
@@ -335,22 +335,22 @@ Initial state:
 Attempting to solve for yellow hex
 Solved in 11 moves:
   1) Green up
-  2) Green left
-  3) Red right
+  2) Red right
+  3) Green left
   4) Red up
-  5) Green right
-  6) Yellow left
+  5) Yellow left
+  6) Green right
   7) Yellow up
   8) Yellow left
   9) Yellow up
   10) Yellow right
   11) Yellow down
 Statistics:
-  states_considered: 433420
-  solving_time: 108.881s
-  states_per_second: 3981
+  states_considered: 496310
+  solving_time: 137.245s
+  states_per_second: 3616
 robots -r green,0,7 -r silver,10,8 -r red,0,8 -r blue,11,11 -r yellow,3,6 -g yellow,hex
-robots --seed 54087
+robots --seed 38445
 Tiles: A1 B1 C1 D1
 **************************************************
 Initial state:
@@ -364,11 +364,11 @@ Solved in 2 moves:
   1) Red right
   2) Red down
 Statistics:
-  states_considered: 3
+  states_considered: 5
   solving_time: 0.001s
-  states_per_second: 4255
+  states_per_second: 5112
 robots -r yellow,3,6 -r green,0,7 -r silver,10,8 -r red,4,10 -r blue,11,11 -g red,square
-robots --seed 41545
+robots --seed 49690
 Tiles: A1 B1 C1 D1
 **************************************************
 Initial state:
@@ -379,17 +379,17 @@ Initial state:
   The silver robot is at row: 10, column: 8.
 Attempting to solve for green triangle
 Solved in 5 moves:
-  1) Red left
-  2) Green right
+  1) Green right
+  2) Red left
   3) Green down
   4) Green left
   5) Green up
 Statistics:
-  states_considered: 744
-  solving_time: 0.107s
-  states_per_second: 6938
+  states_considered: 1467
+  solving_time: 0.217s
+  states_per_second: 6765
 robots -r red,4,0 -r blue,11,11 -r yellow,3,6 -r green,2,1 -r silver,10,8 -g green,triangle
 
-real	3m44.951s
-user	3m41.165s
-sys	0m3.510s
+real	4m31.440s
+user	4m26.103s
+sys	0m4.562s

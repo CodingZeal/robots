@@ -133,6 +133,8 @@ module Robots
           Solvers::Scorers::ShortestFirst.new
         when "shortest-active"
           Solvers::Scorers::ShortestThenActiveFirst.new
+        when "shortest-mru"
+          Solvers::Scorers::ShortestThenMRUFirst.new
         else
           fail "Unknown scoring strategy: #{description}"
       end
