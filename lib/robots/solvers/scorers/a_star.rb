@@ -10,7 +10,7 @@ module Robots
         end
 
         def score(path)
-          path.length + best_estimate
+          (path.length + best_estimate) * 10 + (last_robot_active?(path) ? 0 : 1)
         end
 
         private
@@ -19,6 +19,13 @@ module Robots
 
         def best_estimate
           active_robots.map { |robot| estimate_at(robot.cell) }.min
+        end
+
+        def last_robot_active?(path)
+          last_robot = path.last_moved_robot
+          return false unless last_robot
+
+          last_robot.active?(path.state.goal)
         end
 
         def populate_estimates(target_cell)
