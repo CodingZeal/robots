@@ -1,6 +1,13 @@
 module Robots
   class Grid
+    attr_reader :top, :left, :bottom, :right
+
     def initialize(size)
+      @grid_size = size
+      @top = 0
+      @left = 0
+      @bottom = @grid_size - 1
+      @right = @grid_size - 1
       @elements = Array.new(size) do |row|
         Array.new(size) do |column|
           yield(row, column) if block_given?
@@ -32,33 +39,13 @@ module Robots
       elements.each { |row| row.each { |element| yield element } }
     end
 
-    def top
-      0
-    end
-
-    def left
-      0
-    end
-
-    def bottom
-      grid_size - 1
-    end
-
-    def right
-      grid_size - 1
-    end
-
     def to_s
       elements.map { |row| row.map { |cell| cell ? cell.to_s : "X" }.join(" ") }.join("\n")
     end
 
     private
 
-    attr_reader :elements
-
-    def grid_size
-      elements.size
-    end
+    attr_reader :grid_size, :elements
 
     def on_grid?(row, column)
       row.between?(top, bottom) && column.between?(left, right)
