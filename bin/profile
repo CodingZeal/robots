@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+ALGORITHM=${1:-goal}
+
+bundle exec ruby-prof -p graph_html -f profiles/$ALGORITHM.html bin/robots -- -t A1,B1,C1,D1 --algorithm $ALGORITHM -r blue,6,3 -r yellow,2,2 -r green,15,2 -r silver,11,15 -r red,1,4 -g blue,circle
