@@ -28,8 +28,8 @@ module Robots
     end
 
     def random_element(random)
-      row = random.rand(grid_size)
-      column = random.rand(grid_size)
+      row = random.rand(@grid_size)
+      column = random.rand(@grid_size)
       at(row, column)
     end
 
@@ -48,7 +48,7 @@ module Robots
     attr_reader :grid_size, :elements
 
     def on_grid?(row, column)
-      row.between?(top, bottom) && column.between?(left, right)
+      row.between?(@top, @bottom) && column.between?(@left, @right)
     end
   end
 end
