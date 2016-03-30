@@ -61,7 +61,7 @@ module Robots
       targets: [
         [1, 3, :green, :triangle],
         [3, 6, :yellow, :hex],
-        [4, 2, :red, :circle],
+        [4, 1, :red, :circle],
         [6, 4, :blue, :square]
       ],
       vertical_walls: [
