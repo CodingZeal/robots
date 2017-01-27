@@ -92,6 +92,12 @@ exact same game.
 bundle exec robots -p -c 5 --seed 4347
 ```
 
+## License
+
+Authored by Randy Coulman and the Engineering Team of [Coding ZEAL](https://codingzeal.com?utm_source=github)
+
+Copyright (c) 2017 Zeal, LLC.  Licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
 ## Contributing
 
 1. Fork it ( https://github.com/CodingZeal/robots/fork )
